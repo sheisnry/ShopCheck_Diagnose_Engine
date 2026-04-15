@@ -2453,11 +2453,6 @@ const DEEP_COMMON = [
         code: "decision_store_trust",
         cls: "partial"
       },
-      {
-        label: "การเปรียบเทียบกับตัวเลือกอื่น",
-        code: "decision_compare",
-        cls: "partial"
-      }
     ]
   },
   {
@@ -4212,6 +4207,7 @@ function buildStep2Prompt() {
 
   const totalScore = getQuickScore();
   const quickType = getQuickTypeLabel();
+  const maxScore = formatScore(getQuickMaxScore());
 
   return `คุณคือ ShopCheck AI ที่วิเคราะห์ร้าน Shopee แบบ strategic diagnosis สำหรับผู้ขายไทย
 คุณไม่ต้องพยายามพูดเหมือนมนุษย์ 100% แต่ต้องคิดเป็นระบบ อ่านง่าย ชัด และใช้การได้จริง
@@ -4226,7 +4222,7 @@ function buildStep2Prompt() {
 - ปัญหาหลักที่เจ้าของร้านรู้สึก: ${p.mainProblem || "ไม่ได้ระบุ"}
 
 ผลจาก Part 1:
-- คะแนนรวม: ${totalScore}/8
+- คะแนนรวม: ${formatScore(totalScore)}/${maxScore}
 - ระดับภาพรวม: ${quickType}
 
 คำตอบ Part 1:
@@ -4245,8 +4241,16 @@ ${deepSummary}
    - อยู่ในหมวดที่ price war สูง
    - ร้านยังเล็กเกินจะแข่งตอนนี้
 5) อย่าแนะนำยิงแอดหรือทำโปรเพิ่ม ถ้ายังไม่ใช่ลำดับที่ควรทำก่อน
-6) แผน 30 วันต้องเป็นลำดับที่ทำได้จริง
+6) แผน 30 วันต้องเป็นลำดับที่ทำได้จริง และต้องครบ 4 สัปดาห์
 7) Channel Fit ต้องกล้าตัดสิน ไม่ใช่ตอบกลาง ๆ
+
+กฎ format สำคัญ:
+- ต้องตอบตามหัวข้อด้านล่างเท่านั้น
+- 3 Action plan หลัก ต้องขึ้นต้นแต่ละข้อด้วย 1) 2) 3)
+- ในแต่ละข้อ ต้องมีบรรทัด "วิธีทำ step by step", "เหตุผล:", และ "ผลที่คาด:"
+- แผน 30 วัน ต้องเขียนเป็น 4 block ตาม format [สัปดาห์ที่ 1 — ...] ถึง [สัปดาห์ที่ 4 — ...] เท่านั้น
+- ห้ามเขียนแผน 30 วัน เป็นย่อหน้าก้อนเดียว
+- ห้ามตัดสัปดาห์ใดสัปดาห์หนึ่งออก
 
 กรุณาตอบตาม format นี้เท่านั้น:
 
@@ -4273,14 +4277,22 @@ ${deepSummary}
 ผลที่คาด: ...
 
 **แผน 30 วัน**
-สัปดาห์ 1: ...
-สัปดาห์ 2: ...
-สัปดาห์ 3: ...
-สัปดาห์ 4: ...
+[สัปดาห์ที่ 1 — ชื่อโฟกัส]
+...
+
+[สัปดาห์ที่ 2 — ชื่อโฟกัส]
+...
+
+[สัปดาห์ที่ 3 — ชื่อโฟกัส]
+...
+
+[สัปดาห์ที่ 4 — ชื่อโฟกัส]
+...
 
 **ประเมิน Channel Fit**
 [สรุปตรง ๆ ว่าร้านนี้ควรโตบน Shopee ต่อไหม ควรโตแบบไหน หรือควรระวังอะไร]`;
 }
+
 
 /* Animated loading with rotating messages */
 function showLoadingWithMessages(msgs) {
@@ -4691,18 +4703,18 @@ renderFinalPreview = async function() {
     }
 
     function parseActions(text) {
-      const lines = text.split('\n').filter(l=>l.trim());
+      const lines = String(text || '').replace(/\r/g, '').split('\n').map(l => l.trim()).filter(Boolean);
       const steps = [];
       let cur = null;
 
       lines.forEach(line => {
         const t = line.trim();
-        if (/^\d+\./.test(t)) {
+        if (/^\d+[\.\)]\s*/.test(t)) {
           if (cur) steps.push(cur);
-          cur = { title:t.replace(/^\d+\.\s*/,''), details:[] };
-        } else if (t && cur) {
-          cur.details.push(t);
+          cur = { title: t.replace(/^\d+[\.\)]\s*/, '').trim(), details: [] };
+          return;
         }
+        if (cur) cur.details.push(t);
       });
 
       if (cur) steps.push(cur);
@@ -4710,15 +4722,26 @@ renderFinalPreview = async function() {
     }
 
     function parseWeeks(text) {
-      const wb = text.split(/\[([^\]]+)\]/g).filter(s=>s.trim());
-      const weeks = [];
-      for (let w=0; w<wb.length; w+=2) {
-        weeks.push({
-          label: wb[w].trim(),
-          content: (wb[w+1]||'').trim()
-        });
+      const src = String(text || '').replace(/\r/g, '').trim();
+      if (!src) return [];
+
+      const bracketMatches = [...src.matchAll(/\[([^\]]+)\]\s*([\s\S]*?)(?=\n\s*\[[^\]]+\]|\s*$)/g)];
+      if (bracketMatches.length) {
+        return bracketMatches.map(m => ({
+          label: m[1].trim(),
+          content: m[2].trim()
+        }));
       }
-      return weeks;
+
+      const lineMatches = [...src.matchAll(/(?:^|\n)(สัปดาห์(?:ที่)?\s*\d+\s*[:：-]?[^\n]*)\n?([\s\S]*?)(?=(?:\nสัปดาห์(?:ที่)?\s*\d+\s*[:：-]?)|$)/g)];
+      if (lineMatches.length) {
+        return lineMatches.map(m => ({
+          label: m[1].trim(),
+          content: m[2].trim()
+        }));
+      }
+
+      return [];
     }
 
     const actions = parseActions(actionPlan);
