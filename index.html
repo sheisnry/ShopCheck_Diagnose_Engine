@@ -276,7 +276,7 @@ body.flow-active .hero-main {
   letter-spacing:.6px;
   text-transform:uppercase;
   color:rgba(255,255,255,.72);
-  margin-bottom:8px;
+  margin-bottom:6px;
 }
 
 .stat-big {
@@ -2315,7 +2315,7 @@ const DEEP_COMMON = [
         cls: "bad"
       },
       {
-        label: "เน้นพึ่งราคา/โปรเป็นหลัก",
+        label: "มี/ไม่มีจุดขาย เน้นพึ่งราคา/โปรเป็นหลัก",
         code: "depends_on_price_promo",
         cls: "bad"
       },
@@ -3925,7 +3925,7 @@ function renderFinalPreview() {
   const final = buildFinalPreview();
   const plan = build30DayPlan(final.label, state.deepAnswers);
   const emailNote = state.email
-    ? `<div class="email-sent-box delivery-notice-box">✅ ผลวิเคราะห์ด้านล่างนี้จะส่งไปที่ <strong>${escapeHTML(state.email)}</strong> ภายใน 24 ชั่วโมง</div>`
+    ? `<div class="email-sent-box delivery-notice-box">✅ รายงานฉบับเต็มพร้อมผลวิเคราะห์ด้านล่างนี้จะส่งไปที่ <strong>${escapeHTML(state.email)}</strong> ภายใน 24 ชั่วโมง</div>`
     : '';
 
   el.stageCard.innerHTML = `
@@ -4207,7 +4207,6 @@ function buildStep2Prompt() {
 
   const totalScore = getQuickScore();
   const quickType = getQuickTypeLabel();
-  const maxScore = formatScore(getQuickMaxScore());
 
   return `คุณคือ ShopCheck AI ที่วิเคราะห์ร้าน Shopee แบบ strategic diagnosis สำหรับผู้ขายไทย
 คุณไม่ต้องพยายามพูดเหมือนมนุษย์ 100% แต่ต้องคิดเป็นระบบ อ่านง่าย ชัด และใช้การได้จริง
@@ -4222,7 +4221,7 @@ function buildStep2Prompt() {
 - ปัญหาหลักที่เจ้าของร้านรู้สึก: ${p.mainProblem || "ไม่ได้ระบุ"}
 
 ผลจาก Part 1:
-- คะแนนรวม: ${formatScore(totalScore)}/${maxScore}
+- คะแนนรวม: ${totalScore}/8
 - ระดับภาพรวม: ${quickType}
 
 คำตอบ Part 1:
@@ -4231,26 +4230,28 @@ ${quickSummary}
 คำตอบ Part 2:
 ${deepSummary}
 
-สิ่งที่ต้องทำ:
+หลักการวิเคราะห์:
 1) หา 3 เรื่องที่ควรโฟกัสก่อน โดยเรียงตาม impact ทางธุรกิจจริง
-2) แต่ละข้ออย่าเป็น tip ลอย ๆ ต้องชัดว่า "ร้านนี้ควรทำอะไร เพราะอะไร"
+2) อย่าให้ทั้ง 3 ข้อพูดเรื่องเดียวกัน ต้องเป็นลำดับที่ต่อกัน เช่น foundation → conversion/value → scale
 3) ต้องแยกให้ออกว่าปัญหาเป็นเรื่อง visibility / conversion / pricing / trust / differentiation / operations / tool usage / channel fit
 4) ถ้าร้านสู้ราคายาก ต้องวิเคราะห์ให้ถูกว่าเป็น:
    - ต้นทุนสูงจริง
    - สื่อ value ไม่ชัด
    - อยู่ในหมวดที่ price war สูง
    - ร้านยังเล็กเกินจะแข่งตอนนี้
-5) อย่าแนะนำยิงแอดหรือทำโปรเพิ่ม ถ้ายังไม่ใช่ลำดับที่ควรทำก่อน
-6) แผน 30 วันต้องเป็นลำดับที่ทำได้จริง และต้องครบ 4 สัปดาห์
-7) Channel Fit ต้องกล้าตัดสิน ไม่ใช่ตอบกลาง ๆ
+5) ถ้า D3 มีหลายข้อ ให้เลือกเฉพาะข้อจำกัดที่เป็น root cause จริง 1-2 เรื่อง อย่าพูดครบทุกข้อแบบ checklist
+6) ถ้า D4 คือ รีวิว / รูป-วิดีโอ / รายละเอียดสินค้า ให้ action แรกแตะสิ่งนั้นก่อน ถ้ายังไม่พร้อม ห้ามข้ามไปแนะนำยิงแอด
+7) อย่าแนะนำยิงแอด / Affiliate / Live / ทำโปรเพิ่ม ถ้าหน้าสินค้า รีวิว จุดขาย หรือความน่าเชื่อถือยังไม่พร้อม
+8) แต่ละ action plan ต้องชัดว่า "ร้านนี้ควรทำอะไร เพราะอะไร" ไม่ใช่ tip ลอย ๆ
+9) แผน 30 วันต้องเป็นลำดับที่ทำได้จริง และต้องมีครบ 4 สัปดาห์
+10) Channel Fit ต้องกล้าตัดสิน ไม่ใช่ตอบกลาง ๆ
 
-กฎ format สำคัญ:
-- ต้องตอบตามหัวข้อด้านล่างเท่านั้น
-- 3 Action plan หลัก ต้องขึ้นต้นแต่ละข้อด้วย 1) 2) 3)
-- ในแต่ละข้อ ต้องมีบรรทัด "วิธีทำ step by step", "เหตุผล:", และ "ผลที่คาด:"
-- แผน 30 วัน ต้องเขียนเป็น 4 block ตาม format [สัปดาห์ที่ 1 — ...] ถึง [สัปดาห์ที่ 4 — ...] เท่านั้น
-- ห้ามเขียนแผน 30 วัน เป็นย่อหน้าก้อนเดียว
-- ห้ามตัดสัปดาห์ใดสัปดาห์หนึ่งออก
+รูปแบบการตอบสำคัญมาก:
+- ตอบตาม format ด้านล่างเท่านั้น
+- ในแต่ละ action plan ให้มีหัวข้อย่อย "วิธีทำ step by step" แค่ครั้งเดียว
+- ใต้หัวข้อ "วิธีทำ step by step" ให้ขึ้นเป็นบรรทัดลูกศร → เลย
+- ห้ามเขียนคำว่า "วิธีทำ step by step" ซ้ำอีกในเนื้อหาข้างใต้
+- "แผน 30 วัน" ต้องตอบเป็น 4 block ตามรูปแบบนี้เป๊ะ เพื่อให้ระบบเอาไปใส่ 4 กล่องได้
 
 กรุณาตอบตาม format นี้เท่านั้น:
 
@@ -4279,20 +4280,16 @@ ${deepSummary}
 **แผน 30 วัน**
 [สัปดาห์ที่ 1 — ชื่อโฟกัส]
 ...
-
 [สัปดาห์ที่ 2 — ชื่อโฟกัส]
 ...
-
 [สัปดาห์ที่ 3 — ชื่อโฟกัส]
 ...
-
 [สัปดาห์ที่ 4 — ชื่อโฟกัส]
 ...
 
 **ประเมิน Channel Fit**
 [สรุปตรง ๆ ว่าร้านนี้ควรโตบน Shopee ต่อไหม ควรโตแบบไหน หรือควรระวังอะไร]`;
 }
-
 
 /* Animated loading with rotating messages */
 function showLoadingWithMessages(msgs) {
@@ -4602,7 +4599,7 @@ renderQuickResult = async function() {
           <div class="result-lock-overlay">
             <div class="lock-icon">🔒</div>
             <div class="lock-headline">ปลดล็อกวิเคราะห์เชิงลึก<br>+ แผน 30 วัน</div>
-            <div class="lock-sub">ตอบอีก 5 ข้อ แล้วเราจะวิเคราะห์ให้ลึกกว่านี้มาก<br>เจาะตรงร้านคุณ ไม่ใช่แค่คำแนะนำทั่วไป</br></div>
+            <div class="lock-sub">ตอบอีก 5 ข้อ แล้วเราจะวิเคราะห์ให้ลึกกว่านี้มาก — เจาะตรงร้านคุณ ไม่ใช่แค่คำแนะนำทั่วไป</div>
             <div class="lock-price-row">
               <div class="lock-price">฿599</div>
               <div class="lock-price-note">จ่ายครั้งเดียว<br>ไม่มีค่าสมาชิก</div>
@@ -4703,45 +4700,72 @@ renderFinalPreview = async function() {
     }
 
     function parseActions(text) {
-      const lines = String(text || '').replace(/\r/g, '').split('\n').map(l => l.trim()).filter(Boolean);
+      const lines = String(text || '')
+        .replace(/\r/g, '')
+        .split('\n')
+        .map(l => l.trim())
+        .filter(Boolean);
+
       const steps = [];
       let cur = null;
 
+      const isStepTitle = (value) => /^\d+[\.\)]\s*/.test(value);
+      const isMethodHeader = (value) => /^วิธีทำ(?:\s*step by step)?$/i.test(value);
+
       lines.forEach(line => {
         const t = line.trim();
-        if (/^\d+[\.\)]\s*/.test(t)) {
-          if (cur) steps.push(cur);
+
+        if (isStepTitle(t)) {
+          if (cur) {
+            cur.details = cur.details.filter(Boolean);
+            steps.push(cur);
+          }
           cur = { title: t.replace(/^\d+[\.\)]\s*/, '').trim(), details: [] };
           return;
         }
-        if (cur) cur.details.push(t);
+
+        if (!cur) return;
+        if (isMethodHeader(t)) return;
+
+        cur.details.push(t);
       });
 
-      if (cur) steps.push(cur);
+      if (cur) {
+        cur.details = cur.details.filter(Boolean);
+        steps.push(cur);
+      }
+
       return steps;
     }
 
     function parseWeeks(text) {
-      const src = String(text || '').replace(/\r/g, '').trim();
-      if (!src) return [];
+      const raw = String(text || '').replace(/\r/g, '').trim();
+      if (!raw) return [];
 
-      const bracketMatches = [...src.matchAll(/\[([^\]]+)\]\s*([\s\S]*?)(?=\n\s*\[[^\]]+\]|\s*$)/g)];
-      if (bracketMatches.length) {
-        return bracketMatches.map(m => ({
-          label: m[1].trim(),
-          content: m[2].trim()
-        }));
+      const weeks = [];
+
+      const blockMatches = [...raw.matchAll(/\[(สัปดาห์ที่?\s*\d+\s*[—-]\s*[^\]]+)\]\s*([\s\S]*?)(?=\n?\[สัปดาห์ที่?\s*\d+\s*[—-]|\s*$)/g)];
+      if (blockMatches.length) {
+        blockMatches.forEach(match => {
+          weeks.push({
+            label: match[1].trim(),
+            content: (match[2] || '').trim()
+          });
+        });
+        return weeks;
       }
 
-      const lineMatches = [...src.matchAll(/(?:^|\n)(สัปดาห์(?:ที่)?\s*\d+\s*[:：-]?[^\n]*)\n?([\s\S]*?)(?=(?:\nสัปดาห์(?:ที่)?\s*\d+\s*[:：-]?)|$)/g)];
+      const lineMatches = [...raw.matchAll(/(สัปดาห์ที่?\s*\d+)\s*:\s*([\s\S]*?)(?=\n\s*สัปดาห์ที่?\s*\d+\s*:|\s*$)/g)];
       if (lineMatches.length) {
-        return lineMatches.map(m => ({
-          label: m[1].trim(),
-          content: m[2].trim()
-        }));
+        lineMatches.forEach(match => {
+          weeks.push({
+            label: match[1].trim(),
+            content: (match[2] || '').trim()
+          });
+        });
       }
 
-      return [];
+      return weeks;
     }
 
     const actions = parseActions(actionPlan);
@@ -4793,11 +4817,15 @@ renderFinalPreview = async function() {
 
                 const reasonLine = s.details.find(d => d.trim().startsWith('เหตุผล:'));
                 const resultLine = s.details.find(d => d.trim().startsWith('ผลที่คาด:') || d.trim().startsWith('ผลที่จะเห็น'));
-                const stepLines = s.details.filter(d =>
-                  !d.trim().startsWith('เหตุผล:') &&
-                  !d.trim().startsWith('ผลที่คาด:') &&
-                  !d.trim().startsWith('ผลที่จะเห็น:')
-                );
+                const stepLines = s.details
+                  .filter(d =>
+                    !d.trim().startsWith('เหตุผล:') &&
+                    !d.trim().startsWith('ผลที่คาด:') &&
+                    !d.trim().startsWith('ผลที่จะเห็น:') &&
+                    !/^วิธีทำ(?:\s*step by step)?$/i.test(d.trim())
+                  )
+                  .map(d => d.trim())
+                  .filter(Boolean);
 
                 return `<div style="margin-bottom:18px;padding:20px;background:white;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-sm);">
   <div style="font-size:24px;font-weight:800;line-height:1.45;color:var(--brand);margin-bottom:14px;">
@@ -4806,10 +4834,10 @@ renderFinalPreview = async function() {
 
   ${stepLines.length > 0 ? `
     <div style="margin-bottom:14px;padding:14px 16px;background:#fff7f1;border:1px solid #ffd8c2;border-radius:14px;">
-      <div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:8px;">
+      <div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:6px;">
         วิธีทำ step by step
       </div>
-      <div style="font-size:14px;line-height:1.95;color:var(--text);white-space:pre-wrap;">
+      <div style="font-size:14px;line-height:1.75;color:var(--text);white-space:pre-wrap;">
         ${escapeHTML(stepLines.join('\n'))}
       </div>
       ${tt ? `<div style="color:var(--text3);font-size:13px;margin-top:8px;">${escapeHTML(tt)}</div>` : ''}
