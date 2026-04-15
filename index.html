@@ -2642,6 +2642,21 @@ function inferQuickType(secStats = getQuickSectionStats()) {
   return ranked[0]?.id || 'storefront';
 }
 
+function getQuickTypeLabel() {
+  const map = {
+    storefront: 'หน้าร้านและการหาเจอ',
+    visibility: 'การหาเจอจากการค้นหา',
+    conversion: 'การตัดสินใจซื้อ',
+    pricing: 'ราคาและความคุ้ม',
+    trust: 'รีวิวและความน่าเชื่อถือ',
+    bottleneck: 'จุดที่แพ้เวลาเทียบคู่แข่ง',
+    ops: 'การจัดการหลังบ้าน',
+    operations: 'การจัดการหลังบ้าน',
+    economics: 'ราคาและโครงสร้างความคุ้ม'
+  };
+  return map[state.quickType || inferQuickType()] || 'ภาพรวมร้าน';
+}
+
 function updateHUD() {
   const total = getQuickScore();
   const pct = getQuickPct();
@@ -4746,20 +4761,21 @@ renderFinalPreview = async function() {
 
         <div class="text-block">
           <h3>3 เรื่องที่ควรโฟกัสก่อน</h3>
-          ${actions.length > 0 ? actions.map((s,idx) => {
-            const tm = s.title.match(/\([^)]*(?:นาที|ชั่วโมง|เลย)[^)]*\)/);
-            const tt = tm ? tm[0] : '';
-            const ct = s.title.replace(tm ? tm[0] : '', '').trim();
+          ${actions.length > 0
+            ? actions.map((s, idx) => {
+                const tm = s.title.match(/\([^)]*(?:นาที|ชั่วโมง|เลย)[^)]*\)/);
+                const tt = tm ? tm[0] : '';
+                const ct = s.title.replace(tm ? tm[0] : '', '').trim();
 
-            const reasonLine = s.details.find(d => d.trim().startsWith('เหตุผล:'));
-            const resultLine = s.details.find(d => d.trim().startsWith('ผลที่คาด:') || d.trim().startsWith('ผลที่จะเห็น'));
-            const stepLines = s.details.filter(d =>
-              !d.trim().startsWith('เหตุผล:') &&
-              !d.trim().startsWith('ผลที่คาด:') &&
-              !d.trim().startsWith('ผลที่จะเห็น:')
-            );
+                const reasonLine = s.details.find(d => d.trim().startsWith('เหตุผล:'));
+                const resultLine = s.details.find(d => d.trim().startsWith('ผลที่คาด:') || d.trim().startsWith('ผลที่จะเห็น'));
+                const stepLines = s.details.filter(d =>
+                  !d.trim().startsWith('เหตุผล:') &&
+                  !d.trim().startsWith('ผลที่คาด:') &&
+                  !d.trim().startsWith('ผลที่จะเห็น:')
+                );
 
-            return `<div style="margin-bottom:18px;padding:20px;background:white;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-sm);">
+                return `<div style="margin-bottom:18px;padding:20px;background:white;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-sm);">
   <div style="font-size:24px;font-weight:800;line-height:1.45;color:var(--brand);margin-bottom:14px;">
     ${idx + 1}) ${escapeHTML(ct)}
   </div>
@@ -4798,6 +4814,11 @@ renderFinalPreview = async function() {
     </div>
   ` : ''}
 </div>`;
+              }).join('')
+            : `<p style="font-size:14px;line-height:1.8;color:var(--text2);">${escapeHTML(actionPlan)}</p>`
+          }
+        </div>
+
         <div class="text-block">
           <h3>แผน 30 วัน — ทำอะไรก่อนหลัง</h3>
           <p style="color:var(--text2);font-size:13px;margin-bottom:14px;">แผนนี้เรียงตาม pain หลักของร้านคุณ ไม่ใช่ template กลางๆ</p>
