@@ -2294,38 +2294,38 @@ const QUICK_SECTIONS = [
 
 const DEEP_COMMON = [
   {
-    "id": "d1",
-    "title": "ตอนนี้ยอดมักหลุดตรงไหนมากที่สุด?",
-    "why": "ถ้ารู้ว่าลูกค้าหลุดตรงช่วงไหน จะจัดลำดับการแก้ได้ตรงกว่าการเดาไปทุกจุดพร้อมกัน",
-    "multi": false,
-    "options": [
-      {
-        "label": "คนยังไม่ค่อยเห็นสินค้า",
-        "code": "low_visibility",
-        "cls": "bad"
-      },
-      {
-        "label": "คนเห็นแล้วไม่ค่อยกดเข้า",
-        "code": "seen_no_click",
-        "cls": "partial"
-      },
-      {
-        "label": "คนกดเข้าแล้วแต่ยังไม่ซื้อ",
-        "code": "view_no_buy",
-        "cls": "partial"
-      },
-      {
-        "label": "คนกดสั่งแล้วค่อยยกเลิก",
-        "code": "order_cancel",
-        "cls": "bad"
-      },
-      {
-        "label": "ยังไม่แน่ใจ",
-        "code": "unsure",
-        "cls": "partial"
-      }
-    ]
-  },
+  "id": "d1",
+  "title": "ถ้าลูกค้าต้องเลือกซื้อร้านคุณแทนร้านอื่น ตอนนี้ร้านมีเหตุผลที่ชัดพอไหม?",
+  "why": "ข้อนี้ช่วยให้ AI เห็นว่าร้านมีจุดขายที่ชัดจริงไหม หรือยังต้องพึ่งราคาและโปรเป็นหลัก ซึ่งสำคัญมากต่อการวิเคราะห์ว่าควรโตแบบไหน",
+  "multi": false,
+  "options": [
+    {
+      "label": "ชัดมาก ว่าต่างจากร้านอื่นตรงไหน",
+      "code": "clear_reason_to_buy",
+      "cls": "good"
+    },
+    {
+      "label": "พอมีจุดขาย แต่ยังสื่อไม่คม",
+      "code": "has_usp_but_unclear",
+      "cls": "partial"
+    },
+    {
+      "label": "ยังไม่ค่อยชัด ลูกค้าน่าจะมองว่าคล้ายร้านอื่น",
+      "code": "weak_reason_to_buy",
+      "cls": "bad"
+    },
+    {
+      "label": "ตอนนี้ยังต้องพึ่งราคา/โปรเป็นหลัก",
+      "code": "depends_on_price_promo",
+      "cls": "bad"
+    },
+    {
+      "label": "ยังไม่แน่ใจ",
+      "code": "unsure",
+      "cls": "partial"
+    }
+  ]
+},
   {
     "id": "d2",
     "title": "ลูกค้าส่วนใหญ่ที่ซื้อร้านคุณ น่าจะซื้อเพราะอะไรที่สุด?",
@@ -2369,49 +2369,54 @@ const DEEP_COMMON = [
       }
     ]
   },
-  {
-    "id": "d3",
-    "title": "ตอนนี้ร้านติดข้อจำกัดอะไรที่สุด?",
-    "why": "คำถามนี้บังคับให้ AI มองข้อจำกัดในโลกจริง เช่น ต้นทุน ทีม งบ หรือความต่างของสินค้า แทนการแนะนำแบบสวยแต่ทำจริงยาก",
-    "multi": false,
-    "options": [
-      {
-        "label": "ต้นทุนสูง ทำราคาแข่งยาก",
-        "code": "high_cost",
-        "cls": "bad"
-      },
-      {
-        "label": "ไม่มีเวลาหรือทีมทำรูป/คอนเทนต์",
-        "code": "content_resource_limited",
-        "cls": "bad"
-      },
-      {
-        "label": "งบยิงแอดหรือโปรจำกัด",
-        "code": "budget_limited",
-        "cls": "bad"
-      },
-      {
-        "label": "รีวิว/ยอดขายยังน้อย ทำให้ลูกค้าไม่มั่นใจ",
-        "code": "low_social_proof",
-        "cls": "bad"
-      },
-      {
-        "label": "สินค้าไม่ได้ต่างจากร้านอื่นมาก",
-        "code": "weak_differentiation",
-        "cls": "bad"
-      },
-      {
-        "label": "สินค้ามีหลายแบบเกินไปจนดันไม่ถูกตัว",
-        "code": "too_many_skus",
-        "cls": "partial"
-      },
-      {
-        "label": "ยังไม่แน่ใจ",
-        "code": "unsure",
-        "cls": "partial"
-      }
-    ]
-  },
+{
+  "id": "d3",
+  "title": "ตอนนี้ร้านติดข้อจำกัดอะไรบ้าง? (เลือกได้มากกว่า 1 ข้อ)",
+  "why": "คำถามนี้ช่วยให้ AI มองข้อจำกัดในโลกจริง เช่น ต้นทุน ทีม งบ รีวิว หรือความต่างของสินค้า เพื่อให้คำแนะนำออกมาใช้ได้จริง ไม่ใช่สวยแต่ทำไม่ได้",
+  "multi": true,
+  "options": [
+    {
+      "label": "ต้นทุนสูง ทำราคาแข่งยาก",
+      "code": "high_cost",
+      "cls": "bad"
+    },
+    {
+      "label": "ไม่มีเวลาหรือทีมทำรูป/คอนเทนต์",
+      "code": "content_resource_limited",
+      "cls": "bad"
+    },
+    {
+      "label": "งบยิงแอดหรือโปรจำกัด",
+      "code": "budget_limited",
+      "cls": "bad"
+    },
+    {
+      "label": "รีวิว/ยอดขายยังน้อย ทำให้ลูกค้าไม่มั่นใจ",
+      "code": "low_social_proof",
+      "cls": "bad"
+    },
+    {
+      "label": "สินค้าไม่ได้ต่างจากร้านอื่นมาก",
+      "code": "weak_differentiation",
+      "cls": "bad"
+    },
+    {
+      "label": "สินค้ามีหลายแบบเกินไปจนดันไม่ถูกตัว",
+      "code": "too_many_skus",
+      "cls": "partial"
+    },
+    {
+      "label": "จัดการหลังบ้าน/แชท/สต๊อกยังไม่ลื่น",
+      "code": "ops_not_smooth",
+      "cls": "bad"
+    },
+    {
+      "label": "ยังไม่แน่ใจ",
+      "code": "unsure",
+      "cls": "partial"
+    }
+  ]
+},
   {
     "id": "d4",
     "title": "สินค้านี้ ลูกค้าต้องใช้อะไรในการตัดสินใจก่อนซื้อที่สุด?",
@@ -2456,59 +2461,63 @@ const DEEP_COMMON = [
     ]
   },
   {
-    "id": "d5",
-    "title": "ตอนนี้ร้านใช้เครื่องมือไหนอยู่แล้วบ้าง?",
-    "why": "คำตอบข้อนี้ช่วยให้ AI แยกให้ออกว่าร้านยังไม่ใช้เครื่องมือ หรือใช้แล้วแต่ยังไม่ตรงจังหวะ/ไม่ตรงปัญหา",
-    "multi": true,
-    "options": [
-      {
-        "label": "คูปองร้าน",
-        "code": "voucher",
-        "cls": "partial"
-      },
-      {
-        "label": "Bundle Deal",
-        "code": "bundle",
-        "cls": "partial"
-      },
-      {
-        "label": "Flash Sale",
-        "code": "flash_sale",
-        "cls": "partial"
-      },
-      {
-        "label": "แคมเปญ Shopee",
-        "code": "platform_campaign",
-        "cls": "partial"
-      },
-      {
-        "label": "โฆษณา",
-        "code": "ads",
-        "cls": "partial"
-      },
-      {
-        "label": "ไลฟ์",
-        "code": "live",
-        "cls": "partial"
-      },
-      {
-        "label": "Affiliate / Creator",
-        "code": "affiliate_creator",
-        "cls": "partial"
-      },
-      {
-        "label": "Broadcast / CRM ลูกค้าเก่า",
-        "code": "crm_repeat",
-        "cls": "partial"
-      },
-      {
-        "label": "ยังไม่ได้ใช้จริงจัง",
-        "code": "not_using_seriously",
-        "cls": "partial"
-      }
-    ]
-  }
-];
+  "id": "d5",
+  "title": "ตอนนี้ร้านใช้เครื่องมือไหนอยู่แล้วบ้าง?",
+  "why": "คำตอบข้อนี้ช่วยให้ AI แยกให้ออกว่าร้านยังไม่ใช้เครื่องมือ หรือใช้แล้วแต่ยังไม่ตรงจังหวะ/ไม่ตรงปัญหา",
+  "multi": true,
+  "options": [
+    {
+      "label": "คูปองร้าน",
+      "code": "voucher",
+      "cls": "partial"
+    },
+    {
+      "label": "Bundle Deal",
+      "code": "bundle",
+      "cls": "partial"
+    },
+    {
+      "label": "Flash Sale",
+      "code": "flash_sale",
+      "cls": "partial"
+    },
+    {
+      "label": "แคมเปญ Shopee",
+      "code": "platform_campaign",
+      "cls": "partial"
+    },
+    {
+      "label": "โฆษณา",
+      "code": "ads",
+      "cls": "partial"
+    },
+    {
+      "label": "Live / Video",
+      "code": "live_video",
+      "cls": "partial"
+    },
+    {
+      "label": "Affiliate / Creator",
+      "code": "affiliate_creator",
+      "cls": "partial"
+    },
+    {
+      "label": "Broadcast / CRM ลูกค้าเก่า",
+      "code": "crm_repeat",
+      "cls": "partial"
+    },
+    {
+      "label": "Program Prime Seller",
+      "code": "prime_seller",
+      "cls": "partial"
+    },
+    {
+      "label": "ยังไม่ได้ใช้จริงจัง",
+      "code": "not_using_seriously",
+      "cls": "partial"
+    }
+  ]
+};
 
 /* DEEP_BY_TYPE kept empty — all shops use unified DEEP_COMMON above */
 const DEEP_BY_TYPE = {};
@@ -4771,27 +4780,45 @@ renderFinalPreview = async function() {
               !d.trim().startsWith('ผลที่จะเห็น:')
             );
 
-            return `<div style="margin-bottom:16px;padding:18px 20px;background:white;border:1px solid var(--border);border-left:4px solid var(--brand);border-radius:18px;box-shadow:var(--shadow-sm);">
-              <div style="font-size:24px;font-weight:800;line-height:1.45;color:var(--brand);margin-bottom:12px;">${idx+1}) ${escapeHTML(ct)}</div>
+            return `<div style="margin-bottom:18px;padding:20px;background:white;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-sm);">
+  <div style="font-size:24px;font-weight:800;line-height:1.45;color:var(--brand);margin-bottom:14px;">
+    ${idx+1}) ${escapeHTML(ct)}
+  </div>
 
-              ${stepLines.length>0 ? `<div style="margin-bottom:12px;">
-                <div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:8px;">วิธีทำ step by step</div>
-                <div style="font-size:14px;line-height:1.9;color:var(--text2);white-space:pre-wrap;">${escapeHTML(stepLines.join('\n'))}</div>
-                ${tt ? `<div style="color:var(--text3);font-size:13px;margin-top:8px;">${escapeHTML(tt)}</div>` : ''}
-              </div>` : ''}
+  ${stepLines.length>0 ? `
+    <div style="margin-bottom:14px;padding:14px 16px;background:#fff7f1;border:1px solid #ffd8c2;border-radius:14px;">
+      <div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:8px;">
+        วิธีทำ step by step
+      </div>
+      <div style="font-size:14px;line-height:1.95;color:var(--text);white-space:pre-wrap;">
+        ${escapeHTML(stepLines.join('\n'))}
+      </div>
+      ${tt ? `<div style="color:var(--text3);font-size:13px;margin-top:8px;">${escapeHTML(tt)}</div>` : ''}
+    </div>
+  ` : ''}
 
-              ${reasonLine ? `<div style="margin-bottom:10px;">
-                <div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:6px;">เหตุผล:</div>
-                <div style="font-size:14px;color:var(--text2);line-height:1.8;">${escapeHTML(reasonLine.replace('เหตุผล:','').trim())}</div>
-              </div>` : ''}
+  ${reasonLine ? `
+    <div style="margin-bottom:14px;padding:14px 16px;background:#fffaf4;border:1px solid #f2d9c7;border-radius:14px;">
+      <div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:8px;">
+        เหตุผล
+      </div>
+      <div style="font-size:14px;color:var(--text);line-height:1.85;">
+        ${escapeHTML(reasonLine.replace('เหตุผล:','').trim())}
+      </div>
+    </div>
+  ` : ''}
 
-              ${resultLine ? `<div style="background:var(--green-bg);border:1px solid #b7e8d0;border-radius:12px;padding:10px 12px;">
-                <div style="font-size:15px;font-weight:800;color:var(--green);margin-bottom:6px;">ผลที่คาด:</div>
-                <div style="font-size:14px;color:var(--text);line-height:1.8;">${escapeHTML(resultLine.replace(/^ผลที่คาด:|^ผลที่จะเห็น:/,'').trim())}</div>
-              </div>` : ''}
-            </div>`;
-          }).join('') : `<p style="white-space:pre-wrap;">${escapeHTML(actionPlan)}</p>`}
-        </div>
+  ${resultLine ? `
+    <div style="padding:14px 16px;background:var(--green-bg);border:1px solid #b7e8d0;border-radius:14px;">
+      <div style="font-size:15px;font-weight:800;color:var(--green);margin-bottom:8px;">
+        ผลที่คาด
+      </div>
+      <div style="font-size:14px;color:var(--text);line-height:1.85;">
+        ${escapeHTML(resultLine.replace(/^ผลที่คาด:|^ผลที่จะเห็น:/,'').trim())}
+      </div>
+    </div>
+  ` : ''}
+</div>`;
 
         <div class="text-block">
           <h3>แผน 30 วัน — ทำอะไรก่อนหลัง</h3>
