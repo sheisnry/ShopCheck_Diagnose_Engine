@@ -2315,7 +2315,7 @@ const DEEP_COMMON = [
         cls: "bad"
       },
       {
-        label: "มี/ไม่มีจุดขาย เน้นพึ่งราคา/โปรเป็นหลัก",
+        label: "เน้นพึ่งราคา/โปรเป็นหลัก",
         code: "depends_on_price_promo",
         cls: "bad"
       },
@@ -3925,7 +3925,7 @@ function renderFinalPreview() {
   const final = buildFinalPreview();
   const plan = build30DayPlan(final.label, state.deepAnswers);
   const emailNote = state.email
-    ? `<div class="email-sent-box delivery-notice-box">✅ รายงานฉบับเต็มพร้อมผลวิเคราะห์ด้านล่างนี้จะส่งไปที่ <strong>${escapeHTML(state.email)}</strong> ภายใน 24 ชั่วโมง</div>`
+    ? `<div class="email-sent-box delivery-notice-box">✅ ผลวิเคราะห์ด้านล่างนี้จะส่งไปที่ <strong>${escapeHTML(state.email)}</strong> ภายใน 24 ชั่วโมง</div>`
     : '';
 
   el.stageCard.innerHTML = `
@@ -4602,7 +4602,7 @@ renderQuickResult = async function() {
           <div class="result-lock-overlay">
             <div class="lock-icon">🔒</div>
             <div class="lock-headline">ปลดล็อกวิเคราะห์เชิงลึก<br>+ แผน 30 วัน</div>
-            <div class="lock-sub">ตอบอีก 5 ข้อ แล้วเราจะวิเคราะห์ให้ลึกกว่านี้มาก — เจาะตรงร้านคุณ ไม่ใช่แค่คำแนะนำทั่วไป</div>
+            <div class="lock-sub">ตอบอีก 5 ข้อ แล้วเราจะวิเคราะห์ให้ลึกกว่านี้มาก<br>เจาะตรงร้านคุณ ไม่ใช่แค่คำแนะนำทั่วไป</br></div>
             <div class="lock-price-row">
               <div class="lock-price">฿599</div>
               <div class="lock-price-note">จ่ายครั้งเดียว<br>ไม่มีค่าสมาชิก</div>
