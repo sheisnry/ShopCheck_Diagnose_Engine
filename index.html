@@ -2295,18 +2295,18 @@ const QUICK_SECTIONS = [
 const DEEP_COMMON = [
   {
     id: "d1",
-    title: "เหตุผลหลักที่ทำให้ลูกค้าเลือกซื้อสินค้าร้านคุณมากกว่าร้านอื่น?",
+    title: "ตอนนี้ร้านมีจุดขายหรือเหตุผลที่ชัดพอไหม ว่าทำไมลูกค้าควรเลือกซื้อร้านคุณแทนร้านอื่น?",
     why: "เพื่อหาจุดขายที่ชัดเจนของร้านในการประกอบการวิเคราะห์",
     multi: false,
     options: [
       {
-        label: "จุดขายชัดมาก ว่าต่างจากร้านอื่นตรงไหน",
+        label: "สินค้ามีจุดขายชัดมาก ว่าต่างจากร้านอื่นตรงไหน",
         code: "clear_reason_to_buy",
         cls: "good"
       },
-      {
-        label: "พอมีจุดขาย แต่ยังสื่อไม่ชัดเจนบนตัวสินค้า",
-        code: "has_usp_but_unclear",
+	  {
+        label: "พอมีจุดขาย แต่ยังสื่อไม่ชัดบนหน้าสินค้า",
+        code: "clear_reason_to_buy",
         cls: "partial"
       },
       {
@@ -2315,7 +2315,7 @@ const DEEP_COMMON = [
         cls: "bad"
       },
       {
-        label: "มี/ไม่มีจุดขาย เน้นพึ่งราคา/โปรเป็นหลัก",
+        label: "ตอนนี้ยังต้องเน้นพึ่งราคา/โปรเป็นหลัก",
         code: "depends_on_price_promo",
         cls: "bad"
       },
@@ -3760,7 +3760,7 @@ function renderEmailCollect() {
       <div class="email-header">
         <div class="email-icon">✉️</div>
         <h2>ส่งผลวิเคราะห์ให้ฉัน</h2>
-        <p>กรอกอีเมลไว้รับรายงานวิเคราะห์เชิงลึกฉบับเต็ม + แผน 30 วัน<br>พร้อมดูผลสรุปหน้าจอได้เลยหลังกดส่ง</p>
+        <p>กรอกอีเมลไว้รับรายงานวิเคราะห์เชิงลึก + แผน 30 วัน<br>สามารถดูผลวิเคราะห์เชิงลึกได้เลยหลังกดส่ง</p>
       </div>
 
       <div class="email-form">
@@ -3929,7 +3929,7 @@ function renderFinalPreview() {
   const final = buildFinalPreview();
   const plan = build30DayPlan(final.label, state.deepAnswers);
   const emailNote = state.email
-    ? `<div class="email-sent-box delivery-notice-box">✅ รายงานฉบับเต็มพร้อมผลวิเคราะห์ด้านล่างนี้จะส่งไปที่ <strong>${escapeHTML(state.email)}</strong> ภายใน 24 ชั่วโมง</div>`
+    ? `<div class="email-sent-box delivery-notice-box">✅ รายงานผลวิเคราะห์ด้านล่างนี้จะส่งไปที่ <strong>${escapeHTML(state.email)}</strong> ภายใน 24 ชั่วโมง</div>`
     : '';
 
   el.stageCard.innerHTML = `
