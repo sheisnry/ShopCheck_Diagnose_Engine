@@ -1884,7 +1884,7 @@ body.result-active .main-stage {
   position:relative;
   z-index:1;
   display:grid;
-  grid-template-columns:340px 1fr;
+  grid-template-columns:1fr;
   gap:18px;
   align-items:start;
 }
@@ -1954,7 +1954,7 @@ body.result-active .main-stage {
   color:rgba(255,255,255,.65);
   margin-bottom:6px;
 }
-.dark-premium-overview p{margin:0;font-size:14px;line-height:1.78;color:rgba(255,255,255,.9);}
+.dark-premium-overview p{margin:0;font-size:14px;line-height:1.78;color:var(--text);}
 .premium-light-card{
   border:1px solid rgba(255,255,255,.08);
   background:#fff7f2;
@@ -4997,18 +4997,6 @@ renderFinalPreview = async function() {
     el.stageCard.innerHTML = `
       <div class="dark-premium-stage">
         <div class="dark-premium-grid">
-          <aside class="dark-premium-side">
-            <div class="dark-premium-kicker">ผลวิเคราะห์เชิงลึก · premium layer</div>
-            <div class="dark-premium-score">${formatScore(getQuickScore())}/${formatScore(getQuickMaxScore())}</div>
-            <h2 class="dark-premium-title">ร้านคุณควรโตบน Shopee แบบไหน</h2>
-            <p class="dark-premium-text">ผลวิเคราะห์ส่วนนี้เป็นชั้น premium ของ ShopCheck ที่ช่วยแยกให้ว่าร้านคุณควรโฟกัสอะไร ควรแก้ก่อนหลังยังไง และ Shopee ยังเหมาะเป็นช่องทางโตของสินค้านี้แบบไหน</p>
-            <div class="dark-premium-tags">
-              <div class="dark-premium-tag">AI diagnosis</div>
-              <div class="dark-premium-tag">เฉพาะร้านคุณ</div>
-              <div class="dark-premium-tag">premium mode</div>
-            </div>
-          </aside>
-
           <div class="dark-premium-main">
             ${emailNote}
 
@@ -5016,20 +5004,6 @@ renderFinalPreview = async function() {
               <div class="dark-premium-overview-kicker">ภาพรวมร้านจากผลเชิงลึก</div>
               <p>${escapeHTML(channelFit || 'ร้านยังไปต่อบน Shopee ได้ แต่ควรเลือกแก้ตามลำดับ ไม่ต้องเร่งทุกอย่างพร้อมกัน')}</p>
             </div>
-
-            ${state._step1AI ? (() => {
-              const s1parts = state._step1AI.split(/\*\*([^*]+)\*\*/g);
-              let s1overview = '';
-              for (let i=1; i<s1parts.length; i+=2) {
-                if (s1parts[i].includes('ภาพรวม')) {
-                  s1overview = (s1parts[i+1]||'').trim();
-                  break;
-                }
-              }
-              return s1overview
-                ? `<div class="dark-premium-overview"><div class="dark-premium-overview-kicker">ภาพรวมร้านจากรอบแรก</div><p>${escapeHTML(s1overview)}</p></div>`
-                : '';
-            })() : ''}
 
             <div class="premium-light-card">
               <h3>3 เรื่องที่ควรโฟกัสก่อน</h3>
