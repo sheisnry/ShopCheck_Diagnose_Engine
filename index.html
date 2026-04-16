@@ -276,7 +276,7 @@ body.flow-active .hero-main {
   letter-spacing:.6px;
   text-transform:uppercase;
   color:rgba(255,255,255,.72);
-  margin-bottom:6px;
+  margin-bottom:8px;
 }
 
 .stat-big {
@@ -2452,8 +2452,7 @@ const DEEP_COMMON = [
         label: "ความน่าเชื่อถือของร้าน",
         code: "decision_store_trust",
         cls: "partial"
-      },
-    ]
+      },    ]
   },
   {
     id: "d5",
@@ -4085,6 +4084,75 @@ async function callDiagnose(prompt) {
   return data.result || '';
 }
 
+
+const LANGUAGE_POLICY = `
+กฎภาษาบังคับ:
+- ใช้ภาษาไทยธรรมชาติ อ่านแล้วเหมือนคนทำงาน e-commerce จริง ไม่แปลตรงจากอังกฤษ
+- ใช้คำว่า "ปัญหาหลัก" แทน "คอขวด"
+- ใช้คำว่า "หน้าการค้นหา" แทน "หน้าแข่ง" หรือคำที่สื่อว่าคู่แข่งอยู่ในหน้าเดียวกัน
+- ใช้คำว่า "ราคายังสู้ไม่ได้" แทน "ร้านที่ราคาแพ้"
+- ถ้าจะพูดเรื่องผลตอบแทนต่อการขาย ให้ใช้ "กำไร" หรือ "margin" เท่านั้น ห้ามใช้ "มาร์จิน"
+- ถ้าจะใช้คำอังกฤษ ให้ใช้เป็นคำอังกฤษตรง ๆ เมื่ออ่านง่ายกว่า แต่ห้ามแปลไทยแบบครึ่ง ๆ กลาง ๆ
+- หลีกเลี่ยงคำที่ดูเป็นศัพท์แปลตรง เช่น "คอขวด", "หน้าแข่ง", "ร้านที่ราคาแพ้", "มาร์จิน"
+- ถ้าคำไหนฟังดูไม่ใช่ภาษาคนไทยที่ขายของบน Shopee จริง ให้เปลี่ยนเป็นคำที่เจ้าของร้านอ่านแล้วเข้าใจทันที
+
+คำต้องห้ามและคำแทน:
+- "คอขวด" → "ปัญหาหลัก"
+- "หน้าแข่ง" → "หน้าการค้นหา"
+- "ร้านที่ราคาแพ้" → "ราคายังสู้ไม่ได้"
+- "มาร์จิน" → "กำไร" หรือ "margin"
+- "search page" → "หน้าการค้นหา"
+- "price war" → "สงครามราคา" หรือ "แข่งราคาหนัก"
+
+Tone:
+- Consultant ที่เชี่ยวชาญและเป็นกันเอง ไม่ formal เกิน
+- พูดตรง ๆ อบอุ่น ใช้ "ค่ะ" ตามธรรมชาติ
+- ไม่ใช้คำเรียก "พี่" หรือ "น้อง"
+- หลีกเลี่ยงประโยค generic เช่น "ควรทำการตลาดมากขึ้น", "ควรพัฒนาร้าน", "ควรใช้เครื่องมือให้ครบ"
+`;
+
+const DIAGNOSIS_LOGIC = `
+กฎการวิเคราะห์:
+- ต้องเลือก "ปัญหาหลัก" มา 1 เรื่องก่อนเสมอ ห้ามตอบแบบกระจายเท่ากันทุกเรื่อง
+- ต้องแยกให้ออกว่าอะไรคือ "อาการ" และอะไรคือ "ต้นเหตุ"
+- ทุกข้อเสนอแนะต้องอ้างอิงจากคำตอบของร้านจริง ไม่ใช่คำแนะนำกลาง ๆ
+- ถ้าร้านยังไม่พร้อมเรื่องหน้าสินค้า ความน่าเชื่อถือ หรือข้อมูลสินค้า ห้ามรีบแนะนำให้ยิง Ads หรือทำโปรเพิ่ม
+- ถ้าปัญหาเกี่ยวกับราคา ต้องตัดสินให้ชัดว่าเป็นกรณีใด:
+  1) ต้นทุนสูงจริง
+  2) ร้านยังสื่อความคุ้มค่าไม่ชัด
+  3) สินค้าอยู่ในหมวดที่แข่งราคาหนัก
+  4) ร้านยังเล็กเกินไปจะแข่งในเกมนี้ตอนนี้
+- ถ้าคำตอบบอกว่าร้านติดหลายข้อจำกัด ให้จัดลำดับว่าอะไรควรแก้ก่อนโดยดู impact ต่อยอดขายจริง
+- ห้ามเขียนเหมือน checklist ทั่วไป ต้องเลือกทิศทางให้ร้านนี้
+`;
+
+const FORMAT_POLICY = `
+กฎ format:
+- ใช้หัวข้อด้วย **ชื่อหัวข้อ** เท่านั้น
+- ห้ามใช้ --- หรือ ### หรือ #### แทนหัวข้อ
+- วิธีทำต้องขึ้นบรรทัดใหม่ทีละข้อและใช้ลูกศร →
+- แผน 30 วันต้องครบทุก 4 สัปดาห์เสมอ
+- ในส่วนแผน 30 วัน ให้เขียนแบบนี้:
+[สัปดาห์ที่ 1 — หัวข้อ]
+...
+[สัปดาห์ที่ 2 — หัวข้อ]
+...
+[สัปดาห์ที่ 3 — หัวข้อ]
+...
+[สัปดาห์ที่ 4 — หัวข้อ]
+...
+`;
+
+const SELF_CHECK = `
+ก่อนตอบ final answer ให้ตรวจเองอีกครั้งว่า:
+- มีคำว่า "คอขวด", "หน้าแข่ง", "ร้านที่ราคาแพ้", "มาร์จิน" หรือไม่
+- มีประโยคไหนที่ฟังเหมือนแปลตรงจากอังกฤษหรือไม่
+- มีคำแนะนำที่ generic เช่น "ควรทำการตลาดมากขึ้น", "ควรใช้เครื่องมือให้ครบ", "ควรพัฒนาร้าน" หรือไม่
+- แต่ละข้อโยงกับข้อมูลร้านจริงหรือไม่
+ถ้ามี ให้แก้ก่อนส่งคำตอบ
+`;
+
+
 function buildStep1Prompt() {
   const p = state.profile;
   const answers = QUICK_QUESTIONS.map(q => {
@@ -4121,6 +4189,10 @@ ${answers}
 - ความงามและสกินแคร์: Before/after ส่วนผสม รีวิวจากคนใช้จริง ความน่าเชื่อถือ
 - อิเล็กทรอนิกส์: Spec ชัด warranty รีวิวผู้ใช้จริง ราคาเทียบร้านอื่น
 - บ้านและสวน: รูปในบ้านจริง ขนาด/วัสดุ Bundle ราคาต่อคุณภาพ
+
+${LANGUAGE_POLICY}
+${FORMAT_POLICY}
+${SELF_CHECK}
 
 Tone สำคัญมาก: เป็น consultant ที่เชี่ยวชาญและเป็นกันเอง พูดตรงๆ อบอุ่น ใช้ "ค่ะ" ตามธรรมชาติ
 - ห้ามใช้คำว่า "พี่" หรือ "น้อง" เด็ดขาด
@@ -4230,68 +4302,69 @@ ${quickSummary}
 คำตอบ Part 2:
 ${deepSummary}
 
-หลักการวิเคราะห์:
+${LANGUAGE_POLICY}
+${DIAGNOSIS_LOGIC}
+${FORMAT_POLICY}
+${SELF_CHECK}
+
+สิ่งที่ต้องทำ:
 1) หา 3 เรื่องที่ควรโฟกัสก่อน โดยเรียงตาม impact ทางธุรกิจจริง
-2) อย่าให้ทั้ง 3 ข้อพูดเรื่องเดียวกัน ต้องเป็นลำดับที่ต่อกัน เช่น foundation → conversion/value → scale
+2) แต่ละข้ออย่าเป็น tip ลอย ๆ ต้องชัดว่า "ร้านนี้ควรทำอะไร เพราะอะไร"
 3) ต้องแยกให้ออกว่าปัญหาเป็นเรื่อง visibility / conversion / pricing / trust / differentiation / operations / tool usage / channel fit
 4) ถ้าร้านสู้ราคายาก ต้องวิเคราะห์ให้ถูกว่าเป็น:
    - ต้นทุนสูงจริง
    - สื่อ value ไม่ชัด
-   - อยู่ในหมวดที่ price war สูง
+   - อยู่ในหมวดที่แข่งราคาหนัก
    - ร้านยังเล็กเกินจะแข่งตอนนี้
-5) ถ้า D3 มีหลายข้อ ให้เลือกเฉพาะข้อจำกัดที่เป็น root cause จริง 1-2 เรื่อง อย่าพูดครบทุกข้อแบบ checklist
-6) ถ้า D4 คือ รีวิว / รูป-วิดีโอ / รายละเอียดสินค้า ให้ action แรกแตะสิ่งนั้นก่อน ถ้ายังไม่พร้อม ห้ามข้ามไปแนะนำยิงแอด
-7) อย่าแนะนำยิงแอด / Affiliate / Live / ทำโปรเพิ่ม ถ้าหน้าสินค้า รีวิว จุดขาย หรือความน่าเชื่อถือยังไม่พร้อม
-8) แต่ละ action plan ต้องชัดว่า "ร้านนี้ควรทำอะไร เพราะอะไร" ไม่ใช่ tip ลอย ๆ
-9) แผน 30 วันต้องเป็นลำดับที่ทำได้จริง และต้องมีครบ 4 สัปดาห์
-10) Channel Fit ต้องกล้าตัดสิน ไม่ใช่ตอบกลาง ๆ
-
-รูปแบบการตอบสำคัญมาก:
-- ตอบตาม format ด้านล่างเท่านั้น
-- ในแต่ละ action plan ให้มีหัวข้อย่อย "วิธีทำ step by step" แค่ครั้งเดียว
-- ใต้หัวข้อ "วิธีทำ step by step" ให้ขึ้นเป็นบรรทัดลูกศร → เลย
-- ห้ามเขียนคำว่า "วิธีทำ step by step" ซ้ำอีกในเนื้อหาข้างใต้
-- "แผน 30 วัน" ต้องตอบเป็น 4 block ตามรูปแบบนี้เป๊ะ เพื่อให้ระบบเอาไปใส่ 4 กล่องได้
+5) อย่าแนะนำยิง Ads หรือทำโปรเพิ่ม ถ้ายังไม่ใช่ลำดับที่ควรทำก่อน
+6) แผน 30 วันต้องเป็นลำดับที่ทำได้จริง
+7) Channel Fit ต้องกล้าตัดสิน ไม่ใช่ตอบกลาง ๆ
+8) ใช้คำว่า "ปัญหาหลัก" แทนคำทับศัพท์หรือคำแปลตรงที่อ่านแล้วแปลก
+9) ถ้าจะพูดถึง search ให้ใช้คำว่า "หน้าการค้นหา" เท่านั้น
+10) ถ้าจะพูดถึงราคา ให้ใช้คำว่า "ราคายังสู้ไม่ได้" แทนคำที่ฟังแข็งหรือแปลก
 
 กรุณาตอบตาม format นี้เท่านั้น:
 
 **3 Action plan หลัก**
 1) [ชื่อหัวข้อ]
-วิธีทำ step by step
+→ ...
 → ...
 → ...
 เหตุผล: ...
 ผลที่คาด: ...
 
 2) [ชื่อหัวข้อ]
-วิธีทำ step by step
+→ ...
 → ...
 → ...
 เหตุผล: ...
 ผลที่คาด: ...
 
 3) [ชื่อหัวข้อ]
-วิธีทำ step by step
+→ ...
 → ...
 → ...
 เหตุผล: ...
 ผลที่คาด: ...
 
 **แผน 30 วัน**
-[สัปดาห์ที่ 1 — ชื่อโฟกัส]
+[สัปดาห์ที่ 1 — หัวข้อ]
 ...
-[สัปดาห์ที่ 2 — ชื่อโฟกัส]
+
+[สัปดาห์ที่ 2 — หัวข้อ]
 ...
-[สัปดาห์ที่ 3 — ชื่อโฟกัส]
+
+[สัปดาห์ที่ 3 — หัวข้อ]
 ...
-[สัปดาห์ที่ 4 — ชื่อโฟกัส]
+
+[สัปดาห์ที่ 4 — หัวข้อ]
 ...
 
 **ประเมิน Channel Fit**
 [สรุปตรง ๆ ว่าร้านนี้ควรโตบน Shopee ต่อไหม ควรโตแบบไหน หรือควรระวังอะไร]`;
 }
 
-/* Animated loading with rotating messages */
+/* Animated loading/* Animated loading with rotating messages */
 function showLoadingWithMessages(msgs) {
   let idx = 0;
   el.stageCard.innerHTML = `
@@ -4700,71 +4773,33 @@ renderFinalPreview = async function() {
     }
 
     function parseActions(text) {
-      const lines = String(text || '')
-        .replace(/\r/g, '')
-        .split('\n')
-        .map(l => l.trim())
-        .filter(Boolean);
-
+      const lines = text.split('\n').filter(l=>l.trim());
       const steps = [];
       let cur = null;
 
-      const isStepTitle = (value) => /^\d+[\.\)]\s*/.test(value);
-      const isMethodHeader = (value) => /^วิธีทำ(?:\s*step by step)?$/i.test(value);
-
       lines.forEach(line => {
         const t = line.trim();
-
-        if (isStepTitle(t)) {
-          if (cur) {
-            cur.details = cur.details.filter(Boolean);
-            steps.push(cur);
-          }
-          cur = { title: t.replace(/^\d+[\.\)]\s*/, '').trim(), details: [] };
-          return;
+        if (/^\d+\./.test(t)) {
+          if (cur) steps.push(cur);
+          cur = { title:t.replace(/^\d+\.\s*/,''), details:[] };
+        } else if (t && cur) {
+          cur.details.push(t);
         }
-
-        if (!cur) return;
-        if (isMethodHeader(t)) return;
-
-        cur.details.push(t);
       });
 
-      if (cur) {
-        cur.details = cur.details.filter(Boolean);
-        steps.push(cur);
-      }
-
+      if (cur) steps.push(cur);
       return steps;
     }
 
     function parseWeeks(text) {
-      const raw = String(text || '').replace(/\r/g, '').trim();
-      if (!raw) return [];
-
+      const wb = text.split(/\[([^\]]+)\]/g).filter(s=>s.trim());
       const weeks = [];
-
-      const blockMatches = [...raw.matchAll(/\[(สัปดาห์ที่?\s*\d+\s*[—-]\s*[^\]]+)\]\s*([\s\S]*?)(?=\n?\[สัปดาห์ที่?\s*\d+\s*[—-]|\s*$)/g)];
-      if (blockMatches.length) {
-        blockMatches.forEach(match => {
-          weeks.push({
-            label: match[1].trim(),
-            content: (match[2] || '').trim()
-          });
-        });
-        return weeks;
-      }
-
-      const lineMatches = [...raw.matchAll(/(สัปดาห์ที่?\s*\d+)\s*:\s*([\s\S]*?)(?=\n\s*สัปดาห์ที่?\s*\d+\s*:|\s*$)/g)];
-      if (lineMatches.length) {
-        lineMatches.forEach(match => {
-          weeks.push({
-            label: match[1].trim(),
-            content: (match[2] || '').trim()
-          });
+      for (let w=0; w<wb.length; w+=2) {
+        weeks.push({
+          label: wb[w].trim(),
+          content: (wb[w+1]||'').trim()
         });
       }
-
       return weeks;
     }
 
@@ -4817,15 +4852,11 @@ renderFinalPreview = async function() {
 
                 const reasonLine = s.details.find(d => d.trim().startsWith('เหตุผล:'));
                 const resultLine = s.details.find(d => d.trim().startsWith('ผลที่คาด:') || d.trim().startsWith('ผลที่จะเห็น'));
-                const stepLines = s.details
-                  .filter(d =>
-                    !d.trim().startsWith('เหตุผล:') &&
-                    !d.trim().startsWith('ผลที่คาด:') &&
-                    !d.trim().startsWith('ผลที่จะเห็น:') &&
-                    !/^วิธีทำ(?:\s*step by step)?$/i.test(d.trim())
-                  )
-                  .map(d => d.trim())
-                  .filter(Boolean);
+                const stepLines = s.details.filter(d =>
+                  !d.trim().startsWith('เหตุผล:') &&
+                  !d.trim().startsWith('ผลที่คาด:') &&
+                  !d.trim().startsWith('ผลที่จะเห็น:')
+                );
 
                 return `<div style="margin-bottom:18px;padding:20px;background:white;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-sm);">
   <div style="font-size:24px;font-weight:800;line-height:1.45;color:var(--brand);margin-bottom:14px;">
@@ -4834,10 +4865,10 @@ renderFinalPreview = async function() {
 
   ${stepLines.length > 0 ? `
     <div style="margin-bottom:14px;padding:14px 16px;background:#fff7f1;border:1px solid #ffd8c2;border-radius:14px;">
-      <div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:6px;">
+      <div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:8px;">
         วิธีทำ step by step
       </div>
-      <div style="font-size:14px;line-height:1.75;color:var(--text);white-space:pre-wrap;">
+      <div style="font-size:14px;line-height:1.95;color:var(--text);white-space:pre-wrap;">
         ${escapeHTML(stepLines.join('\n'))}
       </div>
       ${tt ? `<div style="color:var(--text3);font-size:13px;margin-top:8px;">${escapeHTML(tt)}</div>` : ''}
