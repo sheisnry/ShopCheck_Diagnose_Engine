@@ -4905,9 +4905,7 @@ renderFinalPreview = async function() {
       <div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:8px;">
         วิธีทำ step by step
       </div>
-      <div style="font-size:15px;line-height:1.72;color:var(--text);white-space:pre-wrap;">
-        ${escapeHTML(stepLines.join('\n'))}
-      </div>
+      <div style="font-size:15px;line-height:1.62;color:var(--text);white-space:pre-wrap;">${escapeHTML(stepLines.join('\n'))}</div>
       ${tt ? `<div style="color:var(--text3);font-size:13px;margin-top:8px;">${escapeHTML(tt)}</div>` : ''}
     </div>
   ` : ''}
@@ -4928,9 +4926,7 @@ renderFinalPreview = async function() {
       <div style="font-size:15px;font-weight:800;color:var(--green);margin-bottom:8px;">
         ผลที่คาด
       </div>
-      <div style="font-size:15px;color:var(--text);line-height:1.8;white-space:pre-wrap;">
-        ${escapeHTML(resultLine.replace(/^ผลที่คาด:|^ผลที่จะเห็น:/,'').trim())}
-      </div>
+      <div style="font-size:15px;color:var(--text);line-height:1.62;white-space:pre-wrap;">${escapeHTML(resultLine.replace(/^ผลที่คาด:|^ผลที่จะเห็น:/,'').trim())}</div>
     </div>
   ` : ''}
 </div>`;
