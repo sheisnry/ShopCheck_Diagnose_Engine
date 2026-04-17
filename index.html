@@ -1749,6 +1749,413 @@ body.result-active .main-stage {
   color:var(--text3);
 }
 
+
+.summary-result-card{
+  padding:0;
+  overflow:hidden;
+  background:transparent;
+  border:none;
+  box-shadow:none;
+}
+.summary-shell{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.summary-topbar{
+  background:linear-gradient(135deg,#181411 0%, #2b1d16 54%, #6d3819 100%);
+  padding:20px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  color:#fff;
+}
+.summary-brand strong{
+  display:inline-block;
+  white-space:nowrap;
+  font-family:'DM Serif Display',serif;
+  font-size:36px;
+  line-height:1;
+  letter-spacing:-.4px;
+  color:#ffffff;
+}
+.summary-brand strong span{ color:var(--brand); }
+.summary-author{
+  font-size:13px;
+  color:rgba(255,255,255,.78);
+  text-align:right;
+  line-height:1.6;
+}
+.summary-intro{
+  padding:18px 24px;
+  background:linear-gradient(180deg,#fff5ee 0%, #fff0e5 100%);
+  border-bottom:1px solid #f8dccf;
+}
+.summary-intro-inner{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  max-width:860px;
+}
+.summary-intro-icon{
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  background:var(--brand);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  font-weight:700;
+  flex-shrink:0;
+}
+.summary-intro-title{
+  margin:0 0 4px;
+  font-size:16px;
+  font-weight:700;
+  color:var(--brand-dark);
+}
+.summary-intro-copy{
+  margin:0;
+  font-size:14px;
+  line-height:1.72;
+  color:#c75d34;
+}
+.summary-content{
+  display:grid;
+  grid-template-columns:minmax(0,1.45fr) 340px;
+  gap:22px;
+  padding:24px;
+  align-items:start;
+}
+.summary-main{ display:grid; gap:16px; }
+.summary-sidebar{
+  display:grid;
+  gap:16px;
+  align-content:start;
+}
+.summary-card{
+  border:1px solid var(--border);
+  border-radius:24px;
+  background:#fff;
+  padding:20px;
+}
+.summary-headline-card{
+  background:linear-gradient(180deg,#fffdfa 0%, #fff7f1 100%);
+}
+.summary-eyebrow{
+  margin:0 0 6px;
+  font-size:12px;
+  color:var(--text3);
+  letter-spacing:.03em;
+}
+.summary-headline{
+  margin:0;
+  font-size:30px;
+  line-height:1.2;
+  letter-spacing:-.03em;
+}
+.summary-core{
+  margin-top:14px;
+  background:#fff;
+  border:1px solid #f4dfd1;
+  border-radius:18px;
+  padding:14px 15px;
+}
+.summary-core strong{
+  display:block;
+  font-size:12px;
+  color:var(--brand-dark);
+  margin-bottom:5px;
+}
+.summary-core p{
+  margin:0;
+  font-size:14px;
+  line-height:1.72;
+  color:var(--text2);
+}
+.summary-section-title{
+  margin:0 0 12px;
+  font-size:16px;
+  font-weight:700;
+}
+.summary-focus-grid{ display:grid; gap:10px; }
+.summary-focus-card{
+  background:#fff8f3;
+  border:1px solid #f6e2d7;
+  border-radius:18px;
+  padding:14px 15px;
+  display:grid;
+  grid-template-columns:32px minmax(0,1fr) auto;
+  gap:12px;
+  align-items:start;
+}
+.summary-focus-num{
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  background:#faddcc;
+  color:var(--brand-dark);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:15px;
+}
+.summary-focus-copy h4{
+  margin:0 0 4px;
+  font-size:15px;
+  line-height:1.45;
+}
+.summary-focus-copy p{
+  margin:0;
+  font-size:14px;
+  line-height:1.68;
+  color:var(--text2);
+}
+.summary-tag{
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#fff1e8;
+  color:#d45c2e;
+  font-weight:700;
+  white-space:nowrap;
+}
+.summary-tag.green{
+  background:var(--green-bg);
+  color:var(--green);
+}
+.summary-plan-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.summary-plan-card{
+  border:1px solid #f6e2d7;
+  border-radius:16px;
+  padding:14px 14px 16px;
+  min-height:136px;
+  position:relative;
+  overflow:hidden;
+}
+.summary-plan-card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:5px;
+  border-radius:16px 0 0 16px;
+  background:rgba(0,0,0,.08);
+}
+.summary-plan-card.week-1{ background:linear-gradient(180deg,#fff9f4 0%, #fff3ee 100%); border-color:#f2ddd1; }
+.summary-plan-card.week-1::before{ background:#efb28f; }
+.summary-plan-card.week-2{ background:linear-gradient(180deg,#fff8ee 0%, #fff0df 100%); border-color:#efdabc; }
+.summary-plan-card.week-2::before{ background:#eda75a; }
+.summary-plan-card.week-3{ background:linear-gradient(180deg,#fffced 0%, #f8f1d6 100%); border-color:#eadfaf; }
+.summary-plan-card.week-3::before{ background:#d3b449; }
+.summary-plan-card.week-4{ background:linear-gradient(180deg,#f5faed 0%, #e7f3da 100%); border-color:#d8e6bf; }
+.summary-plan-card.week-4::before{ background:#6fa239; }
+.summary-plan-week{
+  margin:0 0 5px;
+  font-size:11px;
+  color:var(--text3);
+}
+.summary-plan-card.week-2 .summary-plan-week{ color:#bc6b2f; }
+.summary-plan-card.week-3 .summary-plan-week{ color:#9b7d1c; }
+.summary-plan-card.week-4 .summary-plan-week{ color:#4f7f1b; }
+.summary-plan-title{
+  margin:0 0 7px;
+  font-size:14px;
+  line-height:1.45;
+}
+.summary-plan-copy{
+  margin:0;
+  font-size:12px;
+  line-height:1.62;
+  color:var(--text2);
+}
+.summary-score-box{
+  background:linear-gradient(145deg,#1d1916,#33231b);
+  color:#fff;
+  border:none;
+}
+.summary-score-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+}
+.summary-score-big{
+  font-size:42px;
+  font-weight:700;
+  line-height:1;
+  color:#fff;
+}
+.summary-score-sub{
+  font-size:12px;
+  color:rgba(255,255,255,.72);
+  line-height:1.6;
+  margin-top:4px;
+}
+.summary-pill{
+  font-size:11px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  font-weight:700;
+  white-space:nowrap;
+}
+.summary-bars{ display:grid; gap:10px; }
+.summary-bar-row{
+  display:grid;
+  grid-template-columns:110px 1fr 44px;
+  gap:8px;
+  align-items:center;
+}
+.summary-bar-row label{
+  font-size:12px;
+  color:rgba(255,255,255,.72);
+}
+.summary-bar{
+  height:6px;
+  background:rgba(255,255,255,.10);
+  border-radius:999px;
+  overflow:hidden;
+}
+.summary-bar > span{
+  display:block;
+  height:100%;
+  border-radius:999px;
+}
+.summary-bar-row strong{
+  font-size:11px;
+  color:rgba(255,255,255,.78);
+  text-align:right;
+}
+.summary-channel strong,
+.summary-delivery strong,
+.summary-actions strong{
+  display:block;
+  font-size:13px;
+  color:var(--brand-dark);
+  margin-bottom:8px;
+}
+.summary-channel p,
+.summary-delivery p,
+.summary-actions p{
+  margin:0;
+  font-size:12px;
+  line-height:1.66;
+  color:var(--text2);
+}
+.summary-delivery p + p,
+.summary-actions p + p{ margin-top:6px; }
+.summary-channel-bar{
+  height:9px;
+  background:#f3ebe6;
+  border-radius:999px;
+  overflow:hidden;
+  margin:10px 0 8px;
+}
+.summary-channel-bar > span{
+  display:block;
+  height:100%;
+  border-radius:999px;
+  background:var(--brand);
+}
+.summary-mini-line{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  font-size:12px;
+  color:var(--text2);
+}
+.summary-mini-line span:last-child{
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#fff1e8;
+  color:#d45c2e;
+  font-weight:700;
+}
+.summary-btn-stack{
+  display:grid;
+  gap:10px;
+  margin-top:14px;
+}
+.summary-btn{
+  display:block;
+  width:100%;
+}
+.summary-helper-note{
+  margin-top:10px;
+  font-size:11px;
+  line-height:1.65;
+  color:var(--text3);
+}
+@media (max-width: 980px) {
+  .summary-content{ grid-template-columns:1fr; }
+  .summary-plan-grid{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width: 720px) {
+  .summary-topbar{
+    padding:16px 16px 14px;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .summary-brand strong{ font-size:28px; }
+  .summary-author{ font-size:11px; text-align:left; }
+  .summary-intro{
+    padding:14px 16px;
+  }
+  .summary-intro-icon{
+    width:34px;
+    height:34px;
+    font-size:15px;
+  }
+  .summary-intro-title{ font-size:14px; }
+  .summary-intro-copy{ font-size:13px; line-height:1.65; }
+  .summary-content{
+    padding:16px;
+    gap:14px;
+  }
+  .summary-card{
+    padding:16px;
+    border-radius:20px;
+  }
+  .summary-headline{
+    font-size:24px;
+    line-height:1.24;
+  }
+  .summary-focus-card{
+    grid-template-columns:28px minmax(0,1fr);
+  }
+  .summary-tag{
+    grid-column:2;
+    justify-self:start;
+    margin-top:2px;
+  }
+  .summary-plan-grid{ grid-template-columns:1fr 1fr; }
+  .summary-score-big{ font-size:34px; }
+  .summary-bar-row{
+    grid-template-columns:96px 1fr 38px;
+  }
+}
+@media (max-width: 480px) {
+  .summary-plan-grid{ grid-template-columns:1fr; }
+}
+
+
 /* ── 30-day Plan ─────────────────────────────────────────── */
 .plan-weeks {
   display:grid;
@@ -2071,7 +2478,7 @@ const PROFILE_FIELDS = [
     "required": true,
     "options": [
       "",
-      "แฟชั่น & เครื่องประดับ",
+      "แฟชั่น & เครื่องประดับ (Fashion)",
       "อุปกรณ์อิเล็กทรอนิกส์ & เครื่องใช้ไฟฟ้า",
       "ความงามและของใช้ส่วนตัว",
       "ของใช้ในบ้าน",
@@ -4074,92 +4481,153 @@ function build30DayPlan(type, deep) {
 }
 
 
+
 function renderFinalPreview() {
   const quick = buildQuickResult();
   const final = buildFinalPreview();
   const plan = build30DayPlan(final.label, state.deepAnswers);
-  const emailNote = state.email
-    ? `<div class="email-sent-box delivery-notice-box">✅ รายงานผลวิเคราะห์ด้านล่างนี้จะส่งไปที่ <strong>${escapeHTML(state.email)}</strong> ภายใน 24 ชั่วโมง</div>`
-    : '';
+  const secStats = getQuickSectionStats();
+  const snapshotMap = {
+    storefront: 'หน้าร้าน & หาเจอ',
+    pricing: 'ราคา & ความคุ้ม',
+    bottleneck: 'จุดต่างจากคู่แข่ง'
+  };
+  const snapshotRows = ['storefront', 'pricing', 'bottleneck']
+    .map(id => secStats.find(sec => sec.id === id))
+    .filter(Boolean);
+
+  const focusTags = ['impact สูง', 'impact สูง', 'ทำได้เลย'];
+
+  function getSummaryHeadline(label) {
+    return {
+      traffic: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้คนยังหาเจอสินค้าไม่พอ',
+      trust: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังทำให้ลูกค้ามั่นใจไม่พอ',
+      price: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังสื่อความคุ้มค่าให้ชัดไม่พอ',
+      ops: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ระบบร้านยังไม่พร้อมพอ',
+      channel_fit: 'ร้านนี้ยังต้องเช็กก่อนว่าสินค้าหลักเหมาะจะโตบน Shopee แค่ไหน'
+    }[label] || 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังต้องเลือกแก้ปัญหาให้ตรงจุด';
+  }
+
+  function getChannelFitMeta(label) {
+    const map = {
+      traffic: { pct: 80, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้คนหาเจอและกดเข้ามาดูง่ายขึ้น', badge: 'เหมาะมาก' },
+      trust: { pct: 82, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้ลูกค้ามั่นใจมากขึ้นก่อนกดซื้อ', badge: 'เหมาะมาก' },
+      price: { pct: 85, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตแบบชนะจากการสื่อความคุ้มค่า ไม่ใช่ชนราคาจนกำไรหาย', badge: 'เหมาะมาก' },
+      ops: { pct: 70, text: 'Shopee ยังเหมาะกับร้านนี้ แต่ถ้าจะโตต่อ ร้านต้องเก็บระบบหลังบ้านให้พร้อมก่อน', badge: 'ยังเหมาะ' },
+      channel_fit: { pct: 58, text: 'Shopee อาจยังไม่ใช่จุดเร่งโตของสินค้าหลักตัวนี้ในตอนนี้ ต้องเช็กบทบาทสินค้าให้ชัดก่อน', badge: 'ต้องเช็กเพิ่ม' }
+    };
+    return map[label] || { pct: 75, text: 'Shopee ยังเหมาะกับร้านนี้ แต่ต้องเลือกแก้ปัญหาหลักให้ตรงก่อน', badge: 'ยังเหมาะ' };
+  }
+
+  const fit = getChannelFitMeta(final.label);
+  const emailValue = state.email ? `<strong>${escapeHTML(state.email)}</strong>` : 'อีเมลที่กรอกไว้';
 
   el.stageCard.innerHTML = `
-    <div class="result-card">
-      <div class="result-top">
-        <div>
-          <div class="result-type-pill">✅ วิเคราะห์เสร็จแล้ว · ผลเต็ม</div>
-          <h2>ร้านคุณควรโตบน Shopee แบบไหน</h2>
-          <div class="result-meta-lines">
-            <div class="result-meta-line"><strong>หมวดหมู่สินค้า:</strong> ${escapeHTML(state.profile.shopCat || 'ไม่ระบุ')}</div>
-            <div class="result-meta-line"><strong>สินค้าที่อยากดัน:</strong> ${escapeHTML(state.profile.heroProduct || 'ไม่ระบุ')}</div>
-            <div class="result-meta-line"><strong>ออเดอร์ปัจจุบัน:</strong> ${escapeHTML(state.profile.monthlyOrders || 'ไม่ระบุ')}</div>
-            <div class="result-meta-line"><strong>เป้าหมาย:</strong> ${escapeHTML(state.profile.targetOrders || 'ไม่ระบุ')}</div>
-          </div>
+    <div class="result-card summary-result-card">
+      <div class="summary-shell">
+        <div class="summary-topbar">
+          <div class="summary-brand"><strong>Shop<span>Check</span></strong></div>
+          <div class="summary-author">โดย Niranya · Ex-Shopee TH<br>ผลสรุปสำหรับอ่านบนหน้าเว็บ</div>
         </div>
-        <div class="result-badge">${getQuickVerdict()}</div>
-      </div>
 
-      ${emailNote}
-
-      <div class="result-summary">
-        <div class="score-ring">
-          <div class="ring-pill">คะแนนเบื้องต้น</div>
-          <div class="big">${formatScore(quick.total)}/${formatScore(getQuickMaxScore())}</div>
-          <div class="small">${escapeHTML(getLabelHeadline(final.label))}</div>
-        </div>
-        <div>
-          <div class="result-panel">
-            <div class="text-block">
-              <h3>ภาพรวมตอนนี้ ร้านควรโตบน Shopee แบบไหน</h3>
-              <p>${escapeHTML(final.role)}</p>
-            </div>
-            <div class="text-block">
-              <h3>แกนปัญหาหลักของร้าน</h3>
-              <p>${escapeHTML(final.rootProblem)}</p>
+        <div class="summary-intro">
+          <div class="summary-intro-inner">
+            <div class="summary-intro-icon">✓</div>
+            <div>
+              <p class="summary-intro-title">รายงานฉบับเต็มจะส่งภายใน 24 ชม.</p>
+              <p class="summary-intro-copy">หน้านี้ตั้งใจให้เห็นข้อสรุปที่อ่านจบได้เร็ว ส่วนรายละเอียดเชิงลึก วิธีทำทีละขั้น และรายงานเต็มจะอยู่ในไฟล์ที่ส่งให้ภายหลัง</p>
             </div>
           </div>
-          ${renderQuickSectionBars(getQuickSectionStats())}
         </div>
-      </div>
 
-      <div class="text-block">
-        <h3>สิ่งที่ยังพอเป็นแรงจูงใจให้ลูกค้าตัดสินใจซื้อซื้อได้อยู่</h3>
-        <ul class="strength-list">${final.strengths.map(item => `<li>${escapeHTML(item)}</li>`).join('')}</ul>
-      </div>
-
-      ${final.targetAdvice ? `<div class="text-block"><h3>เป้าหมายรอบ 30 วันนี้</h3><p>${escapeHTML(final.targetAdvice.text)}</p></div>` : ''}
-
-      <div class="text-block">
-        <h3>3 เรื่องที่ควรโฟกัสก่อน</h3>
-        ${final.focus.map((p, i) => `
-          <div style="margin-bottom:14px; padding:14px 16px; background:${i === 0 ? 'var(--brand-soft)' : 'white'}; border:1px solid ${i === 0 ? 'rgba(234,90,24,.2)' : 'var(--border)'}; border-radius:16px;">
-            <div style="font-size:11px; font-weight:700; color:var(--brand); margin-bottom:4px; text-transform:uppercase; letter-spacing:.5px;">อันดับ ${i + 1}${i === 0 ? ' · เริ่มก่อนเลย' : ''}</div>
-            <div style="font-weight:700; font-size:16px; margin-bottom:6px;">${escapeHTML(p.title)}</div>
-            <div style="color:var(--text2); font-size:15px; line-height:1.82;">${escapeHTML(p.detail)}</div>
-            <div style="color:var(--text3); font-size:13px; margin-top:8px;line-height:1.7;">เหตุผล: ${escapeHTML(p.why)}</div>
-          </div>
-        `).join('')}
-      </div>
-
-      <div class="text-block">
-        <h3>แผน 30 วัน — ทำอะไรก่อนหลัง</h3>
-        <p style="color:var(--text2); font-size:13px; margin-bottom:14px;">แผนนี้เรียงตาม pain หลักของร้านคุณ ไม่ใช่ template กลาง ๆ ที่ใช้ได้กับทุกคน</p>
-        <div class="plan-weeks">
-          ${plan.map(w => `
-            <div class="plan-week">
-              <div class="plan-week-label">${escapeHTML(w.week)}</div>
-              <div class="plan-week-title">${escapeHTML(w.title)}</div>
-              <div class="plan-week-detail">${escapeHTML(w.detail)}</div>
+        <div class="summary-content">
+          <div class="summary-main">
+            <div class="summary-card summary-headline-card">
+              <p class="summary-eyebrow">ผลวิเคราะห์เชิงลึก</p>
+              <h2 class="summary-headline">${escapeHTML(getSummaryHeadline(final.label))}</h2>
+              <div class="summary-core">
+                <strong>ปัญหาหลักตอนนี้</strong>
+                <p>${escapeHTML(final.rootProblem)}</p>
+              </div>
             </div>
-          `).join('')}
-        </div>
-      </div>
 
-      <div class="result-actions-stack">
-        <div class="result-actions">
-          <button class="nav-btn" id="backToQuickResultBtn">← กลับไปดูผลวิเคราะห์ Part แรก</button>
-          <button class="nav-btn" id="restartFinalBtn">เริ่มใหม่ตั้งแต่ต้น*</button>
+            <div class="summary-card">
+              <h3 class="summary-section-title">3 เรื่องที่ควรโฟกัสก่อน</h3>
+              <div class="summary-focus-grid">
+                ${final.focus.map((p, i) => `
+                  <div class="summary-focus-card">
+                    <div class="summary-focus-num">${i + 1}</div>
+                    <div class="summary-focus-copy">
+                      <h4>${escapeHTML(p.title)}</h4>
+                      <p>${escapeHTML(p.detail)}</p>
+                    </div>
+                    <span class="summary-tag ${i === 2 ? 'green' : ''}">${focusTags[i] || 'สำคัญ'}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="summary-card">
+              <h3 class="summary-section-title">แผน 30 วัน</h3>
+              <div class="summary-plan-grid">
+                ${plan.map((w, i) => `
+                  <div class="summary-plan-card week-${i + 1}">
+                    <p class="summary-plan-week">${escapeHTML(w.week)}</p>
+                    <p class="summary-plan-title">${escapeHTML(w.title)}</p>
+                    <p class="summary-plan-copy">${escapeHTML(w.detail)}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-sidebar">
+            <div class="summary-card summary-score-box">
+              <div class="summary-score-top">
+                <div>
+                  <div class="summary-score-big">${formatScore(quick.total)}</div>
+                  <div class="summary-score-sub">คะแนนรวมของร้านตอนนี้<br>${escapeHTML(getQuickVerdict())}</div>
+                </div>
+                <div class="summary-pill">Quick view</div>
+              </div>
+              <div class="summary-bars">
+                ${snapshotRows.map(sec => `
+                  <div class="summary-bar-row">
+                    <label>${snapshotMap[sec.id] || sec.name}</label>
+                    <div class="summary-bar"><span style="width:${sec.pct}%; background:${sec.id === 'bottleneck' ? '#ef9f27' : 'var(--brand)'};"></span></div>
+                    <strong>${formatScore(sec.score)}/${sec.max}</strong>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="summary-card summary-channel">
+              <strong>ประเมิน Channel Fit</strong>
+              <div class="summary-channel-bar"><span style="width:${fit.pct}%"></span></div>
+              <p>${escapeHTML(fit.text)}</p>
+              <div class="summary-mini-line">
+                <span>คะแนนความเหมาะสม</span>
+                <span>${fit.pct}% · ${fit.badge}</span>
+              </div>
+            </div>
+
+            <div class="summary-card summary-delivery">
+              <strong>รายงานเต็มที่ลูกค้าจะได้รับ</strong>
+              <p>ส่งภายใน 24 ชม. ทางอีเมลที่ลูกค้ากรอกไว้ คือ ${emailValue}</p>
+              <p>ถ้าไม่สะดวกเปิดอีเมล สามารถ Add LINE เพื่อรับไฟล์บนมือถือได้เช่นกัน</p>
+            </div>
+
+            <div class="summary-card summary-actions">
+              <strong>ปุ่ม action บนหน้า</strong>
+              <p>หน้านี้ทำให้เห็นข้อสรุปหลักก่อน ส่วนคนที่อยากย้อนดูผลรอบแรกหรือเริ่มทำใหม่ สามารถกดปุ่มด้านล่างได้เลย</p>
+              <div class="summary-btn-stack">
+                <button class="nav-btn summary-btn" id="backToQuickResultBtn">กลับไปดูผลวิเคราะห์พาร์ทแรก</button>
+                <button class="nav-btn primary summary-btn" id="restartFinalBtn">เริ่มใหม่ตั้งแต่ต้น</button>
+              </div>
+              <div class="summary-helper-note">หากกดเริ่มใหม่ตั้งแต่ต้น หมายถึงการทำแบบทดสอบใหม่ โดยข้อมูลที่กรอกมาและผลวิเคราะห์จะไม่มีการบันทึกไว้</div>
+            </div>
+          </div>
         </div>
-        <div class="result-actions-note">(*) หากกดเริ่มใหม่ตั้งแต่ต้น หมายถึง การทำแบบทดสอบใหม่ โดยข้อมูลที่กรอกมาและผลวิเคราะห์จะไม่มีการบันทึกไว้</div>
       </div>
     </div>
   `;
@@ -4928,7 +5396,7 @@ renderQuickResult = async function() {
   }
 };
 
-/* Override renderFinalPreview — keep original template, replace content with Claude */
+/* Override renderFinalPreview — use AI text but render summary layout for web */
 const _origRenderFinalPreview = renderFinalPreview;
 renderFinalPreview = async function() {
   const loadingTimer2 = showLoadingWithMessages([
@@ -4970,11 +5438,11 @@ renderFinalPreview = async function() {
     }
 
     const parts = aiText.split(/\*\*([^*]+)\*\*/g);
-    let actionPlan='', plan30='', channelFit='';
+    let actionPlan = '', plan30 = '', channelFit = '';
 
-    for (let i=1; i<parts.length; i+=2) {
+    for (let i = 1; i < parts.length; i += 2) {
       const title = parts[i].trim();
-      const body = (parts[i+1]||'').trim();
+      const body = (parts[i + 1] || '').trim();
       if (title.includes('Action') || title.includes('action') || title.includes('โฟกัส') || title.includes('ต้องทำ') || title.match(/^3/)) {
         actionPlan = body;
       } else if (title.includes('แผน') || title.includes('30 วัน') || title.includes('สัปดาห์')) {
@@ -4987,9 +5455,10 @@ renderFinalPreview = async function() {
     if (!actionPlan && !plan30 && !channelFit && aiText.length > 100) {
       const thirds = Math.floor(aiText.length / 3);
       actionPlan = aiText.substring(0, thirds);
-      plan30 = aiText.substring(thirds, thirds*2);
-      channelFit = aiText.substring(thirds*2);
+      plan30 = aiText.substring(thirds, thirds * 2);
+      channelFit = aiText.substring(thirds * 2);
     }
+
     function parseActions(text) {
       const lines = String(text || '').replace(/\r/g, '').split('\n').map(l => l.trim()).filter(Boolean);
       const steps = [];
@@ -5037,78 +5506,194 @@ renderFinalPreview = async function() {
       return weeks.slice(0, 4);
     }
 
-    const actions = parseActions(actionPlan);
-    const weeks = parseWeeks(plan30);
-    const p = state.profile;
-    const emailNote = state.email
-      ? `<div class="email-sent-box delivery-notice-box">✅ รายงานฉบับเต็มพร้อมผลวิเคราะห์ด้านล่างนี้จะส่งไปที่ <strong>${escapeHTML(state.email)}</strong> ภายใน 24 ชั่วโมง</div>`
-      : '';
+    function cleanLine(line) {
+      return String(line || '')
+        .replace(/^วิธีทำ\s*step\s*by\s*step\s*:?/i, '')
+        .replace(/^วิธีทำ\s*:?/i, '')
+        .replace(/^เหตุผล\s*:?/i, '')
+        .replace(/^ผลที่คาด\s*:?/i, '')
+        .replace(/^ผลที่จะเห็น\s*:?/i, '')
+        .replace(/^[\s•\-–—]*→?\s*/, '')
+        .trim();
+    }
+
+    function getSummaryHeadline(label) {
+      return {
+        traffic: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้คนยังหาเจอสินค้าไม่พอ',
+        trust: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังทำให้ลูกค้ามั่นใจไม่พอ',
+        price: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังสื่อความคุ้มค่าให้ชัดไม่พอ',
+        ops: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ระบบร้านยังไม่พร้อมพอ',
+        channel_fit: 'ร้านนี้ยังต้องเช็กก่อนว่าสินค้าหลักเหมาะจะโตบน Shopee แค่ไหน'
+      }[label] || 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังต้องเลือกแก้ปัญหาให้ตรงจุด';
+    }
+
+    function getChannelFitMeta(label) {
+      const map = {
+        traffic: { pct: 80, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้คนหาเจอและกดเข้ามาดูง่ายขึ้น', badge: 'เหมาะมาก' },
+        trust: { pct: 82, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้ลูกค้ามั่นใจมากขึ้นก่อนกดซื้อ', badge: 'เหมาะมาก' },
+        price: { pct: 85, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตแบบชนะจากการสื่อความคุ้มค่า ไม่ใช่ชนราคาจนกำไรหาย', badge: 'เหมาะมาก' },
+        ops: { pct: 70, text: 'Shopee ยังเหมาะกับร้านนี้ แต่ถ้าจะโตต่อ ร้านต้องเก็บระบบหลังบ้านให้พร้อมก่อน', badge: 'ยังเหมาะ' },
+        channel_fit: { pct: 58, text: 'Shopee อาจยังไม่ใช่จุดเร่งโตของสินค้าหลักตัวนี้ในตอนนี้ ต้องเช็กบทบาทสินค้าให้ชัดก่อน', badge: 'ต้องเช็กเพิ่ม' }
+      };
+      return map[label] || { pct: 75, text: 'Shopee ยังเหมาะกับร้านนี้ แต่ต้องเลือกแก้ปัญหาหลักให้ตรงก่อน', badge: 'ยังเหมาะ' };
+    }
+
+    const quick = buildQuickResult();
+    const final = buildFinalPreview();
+    const fallbackPlan = build30DayPlan(final.label, state.deepAnswers);
+    const secStats = getQuickSectionStats();
+    const snapshotMap = {
+      storefront: 'หน้าร้าน & หาเจอ',
+      pricing: 'ราคา & ความคุ้ม',
+      bottleneck: 'จุดต่างจากคู่แข่ง'
+    };
+    const snapshotRows = ['storefront', 'pricing', 'bottleneck']
+      .map(id => secStats.find(sec => sec.id === id))
+      .filter(Boolean);
+
+    const parsedActions = parseActions(actionPlan);
+    const parsedWeeks = parseWeeks(plan30);
+    const fit = getChannelFitMeta(final.label);
+
+    const focusCards = parsedActions.length
+      ? parsedActions.slice(0, 3).map((item, idx) => {
+          const detail = item.details
+            .map(cleanLine)
+            .find(line => line && !line.startsWith('เหตุผล') && !line.startsWith('ผลที่คาด') && !line.startsWith('ผลที่จะเห็น'))
+            || cleanLine(item.details[0] || '');
+          return {
+            title: item.title.replace(/\([^)]*\)/g, '').trim(),
+            detail,
+            tag: idx === 2 ? 'ทำได้เลย' : 'impact สูง',
+            green: idx === 2
+          };
+        })
+      : final.focus.map((item, idx) => ({
+          title: item.title,
+          detail: item.detail,
+          tag: idx === 2 ? 'ทำได้เลย' : 'impact สูง',
+          green: idx === 2
+        }));
+
+    const weekCards = parsedWeeks.length
+      ? parsedWeeks.slice(0, 4).map((week, idx) => ({
+          week: week.label || `สัปดาห์ ${idx + 1}`,
+          title: cleanLine((week.content || '').split('\n')[0] || `แผนสัปดาห์ ${idx + 1}`),
+          detail: cleanLine((week.content || '').split('\n').slice(1).join(' ') || week.content || '')
+        }))
+      : fallbackPlan.map(item => ({
+          week: item.week,
+          title: item.title,
+          detail: item.detail
+        }));
+
+    const channelCopy = channelFit ? channelFit.replace(/\n+/g, ' ').trim() : fit.text;
+    const emailValue = state.email ? `<strong>${escapeHTML(state.email)}</strong>` : 'อีเมลที่กรอกไว้';
 
     el.stageCard.innerHTML = `
-      <div class="dark-premium-stage">
-        <div class="dark-premium-grid">
-          <div class="dark-premium-main">
-            ${emailNote}
+      <div class="result-card summary-result-card">
+        <div class="summary-shell">
+          <div class="summary-topbar">
+            <div class="summary-brand"><strong>Shop<span>Check</span></strong></div>
+            <div class="summary-author">โดย Niranya · Ex-Shopee TH<br>ผลสรุปสำหรับอ่านบนหน้าเว็บ</div>
+          </div>
 
-            <div class="dark-premium-overview">
-              <div class="dark-premium-overview-kicker">ภาพรวมร้านจากผลเชิงลึก</div>
-              <p>${escapeHTML(channelFit || 'ร้านยังไปต่อบน Shopee ได้ แต่ควรเลือกแก้ตามลำดับ ไม่ต้องเร่งทุกอย่างพร้อมกัน')}</p>
-            </div>
-
-            <div class="premium-light-card">
-              <h3>3 เรื่องที่ควรโฟกัสก่อน</h3>
-              ${actions.length > 0
-                ? actions.map((s, idx) => {
-                    const tm = s.title.match(/\([^)]*(?:นาที|ชั่วโมง|เลย)[^)]*\)/);
-                    const tt = tm ? tm[0] : '';
-                    const ct = s.title.replace(tm ? tm[0] : '', '').trim();
-
-                    const reasonLine = s.details.find(d => d.trim().startsWith('เหตุผล:'));
-                    const resultLine = s.details.find(d => d.trim().startsWith('ผลที่คาด:') || d.trim().startsWith('ผลที่จะเห็น'));
-                    const stepLines = s.details
-                      .filter(d =>
-                        !d.trim().startsWith('เหตุผล:') &&
-                        !d.trim().startsWith('ผลที่คาด:') &&
-                        !d.trim().startsWith('ผลที่จะเห็น:')
-                      )
-                      .map(d => d.replace(/^วิธีทำ\s*step\s*by\s*step\s*:?/i, '').replace(/^วิธีทำ\s*:?/i, '').replace(/^[\s•\-–—]*→?\s*/, '').trim())
-                      .filter(Boolean);
-
-                    const cleanResultLine = resultLine
-                      ? resultLine.replace(/^ผลที่คาด:|^ผลที่จะเห็น:/, '').replace(/^[\s•\-–—]+/, '').trim()
-                      : '';
-
-                    return `<div style="margin-bottom:18px;padding:20px;background:white;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-sm);">
-  <div style="font-size:25px;font-weight:800;line-height:1.34;color:var(--brand);margin-bottom:12px;">${idx + 1}) ${escapeHTML(ct)}</div>
-  ${stepLines.length > 0 ? `<div style="margin-bottom:10px;padding:13px 15px;background:#fff7f1;border:1px solid #ffd8c2;border-radius:14px;"><div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:5px;line-height:1.3;">วิธีทำ step by step</div><div style="display:grid;gap:2px;">${stepLines.map(line => `<div style="font-size:15px;line-height:1.55;color:var(--text);">→ ${escapeHTML(line)}</div>`).join('')}</div>${tt ? `<div style="color:var(--text3);font-size:13px;margin-top:5px;line-height:1.45;">${escapeHTML(tt)}</div>` : ''}</div>` : ''}
-  ${reasonLine ? `<div style="margin-bottom:10px;padding:13px 15px;background:#fffaf4;border:1px solid #f2d9c7;border-radius:14px;"><div style="font-size:15px;font-weight:800;color:var(--brand);margin-bottom:5px;line-height:1.3;">เหตุผล</div><div style="font-size:15px;color:var(--text);line-height:1.72;">${escapeHTML(reasonLine.replace('เหตุผล:','').trim())}</div></div>` : ''}
-  ${cleanResultLine ? `<div style="padding:13px 15px;background:var(--green-bg);border:1px solid #b7e8d0;border-radius:14px;"><div style="font-size:15px;font-weight:800;color:var(--green);margin-bottom:5px;line-height:1.3;">ผลที่คาด</div><div style="font-size:15px;color:var(--text);line-height:1.65;">${escapeHTML(cleanResultLine)}</div></div>` : ''}
-</div>`;
-                  }).join('')
-                : `<p style="font-size:15px;line-height:1.85;color:var(--text2);white-space:pre-wrap;">${escapeHTML(actionPlan)}</p>`
-              }
-            </div>
-
-            <div class="premium-light-card">
-              <h3>แผน 30 วัน — ทำอะไรก่อนหลัง</h3>
-              <p style="color:var(--text2);font-size:13px;margin-bottom:14px;">แผนนี้เรียงตาม pain หลักของร้านคุณ ไม่ใช่ template กลาง ๆ</p>
-              ${weeks.length > 0
-                ? `<div class="plan-weeks">${weeks.map(w => `<div class="plan-week"><div class="plan-week-label" style="font-size:15px;font-weight:700;">${escapeHTML(w.label)}</div><div class="plan-week-detail" style="white-space:pre-wrap;font-size:15px;line-height:1.82;">${escapeHTML(w.content)}</div></div>`).join('')}</div>`
-                : `<p style="white-space:pre-wrap;font-size:15px;line-height:1.85;color:var(--text2);">${escapeHTML(plan30)}</p>`
-              }
-            </div>
-
-            <div class="premium-light-card">
-              <h3>ประเมิน Channel Fit — ร้านนี้ควรโตบน Shopee แบบไหน</h3>
-              <p style="white-space:pre-wrap;font-size:14px;line-height:1.75;color:var(--text);">${escapeHTML(channelFit)}</p>
-            </div>
-
-            <div class="dark-premium-actions">
-              <div class="result-actions">
-                <button class="nav-btn" id="backToQuickResultBtn">← กลับไปดูผลวิเคราะห์ Part แรก</button>
-                <button class="nav-btn" id="restartFinalBtn">เริ่มใหม่ตั้งแต่ต้น*</button>
+          <div class="summary-intro">
+            <div class="summary-intro-inner">
+              <div class="summary-intro-icon">✓</div>
+              <div>
+                <p class="summary-intro-title">รายงานฉบับเต็มจะส่งภายใน 24 ชม.</p>
+                <p class="summary-intro-copy">หน้านี้ตั้งใจให้เห็นข้อสรุปที่อ่านจบได้เร็ว ส่วนรายละเอียดเชิงลึก วิธีทำทีละขั้น และรายงานเต็มจะอยู่ในไฟล์ที่ส่งให้ภายหลัง</p>
               </div>
-              <div class="result-actions-note">(*) หากกดเริ่มใหม่ตั้งแต่ต้น หมายถึง การทำแบบทดสอบใหม่ โดยข้อมูลที่กรอกมาและผลวิเคราะห์จะไม่มีการบันทึกไว้</div>
+            </div>
+          </div>
+
+          <div class="summary-content">
+            <div class="summary-main">
+              <div class="summary-card summary-headline-card">
+                <p class="summary-eyebrow">ผลวิเคราะห์เชิงลึก</p>
+                <h2 class="summary-headline">${escapeHTML(getSummaryHeadline(final.label))}</h2>
+                <div class="summary-core">
+                  <strong>ปัญหาหลักตอนนี้</strong>
+                  <p>${escapeHTML(final.rootProblem)}</p>
+                </div>
+              </div>
+
+              <div class="summary-card">
+                <h3 class="summary-section-title">3 เรื่องที่ควรโฟกัสก่อน</h3>
+                <div class="summary-focus-grid">
+                  ${focusCards.map((item, idx) => `
+                    <div class="summary-focus-card">
+                      <div class="summary-focus-num">${idx + 1}</div>
+                      <div class="summary-focus-copy">
+                        <h4>${escapeHTML(item.title)}</h4>
+                        <p>${escapeHTML(item.detail)}</p>
+                      </div>
+                      <span class="summary-tag ${item.green ? 'green' : ''}">${item.tag}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="summary-card">
+                <h3 class="summary-section-title">แผน 30 วัน</h3>
+                <div class="summary-plan-grid">
+                  ${weekCards.map((item, idx) => `
+                    <div class="summary-plan-card week-${idx + 1}">
+                      <p class="summary-plan-week">${escapeHTML(item.week)}</p>
+                      <p class="summary-plan-title">${escapeHTML(item.title)}</p>
+                      <p class="summary-plan-copy">${escapeHTML(item.detail)}</p>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+
+            <div class="summary-sidebar">
+              <div class="summary-card summary-score-box">
+                <div class="summary-score-top">
+                  <div>
+                    <div class="summary-score-big">${formatScore(quick.total)}</div>
+                    <div class="summary-score-sub">คะแนนรวมของร้านตอนนี้<br>${escapeHTML(getQuickVerdict())}</div>
+                  </div>
+                  <div class="summary-pill">Quick view</div>
+                </div>
+                <div class="summary-bars">
+                  ${snapshotRows.map(sec => `
+                    <div class="summary-bar-row">
+                      <label>${snapshotMap[sec.id] || sec.name}</label>
+                      <div class="summary-bar"><span style="width:${sec.pct}%; background:${sec.id === 'bottleneck' ? '#ef9f27' : 'var(--brand)'};"></span></div>
+                      <strong>${formatScore(sec.score)}/${sec.max}</strong>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="summary-card summary-channel">
+                <strong>ประเมิน Channel Fit</strong>
+                <div class="summary-channel-bar"><span style="width:${fit.pct}%"></span></div>
+                <p>${escapeHTML(channelCopy)}</p>
+                <div class="summary-mini-line">
+                  <span>คะแนนความเหมาะสม</span>
+                  <span>${fit.pct}% · ${fit.badge}</span>
+                </div>
+              </div>
+
+              <div class="summary-card summary-delivery">
+                <strong>รายงานเต็มที่ลูกค้าจะได้รับ</strong>
+                <p>ส่งภายใน 24 ชม. ทางอีเมลที่ลูกค้ากรอกไว้ คือ ${emailValue}</p>
+                <p>ถ้าไม่สะดวกเปิดอีเมล สามารถ Add LINE เพื่อรับไฟล์บนมือถือได้เช่นกัน</p>
+              </div>
+
+              <div class="summary-card summary-actions">
+                <strong>ปุ่ม action บนหน้า</strong>
+                <p>หน้านี้ทำให้เห็นข้อสรุปหลักก่อน ส่วนคนที่อยากย้อนดูผลรอบแรกหรือเริ่มทำใหม่ สามารถกดปุ่มด้านล่างได้เลย</p>
+                <div class="summary-btn-stack">
+                  <button class="nav-btn summary-btn" id="backToQuickResultBtn">กลับไปดูผลวิเคราะห์พาร์ทแรก</button>
+                  <button class="nav-btn primary summary-btn" id="restartFinalBtn">เริ่มใหม่ตั้งแต่ต้น</button>
+                </div>
+                <div class="summary-helper-note">หากกดเริ่มใหม่ตั้งแต่ต้น หมายถึงการทำแบบทดสอบใหม่ โดยข้อมูลที่กรอกมาและผลวิเคราะห์จะไม่มีการบันทึกไว้</div>
+              </div>
             </div>
           </div>
         </div>
@@ -5127,6 +5712,7 @@ renderFinalPreview = async function() {
     el.stageCard.innerHTML = `<div class="result-card" style="padding:32px;"><p style="color:var(--red);">เกิดข้อผิดพลาดค่ะ — ${escapeHTML(e.message)}</p><button class="nav-btn" onclick="renderCurrent()">ลองใหม่</button></div>`;
   }
 };
+
 
 updateHUD();
 
