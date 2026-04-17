@@ -3092,7 +3092,8 @@ const state = {
   _step1AI:'',
   _step2AI:'',
   _step1Prompt:'',
-  _step2Prompt:''
+  _step2Prompt:'',
+  _step2Payload:null
 };
 
 const el = {
@@ -4671,6 +4672,7 @@ function restartAll() {
   state._step2AI = '';
   state._step1Prompt = '';
   state._step2Prompt = '';
+  state._step2Payload = null;
   state.profile = { shopName:'', shopCat:'', heroProduct:'', monthlyOrders:'', targetOrders:'', mainProblem:'' };
   document.body.classList.remove('result-active');
   renderCurrent();
@@ -4696,6 +4698,7 @@ function escapeAttr(str) { return escapeHTML(str); }
    Replaces rule-based analysis with real Claude AI calls.
    renderQuickResult and renderFinalPreview are overridden below.    */
 
+
 async function callDiagnose(prompt) {
   const res = await fetch('/api/diagnose', {
     method: 'POST',
@@ -4707,6 +4710,224 @@ async function callDiagnose(prompt) {
   return data.result || '';
 }
 
+function extractJSONObject(text) {
+  const raw = String(text || '').trim();
+  if (!raw) return '';
+
+  const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fenced?.[1]) return fenced[1].trim();
+
+  const start = raw.indexOf('{');
+  if (start === -1) return '';
+
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let i = start; i < raw.length; i += 1) {
+    const ch = raw[i];
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+    if (ch === '\\') {
+      escaped = true;
+      continue;
+    }
+    if (ch === '"') {
+      inString = !inString;
+      continue;
+    }
+    if (inString) continue;
+    if (ch === '{') depth += 1;
+    if (ch === '}') {
+      depth -= 1;
+      if (depth === 0) return raw.slice(start, i + 1).trim();
+    }
+  }
+
+  return '';
+}
+
+function safeParseJSON(text) {
+  const candidate = extractJSONObject(text);
+  if (!candidate) return null;
+  try {
+    return JSON.parse(candidate);
+  } catch (_) {
+    return null;
+  }
+}
+
+function asCleanText(value, fallback = '') {
+  if (value == null) return fallback;
+  const text = String(value).replace(/\s+/g, ' ').trim();
+  return text || fallback;
+}
+
+function trimArray(arr, max, mapper) {
+  const list = Array.isArray(arr) ? arr : [];
+  return list.slice(0, max).map((item, idx) => mapper(item, idx)).filter(Boolean);
+}
+
+function normalizeSummaryTag(tag, idx) {
+  const cleaned = asCleanText(tag).toLowerCase();
+  if (cleaned.includes('ทำได้')) return 'ทำได้เลย';
+  if (cleaned.includes('impact')) return 'impact สูง';
+  if (cleaned.includes('สูง')) return 'impact สูง';
+  return idx === 2 ? 'ทำได้เลย' : 'impact สูง';
+}
+
+function normalizeScorePct(value, fallback) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return fallback;
+  return Math.max(0, Math.min(100, Math.round(num)));
+}
+
+function getFallbackChannelFit() {
+  const final = buildFinalPreview();
+  return getChannelFitMeta(final.label);
+}
+
+function buildFallbackStep2Payload() {
+  const quick = buildQuickResult();
+  const final = buildFinalPreview();
+  const fallbackPlan = build30DayPlan(final.label, state.deepAnswers);
+  const fit = getFallbackChannelFit();
+
+  return {
+    web_summary: {
+      headline: getSummaryHeadline(final.label),
+      main_problem: final.rootProblem,
+      focus_3: final.focus.slice(0, 3).map((item, idx) => ({
+        title: item.title,
+        desc: item.detail,
+        tag: idx === 2 ? 'ทำได้เลย' : 'impact สูง'
+      })),
+      plan_30_days: fallbackPlan.slice(0, 4).map((item, idx) => ({
+        week: item.week || `สัปดาห์ที่ ${idx + 1}`,
+        title: item.title,
+        detail: item.detail
+      })),
+      channel_fit: {
+        score_pct: fit.pct,
+        label: fit.badge,
+        summary: fit.text
+      }
+    },
+    full_report: {
+      overview: quick.summary,
+      focus_areas: final.focus.slice(0, 3).map(item => ({
+        title: item.title,
+        why: item.why || item.detail,
+        steps: [item.detail].filter(Boolean),
+        expected_result: item.outcome || 'ช่วยให้ร้านเห็นทิศทางที่ควรทำก่อนและลดการลองผิดแบบไม่จำเป็น'
+      })),
+      plan_30_days: fallbackPlan.slice(0, 4).map((item, idx) => ({
+        week: item.week || `สัปดาห์ที่ ${idx + 1}`,
+        title: item.title,
+        details: [item.detail].filter(Boolean)
+      })),
+      channel_fit: {
+        score_pct: fit.pct,
+        label: fit.badge,
+        long_reason: fit.text,
+        conclusion_lines: [
+          'Shopee ยังเหมาะกับร้านนี้ แต่ต้องแก้ปัญหาหลักก่อนเร่งยอด',
+          'ให้เริ่มจากสินค้าที่อยากดันก่อน ไม่ต้องกระจายทั้งร้าน',
+          'ถ้าแก้ถูกจุด โอกาสเห็นผลใน 2–4 สัปดาห์ยังมีค่ะ'
+        ]
+      }
+    }
+  };
+}
+
+function normalizeStep2Payload(payload) {
+  const fallback = buildFallbackStep2Payload();
+  const raw = payload && typeof payload === 'object' ? payload : {};
+  const web = raw.web_summary && typeof raw.web_summary === 'object' ? raw.web_summary : {};
+  const full = raw.full_report && typeof raw.full_report === 'object' ? raw.full_report : {};
+  const fitFallback = fallback.web_summary.channel_fit;
+
+  const normalized = {
+    web_summary: {
+      headline: asCleanText(web.headline, fallback.web_summary.headline),
+      main_problem: asCleanText(web.main_problem, fallback.web_summary.main_problem),
+      focus_3: trimArray(web.focus_3, 3, (item, idx) => {
+        const source = item && typeof item === 'object' ? item : {};
+        return {
+          title: asCleanText(source.title, fallback.web_summary.focus_3[idx]?.title || `เรื่องที่ ${idx + 1}`),
+          desc: asCleanText(source.desc, fallback.web_summary.focus_3[idx]?.desc || ''),
+          tag: normalizeSummaryTag(source.tag, idx)
+        };
+      }),
+      plan_30_days: trimArray(web.plan_30_days, 4, (item, idx) => {
+        const source = item && typeof item === 'object' ? item : {};
+        return {
+          week: asCleanText(source.week, fallback.web_summary.plan_30_days[idx]?.week || `สัปดาห์ที่ ${idx + 1}`),
+          title: asCleanText(source.title, fallback.web_summary.plan_30_days[idx]?.title || `แผนสัปดาห์ ${idx + 1}`),
+          detail: asCleanText(source.detail, fallback.web_summary.plan_30_days[idx]?.detail || '')
+        };
+      }),
+      channel_fit: {
+        score_pct: normalizeScorePct(web.channel_fit?.score_pct, fitFallback.score_pct),
+        label: asCleanText(web.channel_fit?.label, fitFallback.label),
+        summary: asCleanText(web.channel_fit?.summary, fitFallback.summary)
+      }
+    },
+    full_report: {
+      overview: asCleanText(full.overview, fallback.full_report.overview),
+      focus_areas: trimArray(full.focus_areas, 3, (item, idx) => {
+        const source = item && typeof item === 'object' ? item : {};
+        const fallbackItem = fallback.full_report.focus_areas[idx] || {};
+        return {
+          title: asCleanText(source.title, fallbackItem.title || `เรื่องที่ ${idx + 1}`),
+          why: asCleanText(source.why, fallbackItem.why || ''),
+          steps: trimArray(source.steps, 4, step => asCleanText(step)).filter(Boolean).length
+            ? trimArray(source.steps, 4, step => asCleanText(step)).filter(Boolean)
+            : (fallbackItem.steps || []).filter(Boolean),
+          expected_result: asCleanText(source.expected_result, fallbackItem.expected_result || '')
+        };
+      }),
+      plan_30_days: trimArray(full.plan_30_days, 4, (item, idx) => {
+        const source = item && typeof item === 'object' ? item : {};
+        const fallbackItem = fallback.full_report.plan_30_days[idx] || {};
+        return {
+          week: asCleanText(source.week, fallbackItem.week || `สัปดาห์ที่ ${idx + 1}`),
+          title: asCleanText(source.title, fallbackItem.title || `แผนสัปดาห์ ${idx + 1}`),
+          details: trimArray(source.details, 4, detail => asCleanText(detail)).filter(Boolean).length
+            ? trimArray(source.details, 4, detail => asCleanText(detail)).filter(Boolean)
+            : (fallbackItem.details || []).filter(Boolean)
+        };
+      }),
+      channel_fit: {
+        score_pct: normalizeScorePct(full.channel_fit?.score_pct, fitFallback.score_pct),
+        label: asCleanText(full.channel_fit?.label, fitFallback.label),
+        long_reason: asCleanText(full.channel_fit?.long_reason, fitFallback.summary),
+        conclusion_lines: trimArray(full.channel_fit?.conclusion_lines, 3, line => asCleanText(line)).filter(Boolean).length
+          ? trimArray(full.channel_fit?.conclusion_lines, 3, line => asCleanText(line)).filter(Boolean)
+          : (fallback.full_report.channel_fit.conclusion_lines || [])
+      }
+    }
+  };
+
+  if (normalized.web_summary.focus_3.length < 3) normalized.web_summary.focus_3 = fallback.web_summary.focus_3;
+  if (normalized.web_summary.plan_30_days.length < 4) normalized.web_summary.plan_30_days = fallback.web_summary.plan_30_days;
+  if (normalized.full_report.focus_areas.length < 3) normalized.full_report.focus_areas = fallback.full_report.focus_areas;
+  if (normalized.full_report.plan_30_days.length < 4) normalized.full_report.plan_30_days = fallback.full_report.plan_30_days;
+
+  return normalized;
+}
+
+function getSummaryHeadline(label) {
+  return {
+    traffic: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้คนยังหาเจอสินค้าไม่พอ',
+    trust: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังทำให้ลูกค้ามั่นใจไม่พอ',
+    price: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังสื่อความคุ้มค่าให้ชัดไม่พอ',
+    ops: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ระบบร้านยังไม่พร้อมพอ',
+    channel_fit: 'ร้านนี้ยังต้องเช็กก่อนว่าสินค้าหลักเหมาะจะโตบน Shopee แค่ไหน'
+  }[label] || 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังต้องเลือกแก้ปัญหาให้ตรงจุด';
+}
 
 const LANGUAGE_POLICY = `
 กฎภาษาบังคับ:
@@ -4945,12 +5166,14 @@ function buildStep2Prompt() {
     return `- ${q.title}: ${formatDeepAnswer(a)}`;
   }).join("\n");
 
-  const totalScore = getQuickScore();
+  const totalScore = formatScore(getQuickScore());
+  const maxScore = formatScore(getQuickMaxScore());
   const quickType = getQuickTypeLabel();
 
-  return `คุณคือ ShopCheck AI ที่วิเคราะห์ร้าน Shopee แบบ strategic diagnosis สำหรับผู้ขายไทย
-คุณไม่ต้องพยายามพูดเหมือนมนุษย์ 100% แต่ต้องคิดเป็นระบบ อ่านง่าย ชัด และใช้การได้จริง
-น้ำเสียงต้องฉลาด ตรงประเด็น เหมือน AI consultant ที่วิเคราะห์เป็น ไม่ใช่ AI ที่เขียนสวยอย่างเดียว
+  return `คุณคือ ShopCheck AI ที่วิเคราะห์ร้าน Shopee สำหรับผู้ขายไทยแบบ strategic diagnosis
+หน้าที่ของคุณคือสร้างผลลัพธ์ 2 ชั้นพร้อมกัน:
+1) web_summary = สรุปสั้นสำหรับโชว์บนหน้าเว็บมือถือ ต้องอ่านจบเร็ว
+2) full_report = เนื้อหาฉบับเต็มสำหรับทีมงานเอาไปใส่ presentation ส่งลูกค้า
 
 ข้อมูลร้าน:
 - ชื่อร้าน: ${p.shopName || "ไม่ได้ระบุ"}
@@ -4961,7 +5184,7 @@ function buildStep2Prompt() {
 - ปัญหาหลักที่เจ้าของร้านรู้สึก: ${p.mainProblem || "ไม่ได้ระบุ"}
 
 ผลจาก Part 1:
-- คะแนนรวม: ${totalScore}/8
+- คะแนนรวม: ${totalScore}/${maxScore}
 - ระดับภาพรวม: ${quickType}
 
 คำตอบ Part 1:
@@ -4975,63 +5198,86 @@ ${getCategoryAnalysisGuide()}
 
 ${LANGUAGE_POLICY}
 ${DIAGNOSIS_LOGIC}
-${FORMAT_POLICY}
 ${SELF_CHECK}
 
-สิ่งที่ต้องทำ:
-1) หา 3 เรื่องที่ควรโฟกัสก่อน โดยเรียงตาม impact ทางธุรกิจจริง
-2) แต่ละข้ออย่าเป็น tip ลอย ๆ ต้องชัดว่า "ร้านนี้ควรทำอะไร เพราะอะไร"
-3) ต้องแยกให้ออกว่าปัญหาเป็นเรื่อง visibility / conversion / pricing / trust / differentiation / operations / tool usage / channel fit
-4) ถ้าร้านสู้ราคายาก ต้องวิเคราะห์ให้ถูกว่าเป็น:
-   - ต้นทุนสูงจริง
-   - สื่อ value ไม่ชัด
-   - อยู่ในหมวดที่แข่งราคาหนัก
-   - ร้านยังเล็กเกินจะแข่งตอนนี้
-5) อย่าแนะนำยิง Ads หรือทำโปรเพิ่ม ถ้ายังไม่ใช่ลำดับที่ควรทำก่อน
-6) ถ้าสินค้าที่อยากดันถูกระบุมาแล้ว ห้ามพูดซ้ำให้เลือก SKU หลัก เว้นแต่ร้านตอบชัดว่ามีหลายตัวและยังไม่แน่ใจว่าจะดันตัวไหน
-7) ถ้าจะพูดเรื่องภาพ ให้ใช้คำว่า "5 ภาพแรกของสินค้าที่อยากดัน" หรือ "ภาพหน้าสินค้า" ให้ชัด
-8) แผน 30 วันต้องครบ 4 สัปดาห์ และแต่ละสัปดาห์ต้องชัดว่าเริ่มจากอะไร ต่อด้วยอะไร
-9) Channel Fit ต้องกล้าตัดสิน ไม่ใช่ตอบกลาง ๆ
+กฎสำคัญมาก:
+- ห้ามตอบเป็น markdown
+- ห้ามใส่ code fence แบบ json
+- ห้ามมีคำอธิบายก่อนหรือหลัง JSON
+- ต้องตอบเป็น JSON object เท่านั้น
+- web_summary ต้องสั้น อ่านจบเร็ว และไม่แน่นเหมือนรายงานเต็ม
+- full_report ต้องละเอียดพอให้ทีมงานนำไปใส่ presentation ต่อได้ทันที
+- ทั้ง 2 layer ต้องใช้ logic เดียวกัน ไม่ใช่คนละเรื่อง
+- ถ้าร้านสู้ราคายาก ต้องวิเคราะห์ให้ถูกว่าเป็นต้นทุนสูงจริง หรือยังสื่อความคุ้มค่าไม่ชัด
+- ถ้าจะพูดเรื่องภาพ ให้ใช้คำว่า "5 ภาพแรกของสินค้าที่อยากดัน" หรือ "ภาพหน้าสินค้า"
+- ห้ามใช้คำว่า "คอขวด" "หน้าแข่ง" "ร้านที่ราคาแพ้" "มาร์จิน"
 
-กรุณาตอบตาม format นี้เท่านั้น:
+ตอบตาม schema นี้เท่านั้น:
+{
+  "web_summary": {
+    "headline": "สรุป 1 ประโยค ไม่เกิน 120 ตัวอักษร",
+    "main_problem": "อธิบายปัญหาหลัก 1-2 ประโยค",
+    "focus_3": [
+      {"title": "หัวข้อสั้น", "desc": "คำอธิบายสั้น 1 ประโยค", "tag": "impact สูง"},
+      {"title": "หัวข้อสั้น", "desc": "คำอธิบายสั้น 1 ประโยค", "tag": "impact สูง"},
+      {"title": "หัวข้อสั้น", "desc": "คำอธิบายสั้น 1 ประโยค", "tag": "ทำได้เลย"}
+    ],
+    "plan_30_days": [
+      {"week": "สัปดาห์ที่ 1", "title": "หัวข้อสั้น", "detail": "สรุปสั้น 1 ประโยค"},
+      {"week": "สัปดาห์ที่ 2", "title": "หัวข้อสั้น", "detail": "สรุปสั้น 1 ประโยค"},
+      {"week": "สัปดาห์ที่ 3", "title": "หัวข้อสั้น", "detail": "สรุปสั้น 1 ประโยค"},
+      {"week": "สัปดาห์ที่ 4", "title": "หัวข้อสั้น", "detail": "สรุปสั้น 1 ประโยค"}
+    ],
+    "channel_fit": {
+      "score_pct": 0,
+      "label": "เหมาะมาก",
+      "summary": "สรุปสั้น 1-2 ประโยค"
+    }
+  },
+  "full_report": {
+    "overview": "ภาพรวมร้าน 1 ย่อหน้า",
+    "focus_areas": [
+      {
+        "title": "หัวข้อ",
+        "why": "เหตุผลว่าทำไมเรื่องนี้สำคัญ",
+        "steps": ["step 1", "step 2", "step 3"],
+        "expected_result": "ผลที่คาด"
+      },
+      {
+        "title": "หัวข้อ",
+        "why": "เหตุผลว่าทำไมเรื่องนี้สำคัญ",
+        "steps": ["step 1", "step 2", "step 3"],
+        "expected_result": "ผลที่คาด"
+      },
+      {
+        "title": "หัวข้อ",
+        "why": "เหตุผลว่าทำไมเรื่องนี้สำคัญ",
+        "steps": ["step 1", "step 2", "step 3"],
+        "expected_result": "ผลที่คาด"
+      }
+    ],
+    "plan_30_days": [
+      {"week": "สัปดาห์ที่ 1", "title": "หัวข้อ", "details": ["ข้อ 1", "ข้อ 2", "ข้อ 3"]},
+      {"week": "สัปดาห์ที่ 2", "title": "หัวข้อ", "details": ["ข้อ 1", "ข้อ 2", "ข้อ 3"]},
+      {"week": "สัปดาห์ที่ 3", "title": "หัวข้อ", "details": ["ข้อ 1", "ข้อ 2", "ข้อ 3"]},
+      {"week": "สัปดาห์ที่ 4", "title": "หัวข้อ", "details": ["ข้อ 1", "ข้อ 2", "ข้อ 3"]}
+    ],
+    "channel_fit": {
+      "score_pct": 0,
+      "label": "เหมาะมาก",
+      "long_reason": "อธิบายยาว 1 ย่อหน้า",
+      "conclusion_lines": ["สรุป 1", "สรุป 2", "สรุป 3"]
+    }
+  }
+}
 
-**3 Action plan หลัก**
-1) [ชื่อหัวข้อ]
-→ ...
-→ ...
-→ ...
-เหตุผล: ...
-ผลที่คาด: ...
-
-2) [ชื่อหัวข้อ]
-→ ...
-→ ...
-→ ...
-เหตุผล: ...
-ผลที่คาด: ...
-
-3) [ชื่อหัวข้อ]
-→ ...
-→ ...
-→ ...
-เหตุผล: ...
-ผลที่คาด: ...
-
-**แผน 30 วัน**
-[สัปดาห์ที่ 1 — หัวข้อ]
-...
-
-[สัปดาห์ที่ 2 — หัวข้อ]
-...
-
-[สัปดาห์ที่ 3 — หัวข้อ]
-...
-
-[สัปดาห์ที่ 4 — หัวข้อ]
-...
-
-**ประเมิน Channel Fit**
-[สรุปตรง ๆ ว่าร้านนี้ควรโตบน Shopee ต่อไหม ควรโตแบบไหน หรือควรระวังอะไร]`;
+ข้อบังคับเพิ่ม:
+- focus_3 ต้องมี 3 ข้อเท่านั้น
+- plan_30_days ต้องมี 4 สัปดาห์เท่านั้น
+- steps ของ full_report แต่ละ focus area ต้อง 3-4 ข้อ
+- detail ใน web_summary ต้องสั้นพอสำหรับการ์ดบนหน้าเว็บ
+- อย่าให้ web_summary กลายเป็นรายงานเต็มย่อส่วน
+- channel_fit ต้องกล้าตัดสิน ไม่ตอบกลาง ๆ`;
 }
 
 /* Animated loading/* Animated loading with rotating messages */
@@ -5401,11 +5647,10 @@ const _origRenderFinalPreview = renderFinalPreview;
 renderFinalPreview = async function() {
   const loadingTimer2 = showLoadingWithMessages([
     `กำลังวิเคราะห์เชิงลึกร้าน ${state.profile.shopName || ''}...`,
-    'กำลังวิเคราะห์จุดที่ยอดหลุด...',
-    'กำลังประเมิน competitive positioning...',
-    'กำลังวางแผน 30 วันเฉพาะร้านคุณ...',
+    'กำลังจัดลำดับ 3 เรื่องที่ควรทำก่อน...',
+    'กำลังสรุปหน้าเว็บแบบอ่านจบเร็ว...',
+    'กำลังเตรียมรายงานเต็มสำหรับส่งลูกค้า...',
     'กำลังประเมิน Channel Fit บน Shopee...',
-    'กำลังเขียน Action plan 3 ข้อหลัก...',
     'เกือบเสร็จแล้วค่ะ รอแป๊บนึง...'
   ]);
 
@@ -5416,9 +5661,18 @@ renderFinalPreview = async function() {
     const aiText = await callDiagnose(step2Prompt);
     clearInterval(loadingTimer2);
 
-    state._step2AI = aiText;
+    const parsedPayload = safeParseJSON(aiText);
+    const step2Payload = normalizeStep2Payload(parsedPayload);
+    const storedJSON = JSON.stringify(step2Payload);
+
+    state._step2AI = storedJSON;
+    state._step2Payload = step2Payload;
     window._sc_step2_raw = aiText;
-    console.log('=== STEP2 RAW ===', aiText);
+    window._sc_step2_payload = step2Payload;
+    window._sc_full_report = step2Payload.full_report;
+    try {
+      localStorage.setItem('shopcheck_last_step2_payload', storedJSON);
+    } catch (_) {}
 
     if (!state.submissionId) {
       try {
@@ -5437,110 +5691,7 @@ renderFinalPreview = async function() {
       }
     }
 
-    const parts = aiText.split(/\*\*([^*]+)\*\*/g);
-    let actionPlan = '', plan30 = '', channelFit = '';
-
-    for (let i = 1; i < parts.length; i += 2) {
-      const title = parts[i].trim();
-      const body = (parts[i + 1] || '').trim();
-      if (title.includes('Action') || title.includes('action') || title.includes('โฟกัส') || title.includes('ต้องทำ') || title.match(/^3/)) {
-        actionPlan = body;
-      } else if (title.includes('แผน') || title.includes('30 วัน') || title.includes('สัปดาห์')) {
-        plan30 = body;
-      } else if (title.includes('Channel') || title.includes('channel') || title.includes('Shopee') || title.includes('ควรโต')) {
-        channelFit = body;
-      }
-    }
-
-    if (!actionPlan && !plan30 && !channelFit && aiText.length > 100) {
-      const thirds = Math.floor(aiText.length / 3);
-      actionPlan = aiText.substring(0, thirds);
-      plan30 = aiText.substring(thirds, thirds * 2);
-      channelFit = aiText.substring(thirds * 2);
-    }
-
-    function parseActions(text) {
-      const lines = String(text || '').replace(/\r/g, '').split('\n').map(l => l.trim()).filter(Boolean);
-      const steps = [];
-      let cur = null;
-
-      lines.forEach(line => {
-        const t = line.trim();
-        if (/^\d+[\.)]\s*/.test(t)) {
-          if (cur) steps.push(cur);
-          cur = { title: t.replace(/^\d+[\.)]\s*/, '').trim(), details: [] };
-          return;
-        }
-        if (cur) cur.details.push(t);
-      });
-
-      if (cur) steps.push(cur);
-      return steps;
-    }
-
-    function parseWeeks(text) {
-      const src = String(text || '').replace(/\r/g, '').trim();
-      const lines = src.split('\n').map(l => l.trim()).filter(Boolean);
-      const weeks = [];
-      let current = null;
-
-      lines.forEach(line => {
-        let m = line.match(/^\[\s*(สัปดาห์ที่?\s*[1-4]\s*[—-]\s*.+?)\s*\]$/);
-        if (m) {
-          if (current) weeks.push(current);
-          current = { label: m[1].trim(), content: '' };
-          return;
-        }
-
-        m = line.match(/^(สัปดาห์ที่?\s*[1-4])\s*[:：-]\s*(.+)$/);
-        if (m) {
-          if (current) weeks.push(current);
-          current = { label: m[1].trim(), content: m[2].trim() };
-          return;
-        }
-
-        if (current) current.content += (current.content ? '\n' : '') + line;
-      });
-
-      if (current) weeks.push(current);
-      return weeks.slice(0, 4);
-    }
-
-    function cleanLine(line) {
-      return String(line || '')
-        .replace(/^วิธีทำ\s*step\s*by\s*step\s*:?/i, '')
-        .replace(/^วิธีทำ\s*:?/i, '')
-        .replace(/^เหตุผล\s*:?/i, '')
-        .replace(/^ผลที่คาด\s*:?/i, '')
-        .replace(/^ผลที่จะเห็น\s*:?/i, '')
-        .replace(/^[\s•\-–—]*→?\s*/, '')
-        .trim();
-    }
-
-    function getSummaryHeadline(label) {
-      return {
-        traffic: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้คนยังหาเจอสินค้าไม่พอ',
-        trust: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังทำให้ลูกค้ามั่นใจไม่พอ',
-        price: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังสื่อความคุ้มค่าให้ชัดไม่พอ',
-        ops: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ระบบร้านยังไม่พร้อมพอ',
-        channel_fit: 'ร้านนี้ยังต้องเช็กก่อนว่าสินค้าหลักเหมาะจะโตบน Shopee แค่ไหน'
-      }[label] || 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังต้องเลือกแก้ปัญหาให้ตรงจุด';
-    }
-
-    function getChannelFitMeta(label) {
-      const map = {
-        traffic: { pct: 80, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้คนหาเจอและกดเข้ามาดูง่ายขึ้น', badge: 'เหมาะมาก' },
-        trust: { pct: 82, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้ลูกค้ามั่นใจมากขึ้นก่อนกดซื้อ', badge: 'เหมาะมาก' },
-        price: { pct: 85, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตแบบชนะจากการสื่อความคุ้มค่า ไม่ใช่ชนราคาจนกำไรหาย', badge: 'เหมาะมาก' },
-        ops: { pct: 70, text: 'Shopee ยังเหมาะกับร้านนี้ แต่ถ้าจะโตต่อ ร้านต้องเก็บระบบหลังบ้านให้พร้อมก่อน', badge: 'ยังเหมาะ' },
-        channel_fit: { pct: 58, text: 'Shopee อาจยังไม่ใช่จุดเร่งโตของสินค้าหลักตัวนี้ในตอนนี้ ต้องเช็กบทบาทสินค้าให้ชัดก่อน', badge: 'ต้องเช็กเพิ่ม' }
-      };
-      return map[label] || { pct: 75, text: 'Shopee ยังเหมาะกับร้านนี้ แต่ต้องเลือกแก้ปัญหาหลักให้ตรงก่อน', badge: 'ยังเหมาะ' };
-    }
-
     const quick = buildQuickResult();
-    const final = buildFinalPreview();
-    const fallbackPlan = build30DayPlan(final.label, state.deepAnswers);
     const secStats = getQuickSectionStats();
     const snapshotMap = {
       storefront: 'หน้าร้าน & หาเจอ',
@@ -5551,43 +5702,8 @@ renderFinalPreview = async function() {
       .map(id => secStats.find(sec => sec.id === id))
       .filter(Boolean);
 
-    const parsedActions = parseActions(actionPlan);
-    const parsedWeeks = parseWeeks(plan30);
-    const fit = getChannelFitMeta(final.label);
-
-    const focusCards = parsedActions.length
-      ? parsedActions.slice(0, 3).map((item, idx) => {
-          const detail = item.details
-            .map(cleanLine)
-            .find(line => line && !line.startsWith('เหตุผล') && !line.startsWith('ผลที่คาด') && !line.startsWith('ผลที่จะเห็น'))
-            || cleanLine(item.details[0] || '');
-          return {
-            title: item.title.replace(/\([^)]*\)/g, '').trim(),
-            detail,
-            tag: idx === 2 ? 'ทำได้เลย' : 'impact สูง',
-            green: idx === 2
-          };
-        })
-      : final.focus.map((item, idx) => ({
-          title: item.title,
-          detail: item.detail,
-          tag: idx === 2 ? 'ทำได้เลย' : 'impact สูง',
-          green: idx === 2
-        }));
-
-    const weekCards = parsedWeeks.length
-      ? parsedWeeks.slice(0, 4).map((week, idx) => ({
-          week: week.label || `สัปดาห์ ${idx + 1}`,
-          title: cleanLine((week.content || '').split('\n')[0] || `แผนสัปดาห์ ${idx + 1}`),
-          detail: cleanLine((week.content || '').split('\n').slice(1).join(' ') || week.content || '')
-        }))
-      : fallbackPlan.map(item => ({
-          week: item.week,
-          title: item.title,
-          detail: item.detail
-        }));
-
-    const channelCopy = channelFit ? channelFit.replace(/\n+/g, ' ').trim() : fit.text;
+    const summary = step2Payload.web_summary;
+    const fit = summary.channel_fit;
     const emailValue = state.email ? `<strong>${escapeHTML(state.email)}</strong>` : 'อีเมลที่กรอกไว้';
 
     el.stageCard.innerHTML = `
@@ -5612,24 +5728,24 @@ renderFinalPreview = async function() {
             <div class="summary-main">
               <div class="summary-card summary-headline-card">
                 <p class="summary-eyebrow">ผลวิเคราะห์เชิงลึก</p>
-                <h2 class="summary-headline">${escapeHTML(getSummaryHeadline(final.label))}</h2>
+                <h2 class="summary-headline">${escapeHTML(summary.headline)}</h2>
                 <div class="summary-core">
                   <strong>ปัญหาหลักตอนนี้</strong>
-                  <p>${escapeHTML(final.rootProblem)}</p>
+                  <p>${escapeHTML(summary.main_problem)}</p>
                 </div>
               </div>
 
               <div class="summary-card">
                 <h3 class="summary-section-title">3 เรื่องที่ควรโฟกัสก่อน</h3>
                 <div class="summary-focus-grid">
-                  ${focusCards.map((item, idx) => `
+                  ${summary.focus_3.map((item, idx) => `
                     <div class="summary-focus-card">
                       <div class="summary-focus-num">${idx + 1}</div>
                       <div class="summary-focus-copy">
                         <h4>${escapeHTML(item.title)}</h4>
-                        <p>${escapeHTML(item.detail)}</p>
+                        <p>${escapeHTML(item.desc)}</p>
                       </div>
-                      <span class="summary-tag ${item.green ? 'green' : ''}">${item.tag}</span>
+                      <span class="summary-tag ${item.tag === 'ทำได้เลย' ? 'green' : ''}">${escapeHTML(item.tag)}</span>
                     </div>
                   `).join('')}
                 </div>
@@ -5638,7 +5754,7 @@ renderFinalPreview = async function() {
               <div class="summary-card">
                 <h3 class="summary-section-title">แผน 30 วัน</h3>
                 <div class="summary-plan-grid">
-                  ${weekCards.map((item, idx) => `
+                  ${summary.plan_30_days.map((item, idx) => `
                     <div class="summary-plan-card week-${idx + 1}">
                       <p class="summary-plan-week">${escapeHTML(item.week)}</p>
                       <p class="summary-plan-title">${escapeHTML(item.title)}</p>
@@ -5671,11 +5787,11 @@ renderFinalPreview = async function() {
 
               <div class="summary-card summary-channel">
                 <strong>ประเมิน Channel Fit</strong>
-                <div class="summary-channel-bar"><span style="width:${fit.pct}%"></span></div>
-                <p>${escapeHTML(channelCopy)}</p>
+                <div class="summary-channel-bar"><span style="width:${fit.score_pct}%"></span></div>
+                <p>${escapeHTML(fit.summary)}</p>
                 <div class="summary-mini-line">
                   <span>คะแนนความเหมาะสม</span>
-                  <span>${fit.pct}% · ${fit.badge}</span>
+                  <span>${fit.score_pct}% · ${escapeHTML(fit.label)}</span>
                 </div>
               </div>
 
@@ -5689,10 +5805,10 @@ renderFinalPreview = async function() {
                 <strong>ปุ่ม action บนหน้า</strong>
                 <p>หน้านี้ทำให้เห็นข้อสรุปหลักก่อน ส่วนคนที่อยากย้อนดูผลรอบแรกหรือเริ่มทำใหม่ สามารถกดปุ่มด้านล่างได้เลย</p>
                 <div class="summary-btn-stack">
-                  <button class="nav-btn summary-btn" id="backToQuickResultBtn">กลับไปดูผลวิเคราะห์พาร์ทแรก</button>
+                  <button class="nav-btn summary-btn" id="backToQuickResultBtn">กลับไปดูผลวิเคราะห์ร้านฉบับพื้นฐาน</button>
                   <button class="nav-btn primary summary-btn" id="restartFinalBtn">เริ่มใหม่ตั้งแต่ต้น</button>
                 </div>
-                <div class="summary-helper-note">หากกดเริ่มใหม่ตั้งแต่ต้น หมายถึงการทำแบบทดสอบใหม่ โดยข้อมูลที่กรอกมาและผลวิเคราะห์จะไม่มีการบันทึกไว้</div>
+                <div class="summary-helper-note">ถ้าคุณจะทำรายงานส่งลูกค้า ให้ดึงข้อมูลจาก submission นี้ใน Supabase โดยใช้ step2_ai_result → full_report ได้เลยค่ะ</div>
               </div>
             </div>
           </div>
