@@ -4786,7 +4786,40 @@ function normalizeScorePct(value, fallback) {
 
 function getFallbackChannelFit() {
   const final = buildFinalPreview();
-  return getChannelFitMeta(final.label);
+
+  const map = {
+    traffic: {
+      pct: 80,
+      text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้คนหาเจอและกดเข้ามาดูง่ายขึ้น',
+      badge: 'เหมาะมาก'
+    },
+    trust: {
+      pct: 82,
+      text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้ลูกค้ามั่นใจมากขึ้นก่อนกดซื้อ',
+      badge: 'เหมาะมาก'
+    },
+    price: {
+      pct: 85,
+      text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตแบบชนะจากการสื่อความคุ้มค่า ไม่ใช่ชนราคาจนกำไรหาย',
+      badge: 'เหมาะมาก'
+    },
+    ops: {
+      pct: 70,
+      text: 'Shopee ยังเหมาะกับร้านนี้ แต่ถ้าจะโตต่อ ร้านต้องเก็บระบบหลังบ้านให้พร้อมก่อน',
+      badge: 'ยังเหมาะ'
+    },
+    channel_fit: {
+      pct: 58,
+      text: 'Shopee อาจยังไม่ใช่จุดเร่งโตของสินค้าหลักตัวนี้ในตอนนี้ ต้องเช็กบทบาทสินค้าให้ชัดก่อน',
+      badge: 'ต้องเช็กเพิ่ม'
+    }
+  };
+
+  return map[final.label] || {
+    pct: 75,
+    text: 'Shopee ยังเหมาะกับร้านนี้ แต่ต้องเลือกแก้ปัญหาหลักให้ตรงก่อน',
+    badge: 'ยังเหมาะ'
+  };
 }
 
 function buildFallbackStep2Payload() {
