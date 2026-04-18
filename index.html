@@ -1749,413 +1749,6 @@ body.result-active .main-stage {
   color:var(--text3);
 }
 
-
-.summary-result-card{
-  padding:0;
-  overflow:hidden;
-  background:transparent;
-  border:none;
-  box-shadow:none;
-}
-.summary-shell{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:30px;
-  overflow:hidden;
-  box-shadow:var(--shadow-sm);
-}
-.summary-topbar{
-  background:linear-gradient(135deg,#181411 0%, #2b1d16 54%, #6d3819 100%);
-  padding:20px 24px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  color:#fff;
-}
-.summary-brand strong{
-  display:inline-block;
-  white-space:nowrap;
-  font-family:'DM Serif Display',serif;
-  font-size:36px;
-  line-height:1;
-  letter-spacing:-.4px;
-  color:#ffffff;
-}
-.summary-brand strong span{ color:var(--brand); }
-.summary-author{
-  font-size:13px;
-  color:rgba(255,255,255,.78);
-  text-align:right;
-  line-height:1.6;
-}
-.summary-intro{
-  padding:18px 24px;
-  background:linear-gradient(180deg,#fff5ee 0%, #fff0e5 100%);
-  border-bottom:1px solid #f8dccf;
-}
-.summary-intro-inner{
-  display:flex;
-  gap:12px;
-  align-items:flex-start;
-  max-width:860px;
-}
-.summary-intro-icon{
-  width:42px;
-  height:42px;
-  border-radius:999px;
-  background:var(--brand);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
-  font-weight:700;
-  flex-shrink:0;
-}
-.summary-intro-title{
-  margin:0 0 4px;
-  font-size:16px;
-  font-weight:700;
-  color:var(--brand-dark);
-}
-.summary-intro-copy{
-  margin:0;
-  font-size:14px;
-  line-height:1.72;
-  color:#c75d34;
-}
-.summary-content{
-  display:grid;
-  grid-template-columns:minmax(0,1.45fr) 340px;
-  gap:22px;
-  padding:24px;
-  align-items:start;
-}
-.summary-main{ display:grid; gap:16px; }
-.summary-sidebar{
-  display:grid;
-  gap:16px;
-  align-content:start;
-}
-.summary-card{
-  border:1px solid var(--border);
-  border-radius:24px;
-  background:#fff;
-  padding:20px;
-}
-.summary-headline-card{
-  background:linear-gradient(180deg,#fffdfa 0%, #fff7f1 100%);
-}
-.summary-eyebrow{
-  margin:0 0 6px;
-  font-size:12px;
-  color:var(--text3);
-  letter-spacing:.03em;
-}
-.summary-headline{
-  margin:0;
-  font-size:30px;
-  line-height:1.2;
-  letter-spacing:-.03em;
-}
-.summary-core{
-  margin-top:14px;
-  background:#fff;
-  border:1px solid #f4dfd1;
-  border-radius:18px;
-  padding:14px 15px;
-}
-.summary-core strong{
-  display:block;
-  font-size:12px;
-  color:var(--brand-dark);
-  margin-bottom:5px;
-}
-.summary-core p{
-  margin:0;
-  font-size:14px;
-  line-height:1.72;
-  color:var(--text2);
-}
-.summary-section-title{
-  margin:0 0 12px;
-  font-size:16px;
-  font-weight:700;
-}
-.summary-focus-grid{ display:grid; gap:10px; }
-.summary-focus-card{
-  background:#fff8f3;
-  border:1px solid #f6e2d7;
-  border-radius:18px;
-  padding:14px 15px;
-  display:grid;
-  grid-template-columns:32px minmax(0,1fr) auto;
-  gap:12px;
-  align-items:start;
-}
-.summary-focus-num{
-  width:32px;
-  height:32px;
-  border-radius:10px;
-  background:#faddcc;
-  color:var(--brand-dark);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-  font-size:15px;
-}
-.summary-focus-copy h4{
-  margin:0 0 4px;
-  font-size:15px;
-  line-height:1.45;
-}
-.summary-focus-copy p{
-  margin:0;
-  font-size:14px;
-  line-height:1.68;
-  color:var(--text2);
-}
-.summary-tag{
-  font-size:11px;
-  padding:4px 8px;
-  border-radius:999px;
-  background:#fff1e8;
-  color:#d45c2e;
-  font-weight:700;
-  white-space:nowrap;
-}
-.summary-tag.green{
-  background:var(--green-bg);
-  color:var(--green);
-}
-.summary-plan-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-.summary-plan-card{
-  border:1px solid #f6e2d7;
-  border-radius:16px;
-  padding:14px 14px 16px;
-  min-height:136px;
-  position:relative;
-  overflow:hidden;
-}
-.summary-plan-card::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  bottom:0;
-  width:5px;
-  border-radius:16px 0 0 16px;
-  background:rgba(0,0,0,.08);
-}
-.summary-plan-card.week-1{ background:linear-gradient(180deg,#fff9f4 0%, #fff3ee 100%); border-color:#f2ddd1; }
-.summary-plan-card.week-1::before{ background:#efb28f; }
-.summary-plan-card.week-2{ background:linear-gradient(180deg,#fff8ee 0%, #fff0df 100%); border-color:#efdabc; }
-.summary-plan-card.week-2::before{ background:#eda75a; }
-.summary-plan-card.week-3{ background:linear-gradient(180deg,#fffced 0%, #f8f1d6 100%); border-color:#eadfaf; }
-.summary-plan-card.week-3::before{ background:#d3b449; }
-.summary-plan-card.week-4{ background:linear-gradient(180deg,#f5faed 0%, #e7f3da 100%); border-color:#d8e6bf; }
-.summary-plan-card.week-4::before{ background:#6fa239; }
-.summary-plan-week{
-  margin:0 0 5px;
-  font-size:11px;
-  color:var(--text3);
-}
-.summary-plan-card.week-2 .summary-plan-week{ color:#bc6b2f; }
-.summary-plan-card.week-3 .summary-plan-week{ color:#9b7d1c; }
-.summary-plan-card.week-4 .summary-plan-week{ color:#4f7f1b; }
-.summary-plan-title{
-  margin:0 0 7px;
-  font-size:14px;
-  line-height:1.45;
-}
-.summary-plan-copy{
-  margin:0;
-  font-size:12px;
-  line-height:1.62;
-  color:var(--text2);
-}
-.summary-score-box{
-  background:linear-gradient(145deg,#1d1916,#33231b);
-  color:#fff;
-  border:none;
-}
-.summary-score-top{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:14px;
-}
-.summary-score-big{
-  font-size:42px;
-  font-weight:700;
-  line-height:1;
-  color:#fff;
-}
-.summary-score-sub{
-  font-size:12px;
-  color:rgba(255,255,255,.72);
-  line-height:1.6;
-  margin-top:4px;
-}
-.summary-pill{
-  font-size:11px;
-  padding:6px 10px;
-  border-radius:999px;
-  background:rgba(255,255,255,.12);
-  color:#fff;
-  font-weight:700;
-  white-space:nowrap;
-}
-.summary-bars{ display:grid; gap:10px; }
-.summary-bar-row{
-  display:grid;
-  grid-template-columns:110px 1fr 44px;
-  gap:8px;
-  align-items:center;
-}
-.summary-bar-row label{
-  font-size:12px;
-  color:rgba(255,255,255,.72);
-}
-.summary-bar{
-  height:6px;
-  background:rgba(255,255,255,.10);
-  border-radius:999px;
-  overflow:hidden;
-}
-.summary-bar > span{
-  display:block;
-  height:100%;
-  border-radius:999px;
-}
-.summary-bar-row strong{
-  font-size:11px;
-  color:rgba(255,255,255,.78);
-  text-align:right;
-}
-.summary-channel strong,
-.summary-delivery strong,
-.summary-actions strong{
-  display:block;
-  font-size:13px;
-  color:var(--brand-dark);
-  margin-bottom:8px;
-}
-.summary-channel p,
-.summary-delivery p,
-.summary-actions p{
-  margin:0;
-  font-size:12px;
-  line-height:1.66;
-  color:var(--text2);
-}
-.summary-delivery p + p,
-.summary-actions p + p{ margin-top:6px; }
-.summary-channel-bar{
-  height:9px;
-  background:#f3ebe6;
-  border-radius:999px;
-  overflow:hidden;
-  margin:10px 0 8px;
-}
-.summary-channel-bar > span{
-  display:block;
-  height:100%;
-  border-radius:999px;
-  background:var(--brand);
-}
-.summary-mini-line{
-  margin-top:10px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  font-size:12px;
-  color:var(--text2);
-}
-.summary-mini-line span:last-child{
-  font-size:11px;
-  padding:4px 8px;
-  border-radius:999px;
-  background:#fff1e8;
-  color:#d45c2e;
-  font-weight:700;
-}
-.summary-btn-stack{
-  display:grid;
-  gap:10px;
-  margin-top:14px;
-}
-.summary-btn{
-  display:block;
-  width:100%;
-}
-.summary-helper-note{
-  margin-top:10px;
-  font-size:11px;
-  line-height:1.65;
-  color:var(--text3);
-}
-@media (max-width: 980px) {
-  .summary-content{ grid-template-columns:1fr; }
-  .summary-plan-grid{ grid-template-columns:repeat(2,1fr); }
-}
-@media (max-width: 720px) {
-  .summary-topbar{
-    padding:16px 16px 14px;
-    align-items:flex-start;
-    gap:10px;
-  }
-  .summary-brand strong{ font-size:28px; }
-  .summary-author{ font-size:11px; text-align:left; }
-  .summary-intro{
-    padding:14px 16px;
-  }
-  .summary-intro-icon{
-    width:34px;
-    height:34px;
-    font-size:15px;
-  }
-  .summary-intro-title{ font-size:14px; }
-  .summary-intro-copy{ font-size:13px; line-height:1.65; }
-  .summary-content{
-    padding:16px;
-    gap:14px;
-  }
-  .summary-card{
-    padding:16px;
-    border-radius:20px;
-  }
-  .summary-headline{
-    font-size:24px;
-    line-height:1.24;
-  }
-  .summary-focus-card{
-    grid-template-columns:28px minmax(0,1fr);
-  }
-  .summary-tag{
-    grid-column:2;
-    justify-self:start;
-    margin-top:2px;
-  }
-  .summary-plan-grid{ grid-template-columns:1fr 1fr; }
-  .summary-score-big{ font-size:34px; }
-  .summary-bar-row{
-    grid-template-columns:96px 1fr 38px;
-  }
-}
-@media (max-width: 480px) {
-  .summary-plan-grid{ grid-template-columns:1fr; }
-}
-
-
 /* ── 30-day Plan ─────────────────────────────────────────── */
 .plan-weeks {
   display:grid;
@@ -2385,6 +1978,15 @@ body.result-active .main-stage {
   .premium-light-card{padding:14px; border-radius:18px;}
 }
 
+
+@media (max-width: 980px) {
+  .sc-summary-grid { grid-template-columns:1fr !important; }
+  .sc-plan-grid { grid-template-columns:1fr 1fr !important; }
+}
+@media (max-width: 720px) {
+  .sc-plan-grid { grid-template-columns:1fr !important; }
+  .sc-summary-grid { padding:16px !important; gap:16px !important; }
+}
 </style>
 </head>
 <body>
@@ -3092,8 +2694,7 @@ const state = {
   _step1AI:'',
   _step2AI:'',
   _step1Prompt:'',
-  _step2Prompt:'',
-  _step2Payload:null
+  _step2Prompt:''
 };
 
 const el = {
@@ -4009,7 +3610,7 @@ function renderPayment() {
 
       <div class="payment-combo-actions">
         <div class="nav-left">
-          <button class="nav-btn" id="payBackBtn">← กลับไปดูผลวิเคราะห์ร้านฉบับพื้นฐาน</button>
+          <button class="nav-btn" id="payBackBtn">← กลับไปผลเบื้องต้น</button>
         </div>
         <div class="nav-right">
           <button class="nav-btn primary" id="payConfirmBtn">ชำระเงินแล้ว ไปต่อเลย✨</button>
@@ -4482,153 +4083,92 @@ function build30DayPlan(type, deep) {
 }
 
 
-
 function renderFinalPreview() {
   const quick = buildQuickResult();
   const final = buildFinalPreview();
   const plan = build30DayPlan(final.label, state.deepAnswers);
-  const secStats = getQuickSectionStats();
-  const snapshotMap = {
-    storefront: 'หน้าร้าน & หาเจอ',
-    pricing: 'ราคา & ความคุ้ม',
-    bottleneck: 'จุดต่างจากคู่แข่ง'
-  };
-  const snapshotRows = ['storefront', 'pricing', 'bottleneck']
-    .map(id => secStats.find(sec => sec.id === id))
-    .filter(Boolean);
-
-  const focusTags = ['impact สูง', 'impact สูง', 'ทำได้เลย'];
-
-  function getSummaryHeadline(label) {
-    return {
-      traffic: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้คนยังหาเจอสินค้าไม่พอ',
-      trust: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังทำให้ลูกค้ามั่นใจไม่พอ',
-      price: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังสื่อความคุ้มค่าให้ชัดไม่พอ',
-      ops: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ระบบร้านยังไม่พร้อมพอ',
-      channel_fit: 'ร้านนี้ยังต้องเช็กก่อนว่าสินค้าหลักเหมาะจะโตบน Shopee แค่ไหน'
-    }[label] || 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังต้องเลือกแก้ปัญหาให้ตรงจุด';
-  }
-
-  function getChannelFitMeta(label) {
-    const map = {
-      traffic: { pct: 80, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้คนหาเจอและกดเข้ามาดูง่ายขึ้น', badge: 'เหมาะมาก' },
-      trust: { pct: 82, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้ลูกค้ามั่นใจมากขึ้นก่อนกดซื้อ', badge: 'เหมาะมาก' },
-      price: { pct: 85, text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตแบบชนะจากการสื่อความคุ้มค่า ไม่ใช่ชนราคาจนกำไรหาย', badge: 'เหมาะมาก' },
-      ops: { pct: 70, text: 'Shopee ยังเหมาะกับร้านนี้ แต่ถ้าจะโตต่อ ร้านต้องเก็บระบบหลังบ้านให้พร้อมก่อน', badge: 'ยังเหมาะ' },
-      channel_fit: { pct: 58, text: 'Shopee อาจยังไม่ใช่จุดเร่งโตของสินค้าหลักตัวนี้ในตอนนี้ ต้องเช็กบทบาทสินค้าให้ชัดก่อน', badge: 'ต้องเช็กเพิ่ม' }
-    };
-    return map[label] || { pct: 75, text: 'Shopee ยังเหมาะกับร้านนี้ แต่ต้องเลือกแก้ปัญหาหลักให้ตรงก่อน', badge: 'ยังเหมาะ' };
-  }
-
-  const fit = getChannelFitMeta(final.label);
-  const emailValue = state.email ? `<strong>${escapeHTML(state.email)}</strong>` : 'อีเมลที่กรอกไว้';
+  const emailNote = state.email
+    ? `<div class="email-sent-box delivery-notice-box">✅ รายงานผลวิเคราะห์ด้านล่างนี้จะส่งไปที่ <strong>${escapeHTML(state.email)}</strong> ภายใน 24 ชั่วโมง</div>`
+    : '';
 
   el.stageCard.innerHTML = `
-    <div class="result-card summary-result-card">
-      <div class="summary-shell">
-        <div class="summary-topbar">
-          <div class="summary-brand"><strong>Shop<span>Check</span></strong></div>
-          <div class="summary-author">โดย Niranya · Ex-Shopee TH<br>ผลสรุปสำหรับอ่านบนหน้าเว็บ</div>
-        </div>
-
-        <div class="summary-intro">
-          <div class="summary-intro-inner">
-            <div class="summary-intro-icon">✓</div>
-            <div>
-              <p class="summary-intro-title">รายงานฉบับเต็มจะส่งภายใน 24 ชม.</p>
-              <p class="summary-intro-copy">หน้านี้ตั้งใจให้เห็นข้อสรุปสำคัญแบบอ่านจบได้เร็ว ส่วนรายละเอียดเชิงลึก วิธีทำทีละขั้น และรายงานฉบับเต็มจะส่งให้ทางอีเมล หรือรับผ่าน LINE ได้</p>
-            </div>
+    <div class="result-card">
+      <div class="result-top">
+        <div>
+          <div class="result-type-pill">✅ วิเคราะห์เสร็จแล้ว · ผลเต็ม</div>
+          <h2>ร้านคุณควรโตบน Shopee แบบไหน</h2>
+          <div class="result-meta-lines">
+            <div class="result-meta-line"><strong>หมวดหมู่สินค้า:</strong> ${escapeHTML(state.profile.shopCat || 'ไม่ระบุ')}</div>
+            <div class="result-meta-line"><strong>สินค้าที่อยากดัน:</strong> ${escapeHTML(state.profile.heroProduct || 'ไม่ระบุ')}</div>
+            <div class="result-meta-line"><strong>ออเดอร์ปัจจุบัน:</strong> ${escapeHTML(state.profile.monthlyOrders || 'ไม่ระบุ')}</div>
+            <div class="result-meta-line"><strong>เป้าหมาย:</strong> ${escapeHTML(state.profile.targetOrders || 'ไม่ระบุ')}</div>
           </div>
         </div>
+        <div class="result-badge">${getQuickVerdict()}</div>
+      </div>
 
-        <div class="summary-content">
-          <div class="summary-main">
-            <div class="summary-card summary-headline-card">
-              <p class="summary-eyebrow">ผลวิเคราะห์เชิงลึก</p>
-              <h2 class="summary-headline">${escapeHTML(getSummaryHeadline(final.label))}</h2>
-              <div class="summary-core">
-                <strong>ปัญหาหลักตอนนี้</strong>
-                <p>${escapeHTML(final.rootProblem)}</p>
-              </div>
-            </div>
+      ${emailNote}
 
-            <div class="summary-card">
-              <h3 class="summary-section-title">3 เรื่องที่ควรโฟกัสก่อน</h3>
-              <div class="summary-focus-grid">
-                ${final.focus.map((p, i) => `
-                  <div class="summary-focus-card">
-                    <div class="summary-focus-num">${i + 1}</div>
-                    <div class="summary-focus-copy">
-                      <h4>${escapeHTML(p.title)}</h4>
-                      <p>${escapeHTML(p.detail)}</p>
-                    </div>
-                    <span class="summary-tag ${i === 2 ? 'green' : ''}">${focusTags[i] || 'สำคัญ'}</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-
-            <div class="summary-card">
-              <h3 class="summary-section-title">แผน 30 วัน</h3>
-              <div class="summary-plan-grid">
-                ${plan.map((w, i) => `
-                  <div class="summary-plan-card week-${i + 1}">
-                    <p class="summary-plan-week">${escapeHTML(w.week)}</p>
-                    <p class="summary-plan-title">${escapeHTML(w.title)}</p>
-                    <p class="summary-plan-copy">${escapeHTML(w.detail)}</p>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          </div>
-
-          <div class="summary-sidebar">
-            <div class="summary-card summary-score-box">
-              <div class="summary-score-top">
-                <div>
-                  <div class="summary-score-big">${formatScore(quick.total)}</div>
-                  <div class="summary-score-sub">คะแนนรวมของร้านตอนนี้<br>${escapeHTML(getQuickVerdict())}</div>
-                </div>
-                <div class="summary-pill">Quick view</div>
-              </div>
-              <div class="summary-bars">
-                ${snapshotRows.map(sec => `
-                  <div class="summary-bar-row">
-                    <label>${snapshotMap[sec.id] || sec.name}</label>
-                    <div class="summary-bar"><span style="width:${sec.pct}%; background:${sec.id === 'bottleneck' ? '#ef9f27' : 'var(--brand)'};"></span></div>
-                    <strong>${formatScore(sec.score)}/${sec.max}</strong>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-
-            <div class="summary-card summary-channel">
-              <strong>ประเมิน Channel Fit</strong>
-              <div class="summary-channel-bar"><span style="width:${fit.pct}%"></span></div>
-              <p>${escapeHTML(fit.text)}</p>
-              <div class="summary-mini-line">
-                <span>คะแนนความเหมาะสม</span>
-                <span>${fit.pct}% · ${fit.badge}</span>
-              </div>
-            </div>
-
-            <div class="summary-card summary-delivery">
-              <strong>รายงานเต็มที่ลูกค้าจะได้รับ</strong>
-              <p>ส่งภายใน 24 ชม. ทางอีเมลที่ลูกค้ากรอกไว้ คือ ${emailValue}</p>
-              <p>ถ้าไม่สะดวกเปิดอีเมล สามารถ Add LINE เพื่อรับไฟล์บนมือถือได้เช่นกัน โดยอีเมลยังเป็นช่องทางหลัก</p>
-            </div>
-
-            <div class="summary-card summary-actions">
-              <strong>ปุ่ม action บนหน้า</strong>
-              <p>หน้านี้ทำให้เห็นข้อสรุปหลักก่อน ส่วนคนที่อยากย้อนดูผลรอบแรกหรือเริ่มทำใหม่ สามารถกดปุ่มด้านล่างได้เลย</p>
-              <div class="summary-btn-stack">
-                <button class="nav-btn summary-btn" id="backToQuickResultBtn">กลับไปดูผลวิเคราะห์พาร์ทแรก</button>
-                <button class="nav-btn primary summary-btn" id="restartFinalBtn">เริ่มใหม่ตั้งแต่ต้น</button>
-              </div>
-              <div class="summary-helper-note">หากกดเริ่มใหม่ตั้งแต่ต้น หมายถึงการทำแบบทดสอบใหม่ โดยข้อมูลที่กรอกมาและผลวิเคราะห์จะไม่มีการบันทึกไว้</div>
-            </div>
-          </div>
+      <div class="result-summary">
+        <div class="score-ring">
+          <div class="ring-pill">คะแนนเบื้องต้น</div>
+          <div class="big">${formatScore(quick.total)}/${formatScore(getQuickMaxScore())}</div>
+          <div class="small">${escapeHTML(getLabelHeadline(final.label))}</div>
         </div>
+        <div>
+          <div class="result-panel">
+            <div class="text-block">
+              <h3>ภาพรวมตอนนี้ ร้านควรโตบน Shopee แบบไหน</h3>
+              <p>${escapeHTML(final.role)}</p>
+            </div>
+            <div class="text-block">
+              <h3>แกนปัญหาหลักของร้าน</h3>
+              <p>${escapeHTML(final.rootProblem)}</p>
+            </div>
+          </div>
+          ${renderQuickSectionBars(getQuickSectionStats())}
+        </div>
+      </div>
+
+      <div class="text-block">
+        <h3>สิ่งที่ยังพอเป็นแรงจูงใจให้ลูกค้าตัดสินใจซื้อซื้อได้อยู่</h3>
+        <ul class="strength-list">${final.strengths.map(item => `<li>${escapeHTML(item)}</li>`).join('')}</ul>
+      </div>
+
+      ${final.targetAdvice ? `<div class="text-block"><h3>เป้าหมายรอบ 30 วันนี้</h3><p>${escapeHTML(final.targetAdvice.text)}</p></div>` : ''}
+
+      <div class="text-block">
+        <h3>3 เรื่องที่ควรโฟกัสก่อน</h3>
+        ${final.focus.map((p, i) => `
+          <div style="margin-bottom:14px; padding:14px 16px; background:${i === 0 ? 'var(--brand-soft)' : 'white'}; border:1px solid ${i === 0 ? 'rgba(234,90,24,.2)' : 'var(--border)'}; border-radius:16px;">
+            <div style="font-size:11px; font-weight:700; color:var(--brand); margin-bottom:4px; text-transform:uppercase; letter-spacing:.5px;">อันดับ ${i + 1}${i === 0 ? ' · เริ่มก่อนเลย' : ''}</div>
+            <div style="font-weight:700; font-size:16px; margin-bottom:6px;">${escapeHTML(p.title)}</div>
+            <div style="color:var(--text2); font-size:15px; line-height:1.82;">${escapeHTML(p.detail)}</div>
+            <div style="color:var(--text3); font-size:13px; margin-top:8px;line-height:1.7;">เหตุผล: ${escapeHTML(p.why)}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="text-block">
+        <h3>แผน 30 วัน — ทำอะไรก่อนหลัง</h3>
+        <p style="color:var(--text2); font-size:13px; margin-bottom:14px;">แผนนี้เรียงตาม pain หลักของร้านคุณ ไม่ใช่ template กลาง ๆ ที่ใช้ได้กับทุกคน</p>
+        <div class="plan-weeks">
+          ${plan.map(w => `
+            <div class="plan-week">
+              <div class="plan-week-label">${escapeHTML(w.week)}</div>
+              <div class="plan-week-title">${escapeHTML(w.title)}</div>
+              <div class="plan-week-detail">${escapeHTML(w.detail)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="result-actions-stack">
+        <div class="result-actions">
+          <button class="nav-btn" id="backToQuickResultBtn">← กลับไปดูผลวิเคราะห์ Part แรก</button>
+          <button class="nav-btn" id="restartFinalBtn">เริ่มใหม่ตั้งแต่ต้น*</button>
+        </div>
+        <div class="result-actions-note">(*) หากกดเริ่มใหม่ตั้งแต่ต้น หมายถึง การทำแบบทดสอบใหม่ โดยข้อมูลที่กรอกมาและผลวิเคราะห์จะไม่มีการบันทึกไว้</div>
       </div>
     </div>
   `;
@@ -4672,7 +4212,6 @@ function restartAll() {
   state._step2AI = '';
   state._step1Prompt = '';
   state._step2Prompt = '';
-  state._step2Payload = null;
   state.profile = { shopName:'', shopCat:'', heroProduct:'', monthlyOrders:'', targetOrders:'', mainProblem:'' };
   document.body.classList.remove('result-active');
   renderCurrent();
@@ -4698,7 +4237,6 @@ function escapeAttr(str) { return escapeHTML(str); }
    Replaces rule-based analysis with real Claude AI calls.
    renderQuickResult and renderFinalPreview are overridden below.    */
 
-
 async function callDiagnose(prompt) {
   const res = await fetch('/api/diagnose', {
     method: 'POST',
@@ -4710,257 +4248,6 @@ async function callDiagnose(prompt) {
   return data.result || '';
 }
 
-function extractJSONObject(text) {
-  const raw = String(text || '').trim();
-  if (!raw) return '';
-
-  const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)```/i);
-  if (fenced?.[1]) return fenced[1].trim();
-
-  const start = raw.indexOf('{');
-  if (start === -1) return '';
-
-  let depth = 0;
-  let inString = false;
-  let escaped = false;
-
-  for (let i = start; i < raw.length; i += 1) {
-    const ch = raw[i];
-    if (escaped) {
-      escaped = false;
-      continue;
-    }
-    if (ch === '\\') {
-      escaped = true;
-      continue;
-    }
-    if (ch === '"') {
-      inString = !inString;
-      continue;
-    }
-    if (inString) continue;
-    if (ch === '{') depth += 1;
-    if (ch === '}') {
-      depth -= 1;
-      if (depth === 0) return raw.slice(start, i + 1).trim();
-    }
-  }
-
-  return '';
-}
-
-function safeParseJSON(text) {
-  const candidate = extractJSONObject(text);
-  if (!candidate) return null;
-  try {
-    return JSON.parse(candidate);
-  } catch (_) {
-    return null;
-  }
-}
-
-function asCleanText(value, fallback = '') {
-  if (value == null) return fallback;
-  const text = String(value).replace(/\s+/g, ' ').trim();
-  return text || fallback;
-}
-
-function trimArray(arr, max, mapper) {
-  const list = Array.isArray(arr) ? arr : [];
-  return list.slice(0, max).map((item, idx) => mapper(item, idx)).filter(Boolean);
-}
-
-function normalizeSummaryTag(tag, idx) {
-  const cleaned = asCleanText(tag).toLowerCase();
-  if (cleaned.includes('ทำได้')) return 'ทำได้เลย';
-  if (cleaned.includes('impact')) return 'impact สูง';
-  if (cleaned.includes('สูง')) return 'impact สูง';
-  return idx === 2 ? 'ทำได้เลย' : 'impact สูง';
-}
-
-function normalizeScorePct(value, fallback) {
-  const num = Number(value);
-  if (!Number.isFinite(num)) return fallback;
-  return Math.max(0, Math.min(100, Math.round(num)));
-}
-
-function getFallbackChannelFit() {
-  const final = buildFinalPreview();
-
-  const map = {
-    traffic: {
-      pct: 80,
-      text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้คนหาเจอและกดเข้ามาดูง่ายขึ้น',
-      badge: 'เหมาะมาก'
-    },
-    trust: {
-      pct: 82,
-      text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตด้วยการทำให้ลูกค้ามั่นใจมากขึ้นก่อนกดซื้อ',
-      badge: 'เหมาะมาก'
-    },
-    price: {
-      pct: 85,
-      text: 'Shopee ยังเหมาะกับร้านนี้มาก แต่ต้องโตแบบชนะจากการสื่อความคุ้มค่า ไม่ใช่ชนราคาจนกำไรหาย',
-      badge: 'เหมาะมาก'
-    },
-    ops: {
-      pct: 70,
-      text: 'Shopee ยังเหมาะกับร้านนี้ แต่ถ้าจะโตต่อ ร้านต้องเก็บระบบหลังบ้านให้พร้อมก่อน',
-      badge: 'ยังเหมาะ'
-    },
-    channel_fit: {
-      pct: 58,
-      text: 'Shopee อาจยังไม่ใช่จุดเร่งโตของสินค้าหลักตัวนี้ในตอนนี้ ต้องเช็กบทบาทสินค้าให้ชัดก่อน',
-      badge: 'ต้องเช็กเพิ่ม'
-    }
-  };
-
-  return map[final.label] || {
-    pct: 75,
-    text: 'Shopee ยังเหมาะกับร้านนี้ แต่ต้องเลือกแก้ปัญหาหลักให้ตรงก่อน',
-    badge: 'ยังเหมาะ'
-  };
-}
-
-function buildFallbackStep2Payload() {
-  const quick = buildQuickResult();
-  const final = buildFinalPreview();
-  const fallbackPlan = build30DayPlan(final.label, state.deepAnswers);
-  const fit = getFallbackChannelFit();
-
-  return {
-    web_summary: {
-      headline: getSummaryHeadline(final.label),
-      main_problem: final.rootProblem,
-      focus_3: final.focus.slice(0, 3).map((item, idx) => ({
-        title: item.title,
-        desc: item.detail,
-        tag: idx === 2 ? 'ทำได้เลย' : 'impact สูง'
-      })),
-      plan_30_days: fallbackPlan.slice(0, 4).map((item, idx) => ({
-        week: item.week || `สัปดาห์ที่ ${idx + 1}`,
-        title: item.title,
-        detail: item.detail
-      })),
-      channel_fit: {
-        score_pct: fit.pct,
-        label: fit.badge,
-        summary: fit.text
-      }
-    },
-    full_report: {
-      overview: quick.summary,
-      focus_areas: final.focus.slice(0, 3).map(item => ({
-        title: item.title,
-        why: item.why || item.detail,
-        steps: [item.detail].filter(Boolean),
-        expected_result: item.outcome || 'ช่วยให้ร้านเห็นทิศทางที่ควรทำก่อนและลดการลองผิดแบบไม่จำเป็น'
-      })),
-      plan_30_days: fallbackPlan.slice(0, 4).map((item, idx) => ({
-        week: item.week || `สัปดาห์ที่ ${idx + 1}`,
-        title: item.title,
-        details: [item.detail].filter(Boolean)
-      })),
-      channel_fit: {
-        score_pct: fit.pct,
-        label: fit.badge,
-        long_reason: fit.text,
-        conclusion_lines: [
-          'Shopee ยังเหมาะกับร้านนี้ แต่ต้องแก้ปัญหาหลักก่อนเร่งยอด',
-          'ให้เริ่มจากสินค้าที่อยากดันก่อน ไม่ต้องกระจายทั้งร้าน',
-          'ถ้าแก้ถูกจุด โอกาสเห็นผลใน 2–4 สัปดาห์ยังมีค่ะ'
-        ]
-      }
-    }
-  };
-}
-
-function normalizeStep2Payload(payload) {
-  const fallback = buildFallbackStep2Payload();
-  const raw = payload && typeof payload === 'object' ? payload : {};
-  const web = raw.web_summary && typeof raw.web_summary === 'object' ? raw.web_summary : {};
-  const full = raw.full_report && typeof raw.full_report === 'object' ? raw.full_report : {};
-  const fitFallback = fallback.web_summary.channel_fit;
-
-  const normalized = {
-    web_summary: {
-      headline: asCleanText(web.headline, fallback.web_summary.headline),
-      main_problem: asCleanText(web.main_problem, fallback.web_summary.main_problem),
-      focus_3: trimArray(web.focus_3, 3, (item, idx) => {
-        const source = item && typeof item === 'object' ? item : {};
-        return {
-          title: asCleanText(source.title, fallback.web_summary.focus_3[idx]?.title || `เรื่องที่ ${idx + 1}`),
-          desc: asCleanText(source.desc, fallback.web_summary.focus_3[idx]?.desc || ''),
-          tag: normalizeSummaryTag(source.tag, idx)
-        };
-      }),
-      plan_30_days: trimArray(web.plan_30_days, 4, (item, idx) => {
-        const source = item && typeof item === 'object' ? item : {};
-        return {
-          week: asCleanText(source.week, fallback.web_summary.plan_30_days[idx]?.week || `สัปดาห์ที่ ${idx + 1}`),
-          title: asCleanText(source.title, fallback.web_summary.plan_30_days[idx]?.title || `แผนสัปดาห์ ${idx + 1}`),
-          detail: asCleanText(source.detail, fallback.web_summary.plan_30_days[idx]?.detail || '')
-        };
-      }),
-      channel_fit: {
-        score_pct: normalizeScorePct(web.channel_fit?.score_pct, fitFallback.score_pct),
-        label: asCleanText(web.channel_fit?.label, fitFallback.label),
-        summary: asCleanText(web.channel_fit?.summary, fitFallback.summary)
-      }
-    },
-    full_report: {
-      overview: asCleanText(full.overview, fallback.full_report.overview),
-      focus_areas: trimArray(full.focus_areas, 3, (item, idx) => {
-        const source = item && typeof item === 'object' ? item : {};
-        const fallbackItem = fallback.full_report.focus_areas[idx] || {};
-        return {
-          title: asCleanText(source.title, fallbackItem.title || `เรื่องที่ ${idx + 1}`),
-          why: asCleanText(source.why, fallbackItem.why || ''),
-          steps: trimArray(source.steps, 4, step => asCleanText(step)).filter(Boolean).length
-            ? trimArray(source.steps, 4, step => asCleanText(step)).filter(Boolean)
-            : (fallbackItem.steps || []).filter(Boolean),
-          expected_result: asCleanText(source.expected_result, fallbackItem.expected_result || '')
-        };
-      }),
-      plan_30_days: trimArray(full.plan_30_days, 4, (item, idx) => {
-        const source = item && typeof item === 'object' ? item : {};
-        const fallbackItem = fallback.full_report.plan_30_days[idx] || {};
-        return {
-          week: asCleanText(source.week, fallbackItem.week || `สัปดาห์ที่ ${idx + 1}`),
-          title: asCleanText(source.title, fallbackItem.title || `แผนสัปดาห์ ${idx + 1}`),
-          details: trimArray(source.details, 4, detail => asCleanText(detail)).filter(Boolean).length
-            ? trimArray(source.details, 4, detail => asCleanText(detail)).filter(Boolean)
-            : (fallbackItem.details || []).filter(Boolean)
-        };
-      }),
-      channel_fit: {
-        score_pct: normalizeScorePct(full.channel_fit?.score_pct, fitFallback.score_pct),
-        label: asCleanText(full.channel_fit?.label, fitFallback.label),
-        long_reason: asCleanText(full.channel_fit?.long_reason, fitFallback.summary),
-        conclusion_lines: trimArray(full.channel_fit?.conclusion_lines, 3, line => asCleanText(line)).filter(Boolean).length
-          ? trimArray(full.channel_fit?.conclusion_lines, 3, line => asCleanText(line)).filter(Boolean)
-          : (fallback.full_report.channel_fit.conclusion_lines || [])
-      }
-    }
-  };
-
-  if (normalized.web_summary.focus_3.length < 3) normalized.web_summary.focus_3 = fallback.web_summary.focus_3;
-  if (normalized.web_summary.plan_30_days.length < 4) normalized.web_summary.plan_30_days = fallback.web_summary.plan_30_days;
-  if (normalized.full_report.focus_areas.length < 3) normalized.full_report.focus_areas = fallback.full_report.focus_areas;
-  if (normalized.full_report.plan_30_days.length < 4) normalized.full_report.plan_30_days = fallback.full_report.plan_30_days;
-
-  return normalized;
-}
-
-function getSummaryHeadline(label) {
-  return {
-    traffic: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้คนยังหาเจอสินค้าไม่พอ',
-    trust: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังทำให้ลูกค้ามั่นใจไม่พอ',
-    price: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังสื่อความคุ้มค่าให้ชัดไม่พอ',
-    ops: 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ระบบร้านยังไม่พร้อมพอ',
-    channel_fit: 'ร้านนี้ยังต้องเช็กก่อนว่าสินค้าหลักเหมาะจะโตบน Shopee แค่ไหน'
-  }[label] || 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังต้องเลือกแก้ปัญหาให้ตรงจุด';
-}
 
 const LANGUAGE_POLICY = `
 กฎภาษาบังคับ:
@@ -5094,6 +4381,35 @@ function getCategoryAnalysisGuide() {
 }
 
 
+
+function getCategorySpecificStep2Rules(shopCat, heroProduct) {
+  const cat = String(shopCat || '').trim();
+  const sku = heroProduct || 'สินค้าที่อยากดัน';
+
+  if (cat === 'สุขภาพและอาหารเสริม') {
+    return `
+กฎเฉพาะสำหรับหมวดสุขภาพและอาหารเสริม:
+- ในหมวดนี้ ลูกค้ามักตัดสินใจจากความน่าเชื่อถือ รีวิว จุดขายที่เข้าใจง่าย และความคุ้มค่าเมื่อซื้อหลายชิ้น
+- ถ้าร้านจะโตด้วย ${sku} ให้ดูทั้งเรื่อง conversion และ AOV ไม่ใช่ดูแค่ยอดคลิกหรือยอดเข้าชม
+- GWP และ Bundle deal ใช้ได้ดีในหมวดนี้ แต่ห้ามแนะนำแบบลอย ๆ ต้องผูกกับคำตอบของร้านว่าตอนนี้ใช้เครื่องมืออะไรอยู่แล้ว และอะไรยังไม่เวิร์ก
+- ถ้าจะเสนอ Bundle deal ต้องอธิบายให้ชัดว่าทำไปเพื่อ:
+  1) เพิ่ม AOV
+  2) ทำให้ลูกค้ารู้สึกคุ้มกว่าเดิม
+  3) สร้างข้อเสนอที่ต่างจากร้านอื่น
+- ถ้าจะเสนอ exclusive bundle ต้องบอกให้ร้านเปรียบเทียบกับร้านที่ขายสินค้าเหมือนกันหรือใกล้เคียงก่อน ว่าคู่แข่งจัดชุดแบบไหน ราคาเท่าไร แถมอะไร แล้วค่อยหาช่องว่างที่ร้านยังทำไม่ซ้ำ
+- ถ้าจะพูดเรื่อง bundle หรือของแถม ต้องเตือนเสมอว่าต้องดูเรื่องกำไรด้วย ไม่ใช่เพิ่มยอดแต่กำไรหาย
+- ถ้าหน้าสินค้า รีวิว และความน่าเชื่อถือยังไม่พร้อม ห้ามสรุปว่าควรเร่ง Ads หรือเพิ่ม bid ก่อน ให้แก้ foundation ก่อนเสมอ
+- Keyword Ads สำคัญในหมวดนี้ เพราะต้องแข่งทั้งร้านตรงและร้านอ้อมในคลัสเตอร์เดียวกัน
+- แต่จะเสนอ Ads ได้ก็ต่อเมื่อพื้นฐานพร้อมแล้ว เช่น ภาพหน้าสินค้าดูดี จุดขายชัด รีวิวพอ และหน้าสินค้าดูน่าเชื่อถือ
+- ถ้าพื้นฐานพร้อมแล้ว ค่อยแนะนำว่าเริ่ม Keyword Ads โดยตั้ง bid สูงกว่าค่าที่ระบบแนะนำเล็กน้อยก่อน แล้วดูว่า traffic และอัตราการสั่งซื้อดีขึ้นไหม
+- ห้ามเขียนเหมารวมว่า bid สูงแล้วดีเสมอ ต้องบอกให้ดูผลจริงหลังรัน แล้วค่อยปรับเพิ่มหรือลดตาม performance
+- ถ้าร้านใช้ Bundle deal / Flash Sale / Ads อยู่แล้ว ห้ามแนะนำซ้ำเฉย ๆ ต้องวิเคราะห์ต่อว่าใช้แล้วแต่ยังไม่เวิร์กเพราะอะไร
+`;
+  }
+
+  return '';
+}
+
 function buildStep1Prompt() {
   const p = state.profile;
   const answers = QUICK_QUESTIONS.map(q => {
@@ -5192,21 +4508,21 @@ function buildStep2Prompt() {
   const quickSummary = QUICK_QUESTIONS.map(q => {
     const a = state.quickAnswers[q.id];
     return `- ${q.title}: ${a ? a.label : "ไม่ได้ตอบ"}${a ? ` | ${a.sub}` : ""}`;
-  }).join("\n");
+  }).join("
+");
 
   const deepSummary = DEEP_COMMON.map(q => {
     const a = state.deepAnswers[q.id];
     return `- ${q.title}: ${formatDeepAnswer(a)}`;
-  }).join("\n");
+  }).join("
+");
 
-  const totalScore = formatScore(getQuickScore());
-  const maxScore = formatScore(getQuickMaxScore());
+  const totalScore = getQuickScore();
   const quickType = getQuickTypeLabel();
 
-  return `คุณคือ ShopCheck AI ที่วิเคราะห์ร้าน Shopee สำหรับผู้ขายไทยแบบ strategic diagnosis
-หน้าที่ของคุณคือสร้างผลลัพธ์ 2 ชั้นพร้อมกัน:
-1) web_summary = สรุปสั้นสำหรับโชว์บนหน้าเว็บมือถือ ต้องอ่านจบเร็ว
-2) full_report = เนื้อหาฉบับเต็มสำหรับทีมงานเอาไปใส่ presentation ส่งลูกค้า
+  return `คุณคือ ShopCheck AI ที่วิเคราะห์ร้าน Shopee แบบ strategic diagnosis สำหรับผู้ขายไทย
+คุณไม่ต้องพยายามพูดเหมือนมนุษย์ 100% แต่ต้องคิดเป็นระบบ อ่านง่าย ชัด และใช้การได้จริง
+น้ำเสียงต้องฉลาด ตรงประเด็น เหมือน AI consultant ที่วิเคราะห์เป็น ไม่ใช่ AI ที่เขียนสวยอย่างเดียว
 
 ข้อมูลร้าน:
 - ชื่อร้าน: ${p.shopName || "ไม่ได้ระบุ"}
@@ -5217,7 +4533,7 @@ function buildStep2Prompt() {
 - ปัญหาหลักที่เจ้าของร้านรู้สึก: ${p.mainProblem || "ไม่ได้ระบุ"}
 
 ผลจาก Part 1:
-- คะแนนรวม: ${totalScore}/${maxScore}
+- คะแนนรวม: ${totalScore}/8
 - ระดับภาพรวม: ${quickType}
 
 คำตอบ Part 1:
@@ -5229,88 +4545,135 @@ ${deepSummary}
 แนววิเคราะห์สำหรับหมวด "${p.shopCat}":
 ${getCategoryAnalysisGuide()}
 
+${getCategorySpecificStep2Rules(p.shopCat, p.heroProduct)}
+
 ${LANGUAGE_POLICY}
 ${DIAGNOSIS_LOGIC}
 ${SELF_CHECK}
 
-กฎสำคัญมาก:
-- ห้ามตอบเป็น markdown
-- ห้ามใส่ code fence แบบ json
-- ห้ามมีคำอธิบายก่อนหรือหลัง JSON
-- ต้องตอบเป็น JSON object เท่านั้น
-- web_summary ต้องสั้น อ่านจบเร็ว และไม่แน่นเหมือนรายงานเต็ม
-- full_report ต้องละเอียดพอให้ทีมงานนำไปใส่ presentation ต่อได้ทันที
-- ทั้ง 2 layer ต้องใช้ logic เดียวกัน ไม่ใช่คนละเรื่อง
-- ถ้าร้านสู้ราคายาก ต้องวิเคราะห์ให้ถูกว่าเป็นต้นทุนสูงจริง หรือยังสื่อความคุ้มค่าไม่ชัด
-- ถ้าจะพูดเรื่องภาพ ให้ใช้คำว่า "5 ภาพแรกของสินค้าที่อยากดัน" หรือ "ภาพหน้าสินค้า"
-- ห้ามใช้คำว่า "คอขวด" "หน้าแข่ง" "ร้านที่ราคาแพ้" "มาร์จิน"
+งานนี้ต้องตอบเป็น JSON object เท่านั้น ห้ามมี markdown ห้ามมีคำอธิบายก่อนหรือหลัง JSON
+ผลลัพธ์ต้องมี 2 ชั้นพร้อมกัน คือ web_summary และ full_report
 
-ตอบตาม schema นี้เท่านั้น:
+กฎสำคัญ:
+- web_summary มีไว้โชว์บนหน้าเว็บ ต้องสั้น อ่านง่าย จบไว ไม่ใช่รายงานเต็ม
+- full_report มีไว้ใช้ทำรายงานส่งลูกค้า จึงค่อยลงรายละเอียดมากกว่า
+- ห้ามเอาเนื้อหาแบบรายงานเต็มมายัดใน web_summary
+- ถ้าร้านใช้เครื่องมือบางอย่างอยู่แล้ว ต้องวิเคราะห์ต่อว่าใช้แล้วแต่ยังไม่เวิร์กเพราะอะไร ไม่ใช่แนะนำซ้ำเฉย ๆ
+- ถ้าจะพูดเรื่องภาพ ให้ใช้คำว่า "5 ภาพแรกของสินค้าที่อยากดัน" หรือ "ภาพหน้าสินค้า" ให้ชัด
+- แผน 30 วันต้องครบ 4 สัปดาห์
+- ถ้าจะเสนอ Ads ต้องเป็นลำดับหลังจาก foundation พร้อมแล้ว
+- Channel Fit ต้องกล้าตัดสิน ไม่ใช่ตอบกลาง ๆ
+
+ให้ตอบตาม schema นี้เท่านั้น:
 {
   "web_summary": {
-    "headline": "สรุป 1 ประโยค ไม่เกิน 120 ตัวอักษร",
-    "main_problem": "อธิบายปัญหาหลัก 1-2 ประโยค",
+    "headline": "สรุปสั้น 1-2 ประโยคสำหรับหน้าเว็บ",
+    "main_problem": "ปัญหาหลักตอนนี้ 1 ย่อหน้าสั้น",
     "focus_3": [
-      {"title": "หัวข้อสั้น", "desc": "คำอธิบายสั้น 1 ประโยค", "tag": "impact สูง"},
-      {"title": "หัวข้อสั้น", "desc": "คำอธิบายสั้น 1 ประโยค", "tag": "impact สูง"},
-      {"title": "หัวข้อสั้น", "desc": "คำอธิบายสั้น 1 ประโยค", "tag": "ทำได้เลย"}
+      {"title": "หัวข้อ", "desc": "คำอธิบายสั้น 1-2 ประโยค", "tag": "impact สูง"},
+      {"title": "หัวข้อ", "desc": "คำอธิบายสั้น 1-2 ประโยค", "tag": "impact สูง"},
+      {"title": "หัวข้อ", "desc": "คำอธิบายสั้น 1-2 ประโยค", "tag": "ทำได้เลย"}
     ],
     "plan_30_days": [
-      {"week": "สัปดาห์ที่ 1", "title": "หัวข้อสั้น", "detail": "สรุปสั้น 1 ประโยค"},
-      {"week": "สัปดาห์ที่ 2", "title": "หัวข้อสั้น", "detail": "สรุปสั้น 1 ประโยค"},
-      {"week": "สัปดาห์ที่ 3", "title": "หัวข้อสั้น", "detail": "สรุปสั้น 1 ประโยค"},
-      {"week": "สัปดาห์ที่ 4", "title": "หัวข้อสั้น", "detail": "สรุปสั้น 1 ประโยค"}
+      {"week": "สัปดาห์ 1", "title": "หัวข้อสั้น", "detail": "คำอธิบายสั้น"},
+      {"week": "สัปดาห์ 2", "title": "หัวข้อสั้น", "detail": "คำอธิบายสั้น"},
+      {"week": "สัปดาห์ 3", "title": "หัวข้อสั้น", "detail": "คำอธิบายสั้น"},
+      {"week": "สัปดาห์ 4", "title": "หัวข้อสั้น", "detail": "คำอธิบายสั้น"}
     ],
     "channel_fit": {
       "score_pct": 0,
       "label": "เหมาะมาก",
-      "summary": "สรุปสั้น 1-2 ประโยค"
+      "summary": "สรุปสั้นสำหรับหน้าเว็บ"
     }
   },
   "full_report": {
-    "overview": "ภาพรวมร้าน 1 ย่อหน้า",
+    "overview": "ภาพรวมร้านแบบละเอียดกว่า web_summary",
     "focus_areas": [
-      {
-        "title": "หัวข้อ",
-        "why": "เหตุผลว่าทำไมเรื่องนี้สำคัญ",
-        "steps": ["step 1", "step 2", "step 3"],
-        "expected_result": "ผลที่คาด"
-      },
-      {
-        "title": "หัวข้อ",
-        "why": "เหตุผลว่าทำไมเรื่องนี้สำคัญ",
-        "steps": ["step 1", "step 2", "step 3"],
-        "expected_result": "ผลที่คาด"
-      },
-      {
-        "title": "หัวข้อ",
-        "why": "เหตุผลว่าทำไมเรื่องนี้สำคัญ",
-        "steps": ["step 1", "step 2", "step 3"],
-        "expected_result": "ผลที่คาด"
-      }
+      {"title": "หัวข้อ", "why": "เหตุผล", "steps": ["step 1", "step 2", "step 3"], "expected_result": "ผลที่คาด"},
+      {"title": "หัวข้อ", "why": "เหตุผล", "steps": ["step 1", "step 2", "step 3"], "expected_result": "ผลที่คาด"},
+      {"title": "หัวข้อ", "why": "เหตุผล", "steps": ["step 1", "step 2", "step 3"], "expected_result": "ผลที่คาด"}
     ],
     "plan_30_days": [
-      {"week": "สัปดาห์ที่ 1", "title": "หัวข้อ", "details": ["ข้อ 1", "ข้อ 2", "ข้อ 3"]},
-      {"week": "สัปดาห์ที่ 2", "title": "หัวข้อ", "details": ["ข้อ 1", "ข้อ 2", "ข้อ 3"]},
-      {"week": "สัปดาห์ที่ 3", "title": "หัวข้อ", "details": ["ข้อ 1", "ข้อ 2", "ข้อ 3"]},
-      {"week": "สัปดาห์ที่ 4", "title": "หัวข้อ", "details": ["ข้อ 1", "ข้อ 2", "ข้อ 3"]}
+      {"week": "สัปดาห์ 1", "title": "หัวข้อ", "details": ["...", "...", "..."]},
+      {"week": "สัปดาห์ 2", "title": "หัวข้อ", "details": ["...", "...", "..."]},
+      {"week": "สัปดาห์ 3", "title": "หัวข้อ", "details": ["...", "...", "..."]},
+      {"week": "สัปดาห์ 4", "title": "หัวข้อ", "details": ["...", "...", "..."]}
     ],
     "channel_fit": {
       "score_pct": 0,
       "label": "เหมาะมาก",
-      "long_reason": "อธิบายยาว 1 ย่อหน้า",
-      "conclusion_lines": ["สรุป 1", "สรุป 2", "สรุป 3"]
+      "long_reason": "คำอธิบายเต็ม",
+      "conclusion_lines": ["สรุปข้อ 1", "สรุปข้อ 2", "สรุปข้อ 3"]
     }
   }
+}`;
 }
 
-ข้อบังคับเพิ่ม:
-- focus_3 ต้องมี 3 ข้อเท่านั้น
-- plan_30_days ต้องมี 4 สัปดาห์เท่านั้น
-- steps ของ full_report แต่ละ focus area ต้อง 3-4 ข้อ
-- detail ใน web_summary ต้องสั้นพอสำหรับการ์ดบนหน้าเว็บ
-- อย่าให้ web_summary กลายเป็นรายงานเต็มย่อส่วน
-- channel_fit ต้องกล้าตัดสิน ไม่ตอบกลาง ๆ`;
+function parseStep2JsonPayload(raw) {
+  const text = String(raw || '').trim();
+  if (!text) return null;
+  try { return JSON.parse(text); } catch (_) {}
+  const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fenced?.[1]) {
+    try { return JSON.parse(fenced[1].trim()); } catch (_) {}
+  }
+  const start = text.indexOf('{');
+  if (start === -1) return null;
+  let depth = 0, inString = false, escaped = false;
+  for (let i = start; i < text.length; i += 1) {
+    const ch = text[i];
+    if (escaped) { escaped = false; continue; }
+    if (ch === '\') { escaped = true; continue; }
+    if (ch === '"') { inString = !inString; continue; }
+    if (inString) continue;
+    if (ch === '{') depth += 1;
+    if (ch === '}') {
+      depth -= 1;
+      if (depth === 0) {
+        try { return JSON.parse(text.slice(start, i + 1)); } catch (_) { return null; }
+      }
+    }
+  }
+  return null;
+}
+
+function normalizeStep2Payload(payload) {
+  const safe = payload && typeof payload === 'object' ? payload : {};
+  const web = safe.web_summary && typeof safe.web_summary === 'object' ? safe.web_summary : {};
+  const full = safe.full_report && typeof safe.full_report === 'object' ? safe.full_report : {};
+  const focus = Array.isArray(web.focus_3) ? web.focus_3.slice(0, 3) : [];
+  const plan = Array.isArray(web.plan_30_days) ? web.plan_30_days.slice(0, 4) : [];
+  return {
+    web_summary: {
+      headline: String(web.headline || 'ร้านนี้ยังมีโอกาสโตบน Shopee ต่อได้ แต่ตอนนี้ยังต้องแก้ปัญหาหลักให้ตรงจุด').trim(),
+      main_problem: String(web.main_problem || 'ตอนนี้ลูกค้าเริ่มเห็นสินค้าแล้ว แต่ยังไม่เห็นเหตุผลชัดพอว่าทำไมควรซื้อร้านนี้แทนร้านอื่น').trim(),
+      focus_3: (focus.length ? focus : [
+        { title: 'ทำให้สินค้าที่อยากดันมีเหตุผลให้ซื้อชัดขึ้น', desc: 'ปรับภาพหน้าสินค้าและจุดขายให้ลูกค้าเข้าใจได้เร็วขึ้นตั้งแต่ก่อนเลื่อนอ่านรายละเอียด', tag: 'impact สูง' },
+        { title: 'จัดการเรื่องความคุ้มค่าให้ชัด', desc: 'ทำให้ลูกค้าเห็นความคุ้มจากข้อมูลสินค้าและข้อเสนอ ไม่ใช่ปล่อยให้เทียบกันที่ราคาอย่างเดียว', tag: 'impact สูง' },
+        { title: 'ค่อยใช้โปรกับสินค้าที่พร้อมก่อน', desc: 'เริ่มจากตัวที่หน้าสินค้าพร้อมและมีโอกาสปิดการขายได้ก่อน แล้วค่อยขยาย', tag: 'ทำได้เลย' }
+      ]).map((item, idx) => ({
+        title: String(item?.title || `เรื่องที่ ${idx + 1}`).trim(),
+        desc: String(item?.desc || '').trim(),
+        tag: String(item?.tag || (idx === 2 ? 'ทำได้เลย' : 'impact สูง')).trim()
+      })),
+      plan_30_days: (plan.length ? plan : [
+        { week: 'สัปดาห์ 1', title: 'จัดหน้าสินค้าให้ชัดขึ้น', detail: 'เริ่มจาก 5 ภาพแรกของสินค้าที่อยากดันและข้อความที่ลูกค้าเห็นก่อนตัดสินใจ' },
+        { week: 'สัปดาห์ 2', title: 'จัดข้อเสนอให้ลูกค้าเห็นความคุ้ม', detail: 'ปรับโปรหรือ bundle ให้ช่วยปิดการขายโดยไม่ทำให้กำไรหายเกินไป' },
+        { week: 'สัปดาห์ 3', title: 'เก็บคำถามจริงจากลูกค้า', detail: 'เอาคำถามที่เจอบ่อยมาปรับในภาพและรายละเอียดสินค้าเพื่อลดการลังเล' },
+        { week: 'สัปดาห์ 4', title: 'ต่อยอดด้วยเครื่องมือที่เหมาะ', detail: 'ค่อยใช้แคมเปญหรือโปรกับสินค้าที่หน้าพร้อมแล้วจริง ๆ' }
+      ]).map((item, idx) => ({
+        week: String(item?.week || `สัปดาห์ ${idx + 1}`).trim(),
+        title: String(item?.title || `แผนสัปดาห์ ${idx + 1}`).trim(),
+        detail: String(item?.detail || '').trim()
+      })),
+      channel_fit: {
+        score_pct: Math.max(0, Math.min(100, Number(web?.channel_fit?.score_pct || 75) || 75)),
+        label: String(web?.channel_fit?.label || 'ยังเหมาะ').trim(),
+        summary: String(web?.channel_fit?.summary || 'Shopee ยังเหมาะกับร้านนี้ แต่ต้องเลือกแก้ปัญหาหลักให้ตรงก่อน').trim()
+      }
+    },
+    full_report: full
+  };
 }
 
 /* Animated loading/* Animated loading with rotating messages */
@@ -5675,14 +5038,14 @@ renderQuickResult = async function() {
   }
 };
 
-/* Override renderFinalPreview — use AI text but render summary layout for web */
+/* Override renderFinalPreview — render web_summary on page, keep full_report in DB */
 const _origRenderFinalPreview = renderFinalPreview;
 renderFinalPreview = async function() {
   const loadingTimer2 = showLoadingWithMessages([
     `กำลังวิเคราะห์เชิงลึกร้าน ${state.profile.shopName || ''}...`,
-    'กำลังจัดลำดับ 3 เรื่องที่ควรทำก่อน...',
-    'กำลังสรุปหน้าเว็บแบบอ่านจบเร็ว...',
-    'กำลังเตรียมรายงานเต็มสำหรับส่งลูกค้า...',
+    'กำลังสรุปประเด็นหลักสำหรับหน้าเว็บ...',
+    'กำลังจัด 3 เรื่องที่ควรโฟกัสก่อน...',
+    'กำลังวางแผน 30 วันแบบอ่านง่าย...',
     'กำลังประเมิน Channel Fit บน Shopee...',
     'เกือบเสร็จแล้วค่ะ รอแป๊บนึง...'
   ]);
@@ -5694,18 +5057,16 @@ renderFinalPreview = async function() {
     const aiText = await callDiagnose(step2Prompt);
     clearInterval(loadingTimer2);
 
-    const parsedPayload = safeParseJSON(aiText);
-    const step2Payload = normalizeStep2Payload(parsedPayload);
-    const storedJSON = JSON.stringify(step2Payload);
-
-    state._step2AI = storedJSON;
-    state._step2Payload = step2Payload;
+    state._step2AI = aiText;
     window._sc_step2_raw = aiText;
-    window._sc_step2_payload = step2Payload;
-    window._sc_full_report = step2Payload.full_report;
-    try {
-      localStorage.setItem('shopcheck_last_step2_payload', storedJSON);
-    } catch (_) {}
+
+    const parsed = parseStep2JsonPayload(aiText);
+    if (!parsed) throw new Error('Step 2 output ไม่ได้กลับมาเป็น JSON ตามที่ระบบต้องใช้');
+
+    const payload = normalizeStep2Payload(parsed);
+    state._step2Payload = payload;
+    window._sc_step2_payload = payload;
+    window._sc_full_report = payload.full_report || {};
 
     if (!state.submissionId) {
       try {
@@ -5724,124 +5085,99 @@ renderFinalPreview = async function() {
       }
     }
 
-    const quick = buildQuickResult();
-    const secStats = getQuickSectionStats();
-    const snapshotMap = {
-      storefront: 'หน้าร้าน & หาเจอ',
-      pricing: 'ราคา & ความคุ้ม',
-      bottleneck: 'จุดต่างจากคู่แข่ง'
-    };
-    const snapshotRows = ['storefront', 'pricing', 'bottleneck']
-      .map(id => secStats.find(sec => sec.id === id))
-      .filter(Boolean);
-
-    const summary = step2Payload.web_summary;
-    const fit = summary.channel_fit;
-    const emailValue = state.email ? `<strong>${escapeHTML(state.email)}</strong>` : 'อีเมลที่กรอกไว้';
+    const summary = payload.web_summary || {};
+    const focus = Array.isArray(summary.focus_3) ? summary.focus_3.slice(0, 3) : [];
+    const weeks = Array.isArray(summary.plan_30_days) ? summary.plan_30_days.slice(0, 4) : [];
+    const channel = summary.channel_fit || {};
+    const pct = Math.max(0, Math.min(100, Number(channel.score_pct || 75) || 75));
+    const emailLine = normalizeOptionalValue(state.email)
+      ? `ส่งภายใน 24 ชม. ทางอีเมล <strong>${escapeHTML(state.email)}</strong>`
+      : 'ส่งภายใน 24 ชม. ทางอีเมลที่ลูกค้ากรอกไว้';
 
     el.stageCard.innerHTML = `
-      <div class="result-card summary-result-card">
-        <div class="summary-shell">
-          <div class="summary-topbar">
-            <div class="summary-brand"><strong>Shop<span>Check</span></strong></div>
-            <div class="summary-author">โดย Niranya · Ex-Shopee TH<br>ผลสรุปสำหรับอ่านบนหน้าเว็บ</div>
-          </div>
-
-          <div class="summary-intro">
-            <div class="summary-intro-inner">
-              <div class="summary-intro-icon">✓</div>
-              <div>
-                <p class="summary-intro-title">รายงานฉบับเต็มจะส่งภายใน 24 ชม.</p>
-                <p class="summary-intro-copy">หน้านี้ตั้งใจให้เห็นข้อสรุปสำคัญแบบอ่านจบได้เร็ว ส่วนรายละเอียดเชิงลึก วิธีทำทีละขั้น และรายงานฉบับเต็มจะส่งให้ทางอีเมล หรือรับผ่าน LINE ได้</p>
-              </div>
+      <div class="result-card" style="padding:0; overflow:hidden; border-radius:34px;">
+        <div class="topbar" style="border-radius:0; margin:0;">
+          <div class="brand-copy"><strong>Shop<span>Check</span></strong></div>
+          <div class="tagline" style="background:none;border:none;padding:0;color:rgba(255,255,255,.78);">โดย Niranya · Ex-Shopee TH<br>ผลสรุปสำหรับอ่านบนหน้าเว็บ</div>
+        </div>
+        <div style="padding:18px 24px; background:linear-gradient(180deg,#fff5ee 0%, #fff0e5 100%); border-bottom:1px solid #f8dccf;">
+          <div style="display:flex;gap:12px;align-items:flex-start;max-width:860px;">
+            <div style="width:34px;height:34px;border-radius:999px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;">✓</div>
+            <div>
+              <p style="margin:0 0 4px;font-size:14px;font-weight:700;color:var(--brand-dark);">รายงานฉบับเต็มจะส่งภายใน 24 ชม.</p>
+              <p style="margin:0;font-size:13px;line-height:1.65;color:#c75d34;">หน้านี้ตั้งใจให้เป็นข้อสรุปที่อ่านจบได้เร็ว ส่วนรายละเอียดเชิงลึก วิธีทำทีละขั้น และรายงานเต็มจะอยู่ในไฟล์ที่ส่งให้ภายหลัง</p>
             </div>
           </div>
-
-          <div class="summary-content">
-            <div class="summary-main">
-              <div class="summary-card summary-headline-card">
-                <p class="summary-eyebrow">ผลวิเคราะห์เชิงลึก</p>
-                <h2 class="summary-headline">${escapeHTML(summary.headline)}</h2>
-                <div class="summary-core">
-                  <strong>ปัญหาหลักตอนนี้</strong>
-                  <p>${escapeHTML(summary.main_problem)}</p>
-                </div>
-              </div>
-
-              <div class="summary-card">
-                <h3 class="summary-section-title">3 เรื่องที่ควรโฟกัสก่อน</h3>
-                <div class="summary-focus-grid">
-                  ${summary.focus_3.map((item, idx) => `
-                    <div class="summary-focus-card">
-                      <div class="summary-focus-num">${idx + 1}</div>
-                      <div class="summary-focus-copy">
-                        <h4>${escapeHTML(item.title)}</h4>
-                        <p>${escapeHTML(item.desc)}</p>
-                      </div>
-                      <span class="summary-tag ${item.tag === 'ทำได้เลย' ? 'green' : ''}">${escapeHTML(item.tag)}</span>
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-
-              <div class="summary-card">
-                <h3 class="summary-section-title">แผน 30 วัน</h3>
-                <div class="summary-plan-grid">
-                  ${summary.plan_30_days.map((item, idx) => `
-                    <div class="summary-plan-card week-${idx + 1}">
-                      <p class="summary-plan-week">${escapeHTML(item.week)}</p>
-                      <p class="summary-plan-title">${escapeHTML(item.title)}</p>
-                      <p class="summary-plan-copy">${escapeHTML(item.detail)}</p>
-                    </div>
-                  `).join('')}
-                </div>
+        </div>
+        <div class="sc-summary-grid" style="display:grid;grid-template-columns:minmax(0,1.45fr) 340px;gap:22px;padding:24px;align-items:stretch;">
+          <div style="display:grid;gap:16px;min-width:0;">
+            <div class="premium-light-card" style="background:linear-gradient(180deg,#fffdfa 0%, #fff7f1 100%);">
+              <p style="margin:0 0 6px;font-size:12px;color:var(--text3);letter-spacing:.03em;">ผลวิเคราะห์เชิงลึก</p>
+              <h2 style="margin:0;font-size:30px;line-height:1.2;letter-spacing:-.03em;">${escapeHTML(summary.headline || '')}</h2>
+              <div style="margin-top:14px;background:#fff;border:1px solid #f4dfd1;border-radius:18px;padding:14px 15px;">
+                <strong style="display:block;font-size:12px;color:var(--brand-dark);margin-bottom:5px;">ปัญหาหลักตอนนี้</strong>
+                <p style="margin:0;font-size:14px;line-height:1.72;color:var(--text2);">${escapeHTML(summary.main_problem || '')}</p>
               </div>
             </div>
-
-            <div class="summary-sidebar">
-              <div class="summary-card summary-score-box">
-                <div class="summary-score-top">
-                  <div>
-                    <div class="summary-score-big">${formatScore(quick.total)}</div>
-                    <div class="summary-score-sub">คะแนนรวมของร้านตอนนี้<br>${escapeHTML(getQuickVerdict())}</div>
+            <div class="premium-light-card">
+              <h3>3 เรื่องที่ควรโฟกัสก่อน</h3>
+              <div style="display:grid;gap:10px;">
+                ${focus.map((item, idx) => `
+                  <div style="background:#fff8f3;border:1px solid #f6e2d7;border-radius:18px;padding:14px 15px;display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:start;">
+                    <div style="width:32px;height:32px;border-radius:10px;background:#faddcc;color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;">${idx + 1}</div>
+                    <div style="min-width:0;">
+                      <div style="margin:0 0 4px;font-size:14px;line-height:1.45;font-weight:700;color:var(--text);">${escapeHTML(item.title || '')}</div>
+                      <div style="margin:0;font-size:13px;line-height:1.62;color:var(--text2);">${escapeHTML(item.desc || '')}</div>
+                    </div>
+                    <span style="font-size:11px;padding:4px 8px;border-radius:999px;background:${String(item.tag || '').includes('ทำได้') ? 'var(--green-bg)' : '#fff1e8'};color:${String(item.tag || '').includes('ทำได้') ? 'var(--green)' : '#d45c2e'};font-weight:700;white-space:nowrap;">${escapeHTML(item.tag || '')}</span>
                   </div>
-                  <div class="summary-pill">Quick view</div>
-                </div>
-                <div class="summary-bars">
-                  ${snapshotRows.map(sec => `
-                    <div class="summary-bar-row">
-                      <label>${snapshotMap[sec.id] || sec.name}</label>
-                      <div class="summary-bar"><span style="width:${sec.pct}%; background:${sec.id === 'bottleneck' ? '#ef9f27' : 'var(--brand)'};"></span></div>
-                      <strong>${formatScore(sec.score)}/${sec.max}</strong>
-                    </div>
-                  `).join('')}
-                </div>
+                `).join('')}
               </div>
-
-              <div class="summary-card summary-channel">
-                <strong>ประเมิน Channel Fit</strong>
-                <div class="summary-channel-bar"><span style="width:${fit.score_pct}%"></span></div>
-                <p>${escapeHTML(fit.summary)}</p>
-                <div class="summary-mini-line">
-                  <span>คะแนนความเหมาะสม</span>
-                  <span>${fit.score_pct}% · ${escapeHTML(fit.label)}</span>
-                </div>
+            </div>
+            <div class="premium-light-card">
+              <h3>แผน 30 วัน</h3>
+              <div class="sc-plan-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+                ${weeks.map((w, idx) => `
+                  <div style="border:1px solid #f6e2d7;border-radius:16px;padding:14px 14px 16px;min-height:126px;position:relative;overflow:hidden;background:${idx===0?'linear-gradient(180deg,#fff9f4 0%, #fff3ee 100%)':idx===1?'linear-gradient(180deg,#fff8ee 0%, #fff0df 100%)':idx===2?'linear-gradient(180deg,#fffced 0%, #f8f1d6 100%)':'linear-gradient(180deg,#f5faed 0%, #e7f3da 100%)'};">
+                    <div style="margin:0 0 5px;font-size:11px;color:${idx===3?'#4f7f1b':idx===2?'#9b7d1c':idx===1?'#bc6b2f':'var(--text3)'};">${escapeHTML(w.week || '')}</div>
+                    <div style="margin:0 0 7px;font-size:14px;line-height:1.45;font-weight:700;color:var(--text);">${escapeHTML(w.title || '')}</div>
+                    <div style="margin:0;font-size:12px;line-height:1.62;color:var(--text2);">${escapeHTML(w.detail || '')}</div>
+                  </div>
+                `).join('')}
               </div>
-
-              <div class="summary-card summary-delivery">
-                <strong>รายงานเต็มที่ลูกค้าจะได้รับ</strong>
-                <p>ส่งภายใน 24 ชม. ทางอีเมลที่ลูกค้ากรอกไว้ คือ ${emailValue}</p>
-                <p>ถ้าไม่สะดวกเปิดอีเมล สามารถ Add LINE เพื่อรับไฟล์บนมือถือได้เช่นกัน โดยอีเมลยังเป็นช่องทางหลัก</p>
-              </div>
-
-              <div class="summary-card summary-actions">
-                <strong>ปุ่ม action บนหน้า</strong>
-                <p>หน้านี้ทำให้เห็นข้อสรุปหลักก่อน ส่วนคนที่อยากย้อนดูผลรอบแรกหรือเริ่มทำใหม่ สามารถกดปุ่มด้านล่างได้เลย</p>
-                <div class="summary-btn-stack">
-                  <button class="nav-btn summary-btn" id="backToQuickResultBtn">กลับไปดูผลวิเคราะห์ร้านฉบับพื้นฐาน</button>
-                  <button class="nav-btn primary summary-btn" id="restartFinalBtn">เริ่มใหม่ตั้งแต่ต้น</button>
+            </div>
+          </div>
+          <div style="display:grid;gap:16px;align-content:stretch;height:100%;grid-template-rows:auto auto auto 1fr;">
+            <div class="score-box" style="padding:20px;border-radius:28px;background:linear-gradient(145deg,#1d1916,#33231b);color:#fff;border:none;">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;">
+                <div>
+                  <div style="font-size:42px;font-weight:700;line-height:1;color:#fff;">${escapeHTML(String(getQuickScore()))}</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,.72);line-height:1.6;margin-top:4px;">คะแนนรวมของร้านตอนนี้<br>พื้นฐานร้านแน่นแล้ว</div>
                 </div>
-                <div class="summary-helper-note">ถ้าคุณจะทำรายงานส่งลูกค้า ให้ดึงข้อมูลจาก submission นี้ใน Supabase โดยใช้ step2_ai_result → full_report ได้เลยค่ะ</div>
+                <div style="font-size:11px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.12);color:#fff;font-weight:700;white-space:nowrap;">Quick view</div>
+              </div>
+              ${renderQuickSectionBars(getQuickSections())}
+            </div>
+            <div class="premium-light-card">
+              <h3>ประเมิน Channel Fit</h3>
+              <div style="height:9px;background:#f3ebe6;border-radius:999px;overflow:hidden;margin:10px 0 8px;"><span style="display:block;height:100%;width:${pct}%;background:var(--brand);"></span></div>
+              <p style="margin:0;font-size:12px;line-height:1.66;color:var(--text2);">${escapeHTML(channel.summary || '')}</p>
+              <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--text2)">
+                <span>คะแนนความเหมาะสม</span>
+                <span style="font-size:11px;padding:4px 8px;border-radius:999px;background:#fff1e8;color:#d45c2e;font-weight:700;">${escapeHTML(String(pct))}% · ${escapeHTML(channel.label || '')}</span>
+              </div>
+            </div>
+            <div class="premium-light-card">
+              <h3>รายงานเต็มที่ลูกค้าจะได้รับ</h3>
+              <p style="margin:0;font-size:12px;line-height:1.66;color:var(--text2);">${emailLine}</p>
+              <p style="margin:6px 0 0;font-size:12px;line-height:1.66;color:var(--text2);">ถ้าไม่สะดวกเปิดอีเมล สามารถ Add LINE เพื่อรับไฟล์บนมือถือได้เช่นกัน</p>
+            </div>
+            <div class="premium-light-card" style="display:flex;flex-direction:column;">
+              <h3>ปุ่ม action บนหน้า</h3>
+              <p style="margin:0;font-size:12px;line-height:1.66;color:var(--text2);">หน้านี้ทำให้เห็นข้อสรุปหลักก่อน ส่วนคนที่อยากย้อนดูผลรอบแรกหรือเริ่มใหม่ สามารถกดปุ่มด้านล่างได้เลย</p>
+              <div style="display:grid;gap:10px;margin-top:auto;">
+                <button class="nav-btn" id="backToQuickResultBtn">กลับไปดูผลวิเคราะห์ร้านฉบับพื้นฐาน</button>
+                <button class="nav-btn primary" id="restartFinalBtn">เริ่มใหม่ตั้งแต่ต้น</button>
               </div>
             </div>
           </div>
@@ -5853,7 +5189,6 @@ renderFinalPreview = async function() {
       renderCurrent();
       scrollStageTop();
     });
-
     document.getElementById('restartFinalBtn').addEventListener('click', restartAll);
 
   } catch(e) {
@@ -5861,7 +5196,6 @@ renderFinalPreview = async function() {
     el.stageCard.innerHTML = `<div class="result-card" style="padding:32px;"><p style="color:var(--red);">เกิดข้อผิดพลาดค่ะ — ${escapeHTML(e.message)}</p><button class="nav-btn" onclick="renderCurrent()">ลองใหม่</button></div>`;
   }
 };
-
 
 updateHUD();
 
